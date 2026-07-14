@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>(function(){if(!sessionStorage.getItem('js_portfolio_v1'))window.location.replace('index.html');}());</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sony a7 V — B&H Used PDP Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0F1F4B;--navy-mid:#1A3066;--navy-light:#2A4080;
+  --gold:#C8993A;--gold-light:#E8B84B;
+  --gold-dim:rgba(200,153,58,.12);--gold-border:rgba(200,153,58,.3);
+  --off-white:#F7F8FC;--gray-100:#EEF0F6;--gray-300:#C5CAD9;
+  --gray-500:#7B82A0;--gray-700:#3D4468;
+  --shadow-sm:0 2px 8px rgba(15,31,75,.06);
+  --shadow-md:0 4px 24px rgba(15,31,75,.10);
+  --shadow-lg:0 8px 40px rgba(15,31,75,.14);
+  --font:'Montserrat',sans-serif;--r:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#fff;color:#1a1a1a;font-size:13px}
+
+/* ── ROADMAP NAV ─────────────────────────────────────────────── */
+.rm-shell{position:sticky;top:0;z-index:150;background:var(--navy);box-shadow:0 2px 16px rgba(15,31,75,.35);font-family:var(--font)}
+.rm-topbar{height:4px;background:linear-gradient(90deg,var(--navy) 0%,var(--gold) 60%,var(--gold-light) 100%)}
+.rm-inner{max-width:1120px;margin:0 auto;padding:0 24px;display:flex;align-items:stretch;gap:0;min-height:50px}
+.rm-brand{display:flex;align-items:center;gap:10px;padding-right:20px;border-right:1px solid rgba(255,255,255,.1);flex-shrink:0;margin-right:4px}
+.rm-brand-bh{font-size:14px;font-weight:900;letter-spacing:.04em;color:#fff;line-height:1;font-family:var(--font)}
+.rm-brand-sub{font-size:9px;color:rgba(255,255,255,.38);letter-spacing:.18em;text-transform:uppercase;line-height:1;margin-top:4px;font-family:var(--font)}
+.rm-track{display:flex;align-items:center;gap:0;flex:1;overflow-x:auto;scrollbar-width:none}
+.rm-track::-webkit-scrollbar{display:none}
+.rm-qgrp{display:flex;align-items:center;gap:2px;padding:0 8px;position:relative}
+.rm-qgrp::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);height:20px;width:1px;background:rgba(255,255,255,.1)}
+.rm-qgrp:first-child::before{display:none}
+.rm-qlbl{font-size:9px;font-weight:700;letter-spacing:.16em;color:rgba(255,255,255,.25);text-transform:uppercase;padding-right:4px;flex-shrink:0;white-space:nowrap;font-family:var(--font)}
+.rm-chip{display:flex;align-items:center;gap:6px;padding:5px 11px;border-radius:6px;cursor:pointer;transition:all .18s;text-decoration:none;flex-shrink:0;border:1.5px solid transparent;position:relative;font-family:var(--font)}
+.rm-chip-inner{display:flex;flex-direction:column;gap:1px}
+.rm-chip-name{font-size:10.5px;font-weight:600;line-height:1.25;white-space:nowrap;color:rgba(255,255,255,.5);transition:color .18s;letter-spacing:.01em}
+.rm-chip-sub{font-size:9px;color:rgba(255,255,255,.25);line-height:1.2;white-space:nowrap;transition:color .18s;letter-spacing:.02em}
+.rm-chip.active{background:var(--gold-dim);border-color:var(--gold-border)}
+.rm-chip.active .rm-chip-name{color:var(--gold-light);font-weight:700}
+.rm-chip.active .rm-chip-sub{color:rgba(232,184,75,.6)}
+.rm-chip.linked{cursor:pointer}
+.rm-chip.linked:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.15)}
+.rm-chip.linked:hover .rm-chip-name{color:#fff}
+.rm-chip.linked:hover .rm-chip-sub{color:rgba(255,255,255,.45)}
+.rm-chip.soon{cursor:default;opacity:.6}
+.rm-chip.soon:hover{background:transparent}
+.rm-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:1px}
+.rm-dot.dot-active{background:var(--gold-light);box-shadow:0 0 6px rgba(232,184,75,.7)}
+.rm-dot.dot-linked{background:#5a9ee8}
+.rm-dot.dot-soon{background:rgba(255,255,255,.18)}
+.rm-chip.soon .rm-chip-name::after{content:'Coming Soon';position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);background:var(--navy-mid);color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:5px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .18s;font-family:var(--font);letter-spacing:.04em;box-shadow:var(--shadow-md)}
+.rm-chip.soon:hover .rm-chip-name::after{opacity:1}
+.rm-right-controls{display:flex;align-items:center;gap:8px;margin-left:auto;padding-left:16px;border-left:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.rm-current-flag{display:flex;align-items:center;gap:5px}
+.rm-current-dot{width:5px;height:5px;border-radius:50%;background:var(--gold-light);animation:rm-pulse 2s infinite}
+@keyframes rm-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.rm-current-lbl{font-size:9px;color:rgba(255,255,255,.32);white-space:nowrap;letter-spacing:.12em;text-transform:uppercase;font-family:var(--font);font-weight:600}
+/* ── DETAILS BUTTON ─ prominent gold CTA ─────────────────────── */
+.rm-expand-btn{display:flex;align-items:center;gap:6px;background:var(--gold);border:none;border-radius:6px;padding:7px 14px;cursor:pointer;color:var(--navy);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;transition:all .2s;font-family:var(--font);box-shadow:0 2px 8px rgba(200,153,58,.4)}
+.rm-expand-btn:hover{background:var(--gold-light);box-shadow:0 4px 14px rgba(200,153,58,.55);transform:translateY(-1px)}
+.rm-expand-btn.open{background:var(--navy-mid);color:var(--gold-light);box-shadow:none;border:1.5px solid var(--gold-border)}
+.rm-expand-btn svg{transition:transform .28s cubic-bezier(.4,0,.2,1);flex-shrink:0}
+.rm-expand-btn.open svg{transform:rotate(180deg)}
+
+/* ── EXPAND PANEL ────────────────────────────────────────────── */
+#rm-expand-panel{position:fixed;top:54px;left:0;right:0;background:var(--off-white);z-index:145;transform:translateY(-105%);transition:transform .32s cubic-bezier(.4,0,.2,1);box-shadow:0 16px 48px rgba(15,31,75,.18);max-height:calc(100vh - 54px);overflow-y:auto;border-bottom:2px solid var(--gold-border)}
+#rm-expand-panel.open{transform:translateY(0)}
+.rm-ep-inner{max-width:1120px;margin:0 auto;padding:28px 24px 32px}
+.rm-ep-header{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.rm-ep-eyebrow-rule{width:24px;height:2px;background:var(--gold);border-radius:2px}
+.rm-ep-eyebrow{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-family:var(--font)}
+.rm-ep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.rm-ep-grid{grid-template-columns:repeat(2,1fr)}}
+/* Cards match sell-used-index3 option-card pattern */
+.rm-ep-card{background:#fff;border:1px solid var(--gray-100);border-radius:var(--r);padding:20px 20px 18px;position:relative;overflow:hidden;transition:transform .22s,box-shadow .22s,border-color .22s;box-shadow:var(--shadow-sm);font-family:var(--font);display:flex;flex-direction:column}
+.rm-ep-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--navy),var(--gold));opacity:0;transition:opacity .22s}
+.rm-ep-card.card-active::before{opacity:1}
+.rm-ep-card.card-active{border-color:var(--gold-border);box-shadow:var(--shadow-md)}
+.rm-ep-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--gold-border)}
+.rm-ep-card:hover::before{opacity:1}
+.rm-ep-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}
+.rm-ep-title{font-size:13px;font-weight:800;color:var(--navy);line-height:1.3;letter-spacing:-.01em}
+.rm-ep-badges-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.rm-ep-qbadge{font-size:9px;font-weight:700;letter-spacing:.1em;padding:3px 8px;border-radius:100px;flex-shrink:0;text-transform:uppercase;font-family:var(--font)}
+.rm-ep-qbadge.q2{background:var(--gold-dim);color:var(--gold);border:1.5px solid var(--gold-border)}
+.rm-ep-qbadge.q3{background:rgba(26,48,102,.07);color:var(--navy-mid);border:1.5px solid rgba(26,48,102,.18)}
+.rm-ep-qbadge.q4{background:var(--gray-100);color:var(--gray-500);border:1.5px solid var(--gray-300)}
+.rm-ep-sprint-badge{font-size:9px;font-weight:600;letter-spacing:.08em;padding:3px 8px;border-radius:100px;background:var(--gray-100);color:var(--gray-700);text-transform:uppercase;font-family:var(--font)}
+.rm-ep-links{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+.rm-ep-badge{display:inline-flex;align-items:center;gap:4px;font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:5px;text-decoration:none;transition:all .15s;letter-spacing:.06em;text-transform:uppercase;font-family:var(--font)}
+.rm-ep-badge:hover{transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.rm-ep-badge.jira{background:rgba(20,80,163,.08);color:#1450a3;border:1.5px solid rgba(20,80,163,.2)}
+.rm-ep-badge.conf{background:rgba(0,130,90,.07);color:#007a55;border:1.5px solid rgba(0,130,90,.18)}
+.rm-ep-badge.figma{background:rgba(160,80,200,.07);color:#8040a0;border:1.5px solid rgba(160,80,200,.2)}
+.rm-ep-section{margin-bottom:11px}
+.rm-ep-section:last-child{margin-bottom:0;margin-top:auto}
+.rm-ep-lbl{display:flex;align-items:center;gap:7px;font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;font-family:var(--font)}
+.rm-ep-lbl::before{content:'';width:14px;height:2px;background:var(--gold);border-radius:2px;flex-shrink:0}
+.rm-ep-txt{font-size:11.5px;line-height:1.65;color:var(--gray-500)}
+.rm-ep-overlay{position:fixed;inset:0;top:54px;z-index:144;background:rgba(15,31,75,.12);display:none;backdrop-filter:blur(1px)}
+.rm-ep-overlay.open{display:block}
+
+/* ── IFRAME WRAP ─────────────────────────────────────────────── */
+#iframe-wrap{display:none;position:fixed;top:54px;left:0;right:0;bottom:0;z-index:100;background:#fff}
+#ext-frame{width:100%;height:100%;border:none;display:block}
+
+/* ── PDP ─────────────────────────────────────────────────────── */
+.pdp{max-width:1080px;margin:0 auto;padding:0 24px 48px}
+.pdp-hdr{padding:16px 0 12px;border-bottom:1px solid #e5e5e5;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.pdp-title{font-size:24px;font-weight:400;margin-bottom:7px;line-height:1.2}
+.pdp-meta{display:flex;flex-wrap:wrap;gap:5px 14px;font-size:12px;color:#555;align-items:center}
+.pdp-meta a{color:#005db8;text-decoration:none}
+.stars{color:#e8a000;font-size:13px}
+.sony-word{font-size:22px;font-weight:700;letter-spacing:3px;color:#1a1a1a}
+.sony-auth{font-size:10px;color:#888;display:block;text-align:center;margin-top:2px}
+.pdp-body{display:flex;gap:24px;padding-top:18px}
+.img-col{flex:0 0 500px}
+.img-wrap{display:flex;gap:8px}
+.thumb-rail{display:flex;flex-direction:column;gap:5px;width:68px}
+.thumb{width:64px;height:64px;border:1.5px solid #ddd;border-radius:2px;background:#f5f5f5;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .15s}
+.thumb:hover{border-color:#888}
+.thumb.sel{border-color:#005db8}
+.more-th{font-size:12px;font-weight:600;color:#005db8}
+.img-main{flex:1;background:#f5f5f5;border:1px solid #e5e5e5;border-radius:3px;display:flex;align-items:center;justify-content:center;min-height:415px;position:relative;overflow:hidden;padding:12px}
+.top-seller-badge{position:absolute;top:10px;left:10px;background:#1a1a1a;color:#fff;width:58px;padding:5px 4px;text-align:center;font-size:8px;font-weight:700;line-height:1.4;border-radius:2px}
+.intro-btn{position:absolute;top:10px;right:10px;background:#111;color:#fff;width:68px;height:68px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer}
+.intro-btn span{font-size:7.5px;font-weight:700;line-height:1.2;text-align:center}
+.img-cond-badge{position:absolute;bottom:10px;left:10px;padding:4px 11px;font-size:11px;font-weight:600;border-radius:2px;color:#fff;transition:background .3s}
+.buy-col{flex:1;min-width:0}
+
+/* ── NEW SCALE ───────────────────────────────────────────────── */
+.cond-rating{padding:14px 0 14px;border-bottom:1px solid #e5e5e5}
+.cond-rating-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.used-pill{background:#333;color:#fff;font-size:11px;font-weight:600;padding:3px 9px;border-radius:2px;flex-shrink:0;letter-spacing:.3px}
+.cond-name-lbl{font-size:22px;font-weight:700;color:#1a1a1a;letter-spacing:.5px;flex:1;line-height:1}
+.tip-btn{width:22px;height:22px;border-radius:50%;border:1.5px solid #999;background:#fff;color:#666;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;font-family:Georgia,serif;font-style:italic}
+.tip-btn:hover{border-color:#1a1a1a;color:#1a1a1a;background:#f5f5f5}
+.scale-grid{display:flex;gap:3px;margin-bottom:10px}
+.scale-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.arr-box{height:12px;width:100%;display:flex;justify-content:center;align-items:flex-end}
+.s-lbl{font-size:10.5px;color:#666;text-align:center;line-height:1.2}
+.s-bar{height:7px;width:100%;background:#d8d8d8;border-radius:2px;transition:background .3s}
+.cond-short-txt{font-size:13px;color:#1a1a1a;margin-bottom:5px}
+.cond-warranty-txt{font-size:12px;color:#777;font-style:italic}
+
+/* ── LEGACY HEADER ───────────────────────────────────────────── */
+.cond-header-legacy{padding:13px 0 12px;border-bottom:1px solid #e5e5e5;display:none}
+.cond-header-legacy-top{display:flex;align-items:center;flex-wrap:nowrap;margin-bottom:5px}
+.legacy-used-pill{background:#fff;color:#1a1a1a;font-size:11px;font-weight:600;padding:2px 7px;border-radius:2px;border:1.5px solid #1a1a1a;flex-shrink:0;letter-spacing:.3px;margin-right:8px}
+.legacy-cond-link{color:#005db8;font-size:13px;text-decoration:none;cursor:pointer}
+.legacy-cond-link:hover{text-decoration:underline}
+.legacy-meta-row{font-size:12px;color:#1a1a1a;display:flex;gap:14px}
+
+/* ── PURCHASE ROWS ───────────────────────────────────────────── */
+.stock-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #e5e5e5}
+.in-stock{color:#1a8a0a;font-weight:600;display:flex;align-items:center;gap:5px}
+.sep{color:#ccc}
+.on-disp{color:#005db8}
+.price-row{display:flex;align-items:flex-start;gap:16px;padding:14px 0;border-bottom:1px solid #e5e5e5}
+.price-val{font-size:32px;font-weight:700;min-width:152px;transition:opacity .2s}
+.div-v{width:1px;background:#ddd;align-self:stretch;flex-shrink:0}
+.tax-box{font-size:12px;line-height:1.7}
+.tax-box b{display:block;font-size:13px;margin-bottom:1px}
+.tax-box a{color:#005db8;text-decoration:none}
+.cart-row{display:flex;gap:8px;padding:13px 0;border-bottom:1px solid #e5e5e5}
+.qty-box{border:1px solid #aaa;border-radius:3px;height:48px;width:68px;background:#fff;display:flex;align-items:center;justify-content:center;gap:4px;cursor:pointer;font-size:14px;font-weight:600}
+.add-btn{flex:1;background:#1a8f0b;color:#fff;border:none;border-radius:3px;font-size:17px;font-weight:600;height:48px;cursor:pointer}
+.add-btn:hover{background:#167909}
+.wish-btn{border:1px solid #aaa;border-radius:3px;width:48px;height:48px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.irow{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:1px solid #e5e5e5}
+.irow .ico{flex-shrink:0;color:#555;margin-top:1px}
+.irow .itxt{font-size:12.5px;line-height:1.5;flex:1}
+.irow .itxt b{display:block;font-size:13px;font-weight:700;margin-bottom:1px}
+.irow .itxt a{color:#005db8;text-decoration:none}
+.irow .iml{color:#005db8;font-size:12.5px;white-space:nowrap;align-self:center;margin-left:auto}
+.sec-title{font-size:14px;font-weight:700;margin:15px 0 9px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{border:1.5px solid #bbb;border-radius:3px;padding:9px 16px;cursor:pointer;background:#fff;transition:border-color .15s;min-width:95px}
+.pill:hover{border-color:#777}
+.pill.sel{border:2.5px solid #1a1a1a}
+.pill .pl{font-weight:700;font-size:13px;color:#1a1a1a;display:block}
+.pill .pp{font-size:12px;color:#666;display:block;margin-top:2px}
+.pill.sel .pp{color:#1a1a1a}
+.cond-info{margin-top:13px;padding:11px 13px;background:#f5f5f5;border-radius:3px;font-size:12px;line-height:1.7;color:#333;border-left:3px solid #aaa;transition:border-color .3s}
+.cond-info b{font-size:13px;color:#1a1a1a}
+
+/* ── TRAYS ───────────────────────────────────────────────────── */
+.tray-overlay{position:fixed;inset:0;background:rgba(0,0,0,0);z-index:200;pointer-events:none;transition:background .3s}
+.tray-overlay.open{background:rgba(0,0,0,.45);pointer-events:all}
+.tray-panel{position:fixed;top:0;right:0;bottom:0;width:400px;background:#fff;z-index:201;transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);overflow-y:auto;box-shadow:-4px 0 24px rgba(0,0,0,.14)}
+.tray-panel.open{transform:translateX(0)}
+.tray-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px 20px 14px;border-bottom:1px solid #e5e5e5;position:sticky;top:0;background:#fff;z-index:2}
+.tray-head h2{font-size:15px;font-weight:700;line-height:1.4;color:#1a1a1a}
+.tray-close{border:none;background:none;font-size:22px;cursor:pointer;color:#888;padding:0;line-height:1;flex-shrink:0}
+.tray-close:hover{color:#1a1a1a}
+.tray-intro{padding:14px 20px;border-bottom:1px solid #e5e5e5;font-size:12.5px;line-height:1.7;color:#444}
+.tray-intro b{display:block;font-size:13px;margin-bottom:4px;color:#1a1a1a}
+.acc-item{border-bottom:1px solid #ebebeb}
+.acc-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 4px;cursor:pointer;user-select:none}
+.acc-cname{font-size:22px;font-weight:700;letter-spacing:.5px;color:#1a1a1a}
+.acc-caret{font-size:18px;color:#aaa;font-weight:300}
+.acc-scale-wrap{padding:4px 20px 8px}
+.acc-body{padding:0 20px 16px;display:none}
+.acc-body.open{display:block}
+.acc-short{font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:7px}
+.acc-long{font-size:12.5px;color:#555;line-height:1.7}
+.mini-scale{display:flex;gap:2px}
+.mini-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px}
+.mini-arr-box{height:10px;width:100%;display:flex;justify-content:center;align-items:flex-end}
+.mini-lbl{font-size:9.5px;color:#777;text-align:center;line-height:1.2}
+.mini-bar{height:5px;width:100%;border-radius:1px}
+.legacy-tray-table{padding:0}
+.legacy-tray-row{display:flex;align-items:flex-start;padding:9px 20px;border-bottom:1px solid #f0f0f0;transition:background .2s}
+.legacy-tray-row.highlighted{background:#f0f7ea;border-left:3px solid #1a8a0a;padding-left:17px}
+.legacy-tray-code{font-weight:700;font-size:13px;min-width:58px;color:#1a1a1a;flex-shrink:0;padding-top:2px;line-height:1.4}
+.legacy-tray-desc{font-size:12.5px;color:#444;line-height:1.55;flex:1}
+.legacy-tray-paras{padding:16px 20px;font-size:12px;line-height:1.75;color:#555;border-top:1px solid #e5e5e5}
+.legacy-tray-paras p{margin-bottom:12px}
+.legacy-tray-paras p:last-child{margin-bottom:0}
+.legacy-tray-paras a{color:#005db8;text-decoration:none}
+
+/* ── ANNOTATION SYSTEM ───────────────────────────────────────── */
+.anno-toggle{position:fixed;bottom:24px;right:24px;z-index:190;background:var(--navy);color:#fff;border:none;border-radius:20px;padding:9px 16px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 4px 16px rgba(15,31,75,.35);transition:all .2s;font-family:var(--font);letter-spacing:.06em;text-transform:uppercase}
+.anno-toggle:hover{background:var(--navy-mid);box-shadow:0 6px 20px rgba(15,31,75,.45)}
+.anno-toggle.on{background:var(--gold);color:var(--navy)}
+.anno-toggle.on:hover{background:var(--gold-light)}
+
+/* numbered dot */
+.anno-dot{position:absolute;z-index:186;width:26px;height:26px;border-radius:50%;background:var(--gold);color:var(--navy);font-size:11px;font-weight:900;border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(200,153,58,.55);font-family:var(--font);transition:transform .15s;line-height:1}
+.anno-dot:hover{transform:scale(1.15)}
+.anno-dot::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(200,153,58,.4);animation:anno-ring 2.2s ease-in-out infinite}
+@keyframes anno-pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes anno-ring{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.45);opacity:0}}
+
+/* SVG arrow lines */
+.anno-arrow{position:absolute;z-index:185;pointer-events:none;overflow:visible}
+
+/* panel */
+.anno-panel{position:fixed;bottom:72px;right:24px;width:320px;background:var(--navy);border-radius:10px;z-index:188;box-shadow:0 8px 40px rgba(15,31,75,.45);overflow:hidden;display:none;border:1px solid rgba(255,255,255,.08)}
+.anno-panel.open{display:block;animation:anno-panel-in .22s cubic-bezier(.2,1,.4,1)}
+@keyframes anno-panel-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.anno-panel-head{padding:12px 16px 10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.anno-panel-mode{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-family:var(--font);margin-bottom:2px}
+.anno-panel-title{font-size:12px;font-weight:700;color:#fff;font-family:var(--font)}
+.anno-panel-list{padding:6px 0 8px}
+.anno-item{display:flex;align-items:flex-start;gap:10px;padding:8px 16px 8px 12px;cursor:pointer;transition:background .15s;border-left:2.5px solid transparent}
+.anno-item:hover{background:rgba(255,255,255,.05)}
+.anno-item.focused{background:rgba(200,153,58,.1);border-left-color:var(--gold)}
+.anno-num{width:20px;height:20px;border-radius:50%;background:var(--gold);color:var(--navy);font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-family:var(--font)}
+.anno-item.focused .anno-num{background:var(--gold-light)}
+.anno-content{flex:1}
+.anno-label{font-size:10.5px;font-weight:700;color:#fff;font-family:var(--font);margin-bottom:2px;letter-spacing:.01em}
+.anno-text{font-size:10.5px;line-height:1.55;color:rgba(255,255,255,.55);font-family:var(--font)}
+</style>
+</head>
+<body>
+
+<!-- ── ROADMAP NAV ─────────────────────────────────────────────── -->
+<div class="rm-shell">
+  <div class="rm-topbar"></div>
+  <div class="rm-inner">
+    <div class="rm-brand">
+      <div>
+        <div class="rm-brand-bh">B&amp;H Used</div>
+        <div class="rm-brand-sub">2026 Roadmap</div>
+      </div>
+    </div>
+    <div class="rm-track">
+      <div class="rm-qgrp">
+        <span class="rm-qlbl">Q2</span>
+        <div class="rm-chip active" id="chip-legacy" onclick="switchMode('legacy')">
+          <div class="rm-dot dot-active"></div>
+          <div class="rm-chip-inner">
+            <span class="rm-chip-name">PDP Condition Grouping</span>
+            <span class="rm-chip-sub">Current Scale · OB, Demo, 10–7</span>
+          </div>
+        </div>
+      </div>
+      <div class="rm-qgrp">
+        <span class="rm-qlbl">Q3</span>
+        <div class="rm-chip linked" id="chip-new" onclick="switchMode('new')">
+          <div class="rm-dot dot-linked"></div>
+          <div class="rm-chip-inner">
+            <span class="rm-chip-name">New Condition Rating Scale</span>
+            <span class="rm-chip-sub">PLP · PDP · Help Center · Used Hub</span>
+          </div>
+        </div>
+        <div class="rm-chip linked" id="chip-images" onclick="switchMode('images')">
+          <div class="rm-dot dot-linked"></div>
+          <div class="rm-chip-inner">
+            <span class="rm-chip-name">Actual Used Images</span>
+            <span class="rm-chip-sub">Product photography · PDP</span>
+          </div>
+        </div>
+        <div class="rm-chip linked" id="chip-sell" onclick="switchMode('sell')">
+          <div class="rm-dot dot-linked"></div>
+          <div class="rm-chip-inner">
+            <span class="rm-chip-name">Sell Used / Trade In</span>
+            <span class="rm-chip-sub">Seller flow redesign</span>
+          </div>
+        </div>
+      </div>
+      <div class="rm-qgrp">
+        <span class="rm-qlbl">Q4</span>
+        <div class="rm-chip soon">
+          <div class="rm-dot dot-soon"></div>
+          <div class="rm-chip-inner">
+            <span class="rm-chip-name">PLP Roll-Up SKU by Condition</span>
+            <span class="rm-chip-sub">Grouped listing experience</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="rm-right-controls">
+      <div class="rm-current-flag">
+        <div class="rm-current-dot"></div>
+        <span class="rm-current-lbl">Viewing now</span>
+      </div>
+      <button class="rm-expand-btn" id="rm-expand-btn" onclick="toggleExpand()">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="7" y="1" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="7" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="7" y="7" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
+        Details
+        <svg width="9" height="6" viewBox="0 0 9 6" fill="none"><path d="M1 1l3.5 4L8 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── EXPAND PANEL ───────────────────────────────────────────── -->
+<div class="rm-ep-overlay" id="rm-ep-overlay" onclick="toggleExpand()"></div>
+<div id="rm-expand-panel">
+  <div class="rm-ep-inner">
+    <div class="rm-ep-header">
+      <div class="rm-ep-eyebrow-rule"></div>
+      <span class="rm-ep-eyebrow">2026 Roadmap — Initiative Details</span>
+    </div>
+    <div class="rm-ep-grid" id="rm-ep-grid"><!-- built by JS --></div>
+  </div>
+</div>
+
+<!-- ── IFRAME VIEW ────────────────────────────────────────────── -->
+<div id="iframe-wrap">
+  <iframe id="ext-frame" src="" frameborder="0"></iframe>
+</div>
+
+<!-- ── PDP CONTENT ────────────────────────────────────────────── -->
+<div id="pdp-wrap">
+<div class="pdp">
+  <div class="pdp-hdr">
+    <div>
+      <h1 class="pdp-title">Sony a7 V Mirrorless Camera</h1>
+      <div class="pdp-meta">
+        <span>BH #S0A75 &nbsp;·&nbsp; MFR #ILCE-7M5/B</span>
+        <span><span class="stars">★★★★</span><span class="stars" style="opacity:.22">★</span> <a href="#">64 reviews</a></span>
+        <span><a href="#">28 Questions, 35 Answers</a></span>
+        <span style="color:#ccc">|</span>
+        <a href="#">Share</a>
+        <a href="#">Print</a>
+      </div>
+    </div>
+    <div style="text-align:right;flex-shrink:0">
+      <div class="sony-word">SONY</div>
+      <span class="sony-auth">Authorized Dealer</span>
+    </div>
+  </div>
+
+  <div class="pdp-body">
+    <div class="img-col">
+      <div class="img-wrap">
+        <div class="thumb-rail">
+          <div class="thumb sel" onclick="setThumb(this)"><svg viewBox="0 0 48 40" fill="none" width="44" height="37"><rect x="3" y="9" width="42" height="26" rx="3" fill="#1c1c1c"/><rect x="3" y="6" width="10" height="29" rx="2.5" fill="#1e1e1e"/><rect x="13" y="6" width="14" height="8" rx="1.5" fill="#1e1e1e"/><circle cx="21" cy="25" r="10" fill="#222" stroke="#666" stroke-width=".5"/><circle cx="21" cy="25" r="8.5" fill="none" stroke="#c85420" stroke-width="1.2"/><circle cx="21" cy="25" r="7" fill="#172038"/></svg></div>
+          <div class="thumb" onclick="setThumb(this)"><svg viewBox="0 0 48 40" fill="none" width="44" height="37"><rect x="4" y="7" width="40" height="28" rx="3" fill="#1c1c1c"/><rect x="4" y="4" width="9" height="32" rx="2.5" fill="#222"/><rect x="20" y="12" width="22" height="14" rx="1.5" fill="#252525"/><rect x="22" y="15" width="18" height="8" rx="1" fill="#1a2038"/></svg></div>
+          <div class="thumb" onclick="setThumb(this)"><svg viewBox="0 0 48 40" fill="none" width="44" height="37"><rect x="3" y="11" width="42" height="22" rx="2" fill="#1c1c1c"/><rect x="3" y="7" width="10" height="26" rx="2" fill="#222"/><circle cx="18" cy="32" r="5" fill="#252525" stroke="#555" stroke-width=".5"/><circle cx="36" cy="32" r="5" fill="#252525" stroke="#555" stroke-width=".5"/><rect x="20" y="11" width="22" height="10" rx="1" fill="#222"/></svg></div>
+          <div class="thumb" onclick="setThumb(this)"><svg viewBox="0 0 48 40" fill="none" width="44" height="37"><rect x="5" y="6" width="38" height="30" rx="3" fill="#1e1e1e"/><rect x="5" y="6" width="10" height="30" rx="2.5" fill="#222"/><circle cx="26" cy="22" r="11" fill="#222" stroke="#555" stroke-width=".5"/><circle cx="26" cy="22" r="9" fill="none" stroke="#c85420" stroke-width="1"/><circle cx="26" cy="22" r="7.5" fill="#172038"/></svg></div>
+          <div class="thumb more-th">+33</div>
+        </div>
+        <div class="img-main">
+          <div class="top-seller-badge"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="display:block;margin:0 auto 2px"><path d="M9 2l1.5 4h4l-3.2 2.4 1.2 4L9 10.4 5.5 12.4l1.2-4L3.5 6h4L9 2z" fill="#c8a040"/></svg>Top Seller</div>
+          <div class="intro-btn"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#fff" stroke-width="1.2"/><path d="M7 5.5l6 3.5-6 3.5V5.5z" fill="#fff"/></svg><span>90-Second<br>Intro</span></div>
+          <svg id="cam" viewBox="0 0 480 378" width="410" height="323">
+            <defs><clipPath id="sc"><circle cx="202" cy="213" r="111"/></clipPath></defs>
+            <rect x="26" y="80" width="426" height="258" rx="12" fill="#1c1c1c"/>
+            <rect x="26" y="55" width="76" height="285" rx="11" fill="#1d1d1d"/>
+            <g fill="#2b2b2b"><circle cx="40" cy="100" r="1.2"/><circle cx="52" cy="100" r="1.2"/><circle cx="64" cy="100" r="1.2"/><circle cx="40" cy="113" r="1.2"/><circle cx="52" cy="113" r="1.2"/><circle cx="64" cy="113" r="1.2"/><circle cx="40" cy="126" r="1.2"/><circle cx="52" cy="126" r="1.2"/><circle cx="64" cy="126" r="1.2"/><circle cx="40" cy="139" r="1.2"/><circle cx="52" cy="139" r="1.2"/><circle cx="64" cy="139" r="1.2"/><circle cx="40" cy="152" r="1.2"/><circle cx="52" cy="152" r="1.2"/><circle cx="64" cy="152" r="1.2"/><circle cx="40" cy="165" r="1.2"/><circle cx="52" cy="165" r="1.2"/><circle cx="64" cy="165" r="1.2"/><circle cx="40" cy="178" r="1.2"/><circle cx="52" cy="178" r="1.2"/><circle cx="64" cy="178" r="1.2"/><circle cx="40" cy="191" r="1.2"/><circle cx="52" cy="191" r="1.2"/><circle cx="64" cy="191" r="1.2"/><circle cx="40" cy="204" r="1.2"/><circle cx="52" cy="204" r="1.2"/><circle cx="64" cy="204" r="1.2"/><circle cx="40" cy="217" r="1.2"/><circle cx="52" cy="217" r="1.2"/><circle cx="64" cy="217" r="1.2"/><circle cx="40" cy="230" r="1.2"/><circle cx="52" cy="230" r="1.2"/><circle cx="64" cy="230" r="1.2"/><circle cx="40" cy="243" r="1.2"/><circle cx="52" cy="243" r="1.2"/><circle cx="64" cy="243" r="1.2"/><circle cx="40" cy="256" r="1.2"/><circle cx="52" cy="256" r="1.2"/><circle cx="64" cy="256" r="1.2"/><circle cx="40" cy="269" r="1.2"/><circle cx="52" cy="269" r="1.2"/><circle cx="64" cy="269" r="1.2"/><circle cx="40" cy="282" r="1.2"/><circle cx="52" cy="282" r="1.2"/><circle cx="64" cy="282" r="1.2"/><circle cx="40" cy="295" r="1.2"/><circle cx="52" cy="295" r="1.2"/><circle cx="64" cy="295" r="1.2"/><circle cx="40" cy="308" r="1.2"/><circle cx="52" cy="308" r="1.2"/><circle cx="64" cy="308" r="1.2"/><circle cx="40" cy="321" r="1.2"/><circle cx="52" cy="321" r="1.2"/><circle cx="64" cy="321" r="1.2"/></g>
+            <rect x="102" y="52" width="130" height="52" rx="7" fill="#1e1e1e"/><rect x="115" y="58" width="90" height="35" rx="4" fill="#111"/><rect x="118" y="60" width="38" height="10" rx="2" fill="#1a2030" opacity=".55"/>
+            <line x1="102" y1="80" x2="452" y2="80" stroke="#2a2a2a" stroke-width=".8"/>
+            <rect x="238" y="49" width="56" height="11" rx="1" fill="#222" stroke="#444" stroke-width=".5"/>
+            <circle cx="340" cy="60" r="4" fill="#191919" stroke="#444" stroke-width=".5"/>
+            <circle cx="416" cy="74" r="24" fill="#252525" stroke="#3a3a3a" stroke-width=".8"/>
+            <circle cx="416" cy="52" r="2.5" fill="none" stroke="#666" stroke-width="1.2"/>
+            <line x1="432" y1="56" x2="430" y2="59" stroke="#666" stroke-width="1.2"/><line x1="440" y1="69" x2="436" y2="70" stroke="#666" stroke-width="1.2"/><line x1="400" y1="56" x2="402" y2="59" stroke="#666" stroke-width="1.2"/><line x1="392" y1="69" x2="396" y2="70" stroke="#666" stroke-width="1.2"/>
+            <circle cx="416" cy="74" r="8" fill="#333"/>
+            <circle cx="446" cy="54" r="11" fill="#282828" stroke="#3a3a3a" stroke-width=".5"/><circle cx="446" cy="53" r="7" fill="#222"/>
+            <circle cx="381" cy="74" r="17" fill="#252525" stroke="#383838" stroke-width=".5"/><circle cx="381" cy="74" r="6" fill="#333"/>
+            <circle cx="430" cy="102" r="9" fill="#252525" stroke="#383838" stroke-width=".5"/>
+            <circle cx="202" cy="213" r="127" fill="#2c2c2c"/><circle cx="202" cy="213" r="122" fill="#1e1e1e" stroke="#666" stroke-width=".5"/><circle cx="202" cy="213" r="117" fill="none" stroke="#c85420" stroke-width="5"/><circle cx="202" cy="213" r="111" fill="#0d0d0d"/>
+            <g clip-path="url(#sc)"><rect x="124" y="161" width="156" height="104" rx="2" fill="#162036"/><rect x="130" y="168" width="65" height="45" fill="#1e2d4a" opacity=".8"/><rect x="185" y="185" width="55" height="42" fill="#1a2645" opacity=".7"/><rect x="145" y="210" width="75" height="30" fill="#1c2a48" opacity=".6"/><rect x="150" y="163" width="42" height="22" fill="#253550" opacity=".5"/><rect x="200" y="170" width="50" height="18" fill="#1d2c4a" opacity=".55"/></g>
+            <g fill="#777" opacity=".7"><circle cx="174" cy="313" r="1.8"/><circle cx="187" cy="317" r="1.8"/><circle cx="201" cy="318" r="1.8"/><circle cx="215" cy="317" r="1.8"/><circle cx="228" cy="313" r="1.8"/><circle cx="239" cy="307" r="1.8"/></g>
+            <circle cx="87" cy="213" r="4" fill="#191919" stroke="#3a3a3a" stroke-width=".5"/>
+            <text x="312" y="118" font-size="20" font-weight="700" fill="#cccccc" font-family="Arial,sans-serif" letter-spacing="2.5">SONY</text>
+            <text x="308" y="186" font-size="38" fill="#b0b0b0" font-family="Georgia,serif" font-style="italic">&#945;</text>
+            <text x="347" y="184" font-size="34" fill="#b0b0b0" font-family="Arial,sans-serif" font-weight="300">7</text>
+            <rect x="424" y="152" width="26" height="16" rx="3" fill="#252525" stroke="#383838" stroke-width=".5"/><rect x="424" y="175" width="26" height="16" rx="3" fill="#252525" stroke="#383838" stroke-width=".5"/><rect x="424" y="198" width="26" height="16" rx="3" fill="#252525" stroke="#383838" stroke-width=".5"/>
+            <circle cx="435" cy="248" r="21" fill="#222" stroke="#363636" stroke-width=".5"/><circle cx="435" cy="248" r="12" fill="#282828"/><circle cx="435" cy="248" r="5" fill="#333"/>
+            <circle cx="422" cy="145" r="6" fill="#2a2a2a" stroke="#3a3a3a" stroke-width=".5"/><circle cx="422" cy="145" r="3" fill="#333"/>
+            <g id="w1" style="display:none"><line x1="78" y1="135" x2="145" y2="225" stroke="#5a5a5a" stroke-width=".9" opacity=".35"/><line x1="95" y1="150" x2="150" y2="218" stroke="#4a4a4a" stroke-width=".6" opacity=".28"/><line x1="352" y1="118" x2="408" y2="172" stroke="#4a4a4a" stroke-width=".8" opacity=".3"/><line x1="355" y1="245" x2="395" y2="292" stroke="#4a4a4a" stroke-width=".6" opacity=".28"/></g>
+            <g id="w2" style="display:none"><line x1="68" y1="95" x2="150" y2="210" stroke="#666" stroke-width="1.8" opacity=".5"/><line x1="85" y1="115" x2="158" y2="205" stroke="#555" stroke-width="1.2" opacity=".42"/><line x1="340" y1="98" x2="422" y2="178" stroke="#666" stroke-width="1.8" opacity=".48"/><line x1="348" y1="258" x2="418" y2="320" stroke="#555" stroke-width="1.2" opacity=".42"/><line x1="195" y1="88" x2="278" y2="135" stroke="#555" stroke-width=".9" opacity=".35"/><line x1="310" y1="290" x2="390" y2="335" stroke="#555" stroke-width=".9" opacity=".35"/><rect x="26" y="55" width="32" height="32" rx="11" fill="#3e3e3e" opacity=".45"/><rect x="420" y="312" width="32" height="28" rx="7" fill="#3e3e3e" opacity=".4"/><rect x="26" y="305" width="30" height="30" rx="7" fill="#3e3e3e" opacity=".38"/></g>
+          </svg>
+          <div class="img-cond-badge" id="img-badge"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="buy-col">
+      <div class="cond-rating" id="cond-rating">
+        <div class="cond-rating-top">
+          <span class="used-pill">Used</span>
+          <span class="cond-name-lbl" id="cond-name-lbl"></span>
+          <button class="tip-btn" onclick="openNewTray()" title="View full condition guide">?</button>
+        </div>
+        <div class="scale-grid">
+          <div class="scale-col"><div class="arr-box" id="arr0"></div><div class="s-lbl">Rough</div><div class="s-bar" id="bar0"></div></div>
+          <div class="scale-col"><div class="arr-box" id="arr1"></div><div class="s-lbl">Fair</div><div class="s-bar" id="bar1"></div></div>
+          <div class="scale-col"><div class="arr-box" id="arr2"></div><div class="s-lbl">Good</div><div class="s-bar" id="bar2"></div></div>
+          <div class="scale-col"><div class="arr-box" id="arr3"></div><div class="s-lbl">Very Good</div><div class="s-bar" id="bar3"></div></div>
+          <div class="scale-col"><div class="arr-box" id="arr4"></div><div class="s-lbl">Excellent</div><div class="s-bar" id="bar4"></div></div>
+        </div>
+        <p class="cond-short-txt" id="cond-short-txt"></p>
+        <p class="cond-warranty-txt">Warranty: 6 Month B&amp;H Warranty</p>
+      </div>
+
+      <div class="cond-header-legacy" id="cond-header-legacy">
+        <div class="cond-header-legacy-top">
+          <span class="legacy-used-pill">Used</span>
+          <a class="legacy-cond-link" onclick="openLegacyTray();return false;" href="#">Condition: <span id="legacy-cond-val">9</span> <span id="legacy-cond-desc">Minor surface marks</span></a>
+        </div>
+        <div class="legacy-meta-row">Shutter Count: <strong style="margin-left:3px">127,000</strong>&nbsp;&nbsp;&nbsp;Warranty: <strong>B&amp;H 90 Days</strong></div>
+      </div>
+
+      <div class="stock-row">
+        <span class="in-stock"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="#1a8a0a" stroke-width="1"/><path d="M4 7l2 2 4-4" stroke="#1a8a0a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>In Stock</span>
+        <span class="sep">|</span>
+        <span class="on-disp">On Display in Store</span>
+      </div>
+
+      <div class="price-row">
+        <div class="price-val" id="price-el"></div>
+        <div class="div-v"></div>
+        <div class="tax-box"><b>Save the Tax‡</b>or Pay <b style="display:inline" id="mo-el"></b> suggested payments for 12 Mos.<sup>§</sup> when you use the <b style="display:inline">Payboo</b> credit card.<br><a href="#">Learn More</a></div>
+      </div>
+
+      <div class="cart-row">
+        <div class="qty-box"><span>1</span><svg width="10" height="7" viewBox="0 0 10 7" fill="none"><path d="M1 1l4 4 4-4" stroke="#555" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+        <button class="add-btn">Add to Cart</button>
+        <div class="wish-btn"><svg width="18" height="20" viewBox="0 0 18 20" fill="none"><path d="M9 1l2 5.5h5.5l-4.5 3.3 1.7 5.5-4.7-3.4-4.7 3.4 1.7-5.5L1.5 6.5H7L9 1z" stroke="#555" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <div class="irow">
+        <span class="ico"><svg width="17" height="14" viewBox="0 0 18 15" fill="none"><rect x="1" y="1" width="16" height="13" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M1 5h16" stroke="currentColor" stroke-width="1.3"/></svg></span>
+        <div class="itxt"><b>Free Next Day Shipping</b>Want it <b>Mon 4/20</b>? Order in the next <b>03:49</b> w/ Free Next Day Shipping to <a href="#">New York, NY</a><br><a href="#">Express Store Pickup in 30 mins ›</a></div>
+      </div>
+
+      <div class="irow">
+        <span class="ico"><svg width="15" height="17" viewBox="0 0 15 17" fill="none"><path d="M7.5 1L1.5 4v4.5c0 4 2.5 7 6 8 3.5-1 6-4 6-8V4L7.5 1z" stroke="currentColor" stroke-width="1.2"/></svg></span>
+        <div class="itxt"><b>Protect Your Gear</b>Add a protection plan from <b>$119.99</b></div>
+        <span class="iml">See Options ›</span>
+      </div>
+
+      <div id="conditions-section">
+        <div class="sec-title">Conditions</div>
+        <div class="pills" id="pills"></div>
+       <!-- <div class="cond-info" id="cdesc"></div> -->
+      </div>
+    </div>
+  </div>
+</div>
+</div><!-- /pdp-wrap -->
+
+<!-- ── TRAYS ───────────────────────────────────────────────────── -->
+<div class="tray-overlay" id="tray-overlay" onclick="closeAllTrays()"></div>
+<div class="tray-panel" id="tray-panel-new">
+  <div class="tray-head"><h2>B&amp;H Used Equipment<br>Rating System</h2><button class="tray-close" onclick="closeAllTrays()">&#x2715;</button></div>
+  <div class="tray-intro"><b>Cosmetic Ratings Only!</b>We only sell used equipment that has been tested and proven to be in good working order.</div>
+  <div id="tray-acc"></div>
+</div>
+<div class="tray-panel" id="tray-panel-legacy">
+  <div class="tray-head"><h2>B&amp;H Used Equipment<br>Rating System</h2><button class="tray-close" onclick="closeAllTrays()">&#x2715;</button></div>
+  <div class="tray-intro"><b>Cosmetic Ratings Only!</b>We only sell used equipment that has been tested and proven to be in good working order.</div>
+  <div class="legacy-tray-table">
+    <div class="legacy-tray-row" id="legacy-row-openbox"><div class="legacy-tray-code">Open Box</div><div class="legacy-tray-desc">Like New condition which includes a limited 1-year B&amp;H warranty</div></div>
+    <div class="legacy-tray-row" id="legacy-row-demo"><div class="legacy-tray-code">DEMO</div><div class="legacy-tray-desc">Never owned; Used for demonstration purposes only</div></div>
+    <div class="legacy-tray-row" id="legacy-row-10"><div class="legacy-tray-code">10</div><div class="legacy-tray-desc">Preowned equipment that looks good as new; no signs of wear</div></div>
+    <div class="legacy-tray-row" id="legacy-row-9plus"><div class="legacy-tray-code">9+</div><div class="legacy-tray-desc">Preowned equipment that shows little to no signs of wear</div></div>
+    <div class="legacy-tray-row" id="legacy-row-9"><div class="legacy-tray-code">9</div><div class="legacy-tray-desc">Very good condition; overall looks clean but may have minor signs of use/surface marks</div></div>
+    <div class="legacy-tray-row" id="legacy-row-8plus"><div class="legacy-tray-code">8+</div><div class="legacy-tray-desc">Shows moderate wear, scuffing or marks to finish</div></div>
+    <div class="legacy-tray-row" id="legacy-row-8"><div class="legacy-tray-code">8</div><div class="legacy-tray-desc">Well used—may exhibit "dings" or noticeable marks to finish</div></div>
+    <div class="legacy-tray-row" id="legacy-row-7"><div class="legacy-tray-code">7</div><div class="legacy-tray-desc">Shows considerable wear and above-average signs of use</div></div>
+  </div>
+  <div class="legacy-tray-paras">
+    <p>Every item sold by B&amp;H's Used Department comes with our own 90-day parts and labor warranty (or longer for open box items). For many items, you may also purchase supplemental warranty coverage. Please refer to our <a href="#">warranty policies</a>, or ask your sales associate for details.</p>
+    <p>The B&amp;H Used Dept. does not distinguish between "<a href="#">grey market</a>" and USA-warranted merchandise for any item we sell.</p>
+    <p>You should be aware that while almost all the items sold through our Used Dept. no longer qualify for the original manufacturer's warranty, certain manufacturers will not service goods whose original provenance was grey market, even for a fee. However, in almost every case, service is available through independent repair facilities.</p>
+  </div>
+</div>
+
+<!-- ── ANNOTATION SYSTEM ──────────────────────────────────────── -->
+<button class="anno-toggle" id="anno-toggle" onclick="toggleAnnotations()">
+  <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.8" stroke="currentColor" stroke-width="1.2"/><text x="6.5" y="10" font-size="8" font-weight="700" text-anchor="middle" fill="currentColor" font-family="Arial">i</text></svg>
+  Annotations
+</button>
+<div class="anno-panel" id="anno-panel">
+  <div class="anno-panel-head">
+    <div class="anno-panel-mode"></div>
+    <div class="anno-panel-title"></div>
+  </div>
+  <div class="anno-panel-list" id="anno-panel-list"></div>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────────────── */
+var LABELS = ['Rough','Fair','Good','Very Good','Excellent'];
+var viewMode = 'new';
+var activeNew = 1, activeLegacy = 1;
+var openAccIdx = 1;
+var annoMode = false;
+
+/* ── ROADMAP INITIATIVE DATA ─────────────────────────────────── */
+var INITIATIVES = [
+  { id:'legacy', chipId:'chip-legacy', name:'PDP Condition Grouping', quarter:'Q2', qClass:'q2',
+    sprint:'Sprint June', status:'linked',
+    jira:[{id:'BHP-4518',url:'#'}],
+    confluence:{label:'Spec Doc',url:'#'}, figma:{label:'Figma Mockup',url:'#'},
+    problem:'The current numeric scale (7–10, OB, Demo) provides no intuitive meaning to customers. Medallia VoC data shows repeated confusion about relative condition differences — particularly between 8/8+/9/9+, which lack universal reference points.',
+    solution:'Group all available conditions for the same product onto a single PDP (KEH-style). Customers can compare tiers side-by-side and select their preference in one view, rather than navigating separate listings.' },
+  { id:'images', chipId:'chip-images', name:'Actual Used Images', quarter:'Q3', qClass:'q3',
+    sprint:'Sprint June', status:'linked',
+    jira:[{id:'BHP-4563',url:'#'},{id:'BHJ-117987',url:'#'},{id:'BHIA-8317',url:'#'}],
+    confluence:{label:'Phase 1 Brief',url:'#'}, figma:null,
+    problem:'All used PDP listings show generic manufacturer stock photos. Customers cannot see the actual cosmetic condition of the item they\'re purchasing, directly contributing to post-purchase complaints and return volume captured in Medallia.',
+    solution:'Phase 1 MVP: Ortery system ordered and installed, new "Used Imager" DES role created. Used Dept. owns image capture and upload; Imaging team is advisory. Target: first images live mid-August, starting with a selected category subset. Success metric: ~5% of category photographed, improved Used web purchase survey image score.' },
+  { id:'new', chipId:'chip-new', name:'New Condition Rating Scale', quarter:'Q3', qClass:'q3',
+    sprint:'Sprint June', status:'active',
+    jira:[{id:'BHP-4771',url:'#'}],
+    confluence:{label:'Condition Scale Spec',url:'#'}, figma:{label:'Figma – PDP Components',url:'#'},
+    problem:'The numeric scale (7–10) is opaque and not self-explanatory. Customers unfamiliar with B&H\'s internal grading have no frame of reference. Medallia VoC identifies condition clarity as the #1 used-web addressable complaint by web-addressable impact differential.',
+    solution:'Replace numeric scale with a 5-tier word-based system: Excellent, Very Good, Good, Fair, Rough. New visual progress bar indicator on PDP. Full system rollout across PLP, PDP, Help Center, and Used Hub. Customer-facing launch target: H1 2026. Tech scoping with Yoshi Kind gates design investment.' },
+  { id:'sell', chipId:'chip-sell', name:'Sell Used / Trade In', quarter:'Q2', qClass:'q2',
+    sprint:'Q2', status:'linked',
+    jira:[{id:'BHP-6434',url:'#'},{id:'BHUX-33009',url:'#'}],
+    confluence:{label:'Sell Used Brief',url:'#'}, figma:{label:'Figma – Seller Flow',url:'#'},
+    problem:'GA4 funnel shows significant abandonment in the seller flow. Medallia identifies: no EFT/Direct Deposit option, lack of payment transparency, no save & return capability, and confusing accessories valuation as top friction points. Trade-in page experience is a high-priority gap flagged by Duran with significant cross-team complexity.',
+    solution:'Full seller flow redesign: EFT as 4th payment option, save & return at basket, valuation transparency copy, accessories checklist with live subtotal, tax-equivalence framing for trade-in credit. Trade-in: Isaac to draft one-pager requirements doc and conduct stakeholder interviews before scope is committed.' },
+  { id:'rollup', chipId:null, name:'PLP Roll-Up SKU by Condition', quarter:'Q4', qClass:'q4',
+    sprint:'TBD', status:'soon',
+    jira:[{id:'BHP-5211',url:'#'}],
+    confluence:{label:'Roll-Up SKU Spec',url:'#'}, figma:null,
+    problem:'Used items appear as individual listings on PLP, creating visual clutter and making it hard to compare condition tiers for the same product across results pages.',
+    solution:'Group same-product SKUs by condition tier on PLP. Dependent on new condition rating scale launch being finalized first. Engineering lead: Akiva. Feasible given existing SKU relationships in DES. Targeted for H2 2026.' },
+];
+
+/* ── ANNOTATION DATA ──────────────────────────────────────────── */
+// `fixed: true` entries use viewport px coords (for iframe overlays) instead of DOM selectors
+var ANNO_DATA = {
+  legacy: [
+    { n:1, sel:'#conditions-section', pos:'tc',
+      label:'Condition Grouping — the key feature',
+      tip:'All condition tiers for this item appear together on one PDP. Click each pill (Condition 10, 9, 8) to switch between grades — price, condition header, and description all update live. This mirrors the KEH-style grouped experience proposed for Q2.' },
+  ],
+  new: [
+    { n:1, sel:'#cond-name-lbl', pos:'tc',
+      label:'New word-based condition label',
+      tip:'Replaces the opaque numeric scale with a plain-language label — VERY GOOD, EXCELLENT, FAIR, etc. No decoder ring required. This is the first thing a customer sees and immediately communicates condition quality.' },
+    { n:2, sel:'.scale-grid', pos:'bc',
+      label:'5-tier visual scale — Rough → Excellent',
+      tip:'Each segment fills with a color-coded bar representing cosmetic quality. The pointer arrow above the active tier updates live when you switch conditions. This is the primary trust signal for used buyers.' },
+    { n:3, sel:'.tip-btn', pos:'tl',
+      label:'"?" tooltip — full condition guide drawer',
+      tip:'Opens the slide-in rating guide with all 5 tiers — each showing a mini scale, a short headline, and full long-form copy. Scrolls directly to the current condition\'s accordion entry.' },
+    { n:4, sel:'#pills', pos:'tc',
+      label:'Condition pills — compare tiers & pricing',
+      tip:'Select Excellent, Very Good, or Fair to compare price points side-by-side. The scale indicator, condition name, and short description all update instantly.' },
+    { n:5, sel:'#cdesc', pos:'tl',
+      label:'Condition description block',
+      tip:'Full evaluator-authored description for the selected tier. The left accent border color matches the condition\'s scale color — green for Excellent, blue for Very Good, orange for Fair.' },
+  ],
+  images: [
+    { n:1, legendOnly:true,
+      label:'Drop Image Label Here — dz-c1',
+      tip:'The Used Imager drops an image label onto this zone before uploading. Each standard angle gets one label (e.g. #1 Front, #2 Back, #3 Left). An unlimited number of imperfection labels can also be assigned here.' },
+  ],
+};
+
+var MODE_LABELS = {
+  legacy: 'PDP Condition Grouping — Q2',
+  new:    'New Condition Rating Scale — Q3',
+  images: 'Actual Used Images — Q3',
+};
+
+/* ── BUILD EXPAND PANEL CARDS ────────────────────────────────── */
+(function() {
+  var grid = document.getElementById('rm-ep-grid');
+  if (!grid) return;
+  INITIATIVES.forEach(function(init) {
+    var card = document.createElement('div');
+    var isActive = (init.id === 'legacy'); // default view
+    card.className = 'rm-ep-card' + (isActive ? ' card-active' : '');
+    var linksHtml = '';
+    init.jira.forEach(function(j) {
+      linksHtml += '<a class="rm-ep-badge jira" href="' + j.url + '" target="_blank">' + j.id + '</a>';
+    });
+    if (init.confluence) linksHtml += '<a class="rm-ep-badge conf" href="' + init.confluence.url + '" target="_blank">' + init.confluence.label + '</a>';
+    if (init.figma)      linksHtml += '<a class="rm-ep-badge figma" href="' + init.figma.url + '" target="_blank">' + init.figma.label + '</a>';
+    card.innerHTML =
+      '<div class="rm-ep-card-top"><div class="rm-ep-title">' + init.name + '</div></div>' +
+      '<div class="rm-ep-badges-row">' +
+        '<span class="rm-ep-qbadge ' + init.qClass + '">' + init.quarter + ' 2026</span>' +
+        '<span class="rm-ep-sprint-badge">' + init.sprint + '</span>' +
+      '</div>' +
+      '<div class="rm-ep-links">' + linksHtml + '</div>' +
+      '<div class="rm-ep-section"><div class="rm-ep-lbl">Problem Space</div><div class="rm-ep-txt">' + init.problem + '</div></div>' +
+      '<div class="rm-ep-section"><div class="rm-ep-lbl">Solution</div><div class="rm-ep-txt">' + init.solution + '</div></div>';
+    grid.appendChild(card);
+  });
+})();
+
+/* ── CONDITION DATA ───────────────────────────────────────────── */
+var ALL_C = [
+  { name:'EXCELLENT', segColor:'#3db84d', activeIdx:4, filledCount:5,
+    short:'Like-new, no visible signs of wear.',
+    long:'Pristine, like new. No visible signs of wear: scuffing or handling marks on any surface or component. Finish is perfect. The finest used condition available. Fully functional with no performance issues.' },
+  { name:'VERY GOOD', segColor:'#1877c5', activeIdx:3, filledCount:4,
+    short:'Gently used, minimal signs of wear.',
+    long:'Shows light cosmetic wear. May have minimal scratches, scuffing or rubber imperfections present. Overall gently used condition, clean finish. Fully functional with no performance issues.' },
+  { name:'GOOD', segColor:'#e8a500', activeIdx:2, filledCount:3,
+    short:'Shows moderate wear consistent with regular use.',
+    long:'Shows moderate wear and signs of regular use, including scratches, scuffs, or possible minor brassing. Fully functional with no performance issues.' },
+  { name:'FAIR', segColor:'#e07820', activeIdx:1, filledCount:2,
+    short:'Well used with visible cosmetic flaws, scuffs, and marks.',
+    long:'Shows obvious cosmetic wear including significant scuffs, noticeable scratches, and possible brassing. Well used. Fully functional with no performance issues.' },
+  { name:'ROUGH', segColor:'#cc2222', activeIdx:0, filledCount:1,
+    short:'Shows considerable wear, finishing loss, and above-average signs of hard use.',
+    long:'Shows excessive wear, including significant paint and finish loss, exposed metal, deep scratches, and possible dents. Heavily used. Fully functional with no performance issues.' }
+];
+
+var C_NEW = [
+  { label:'Excellent', price:2694.95, wear:0, imgBg:'#1a7a1a',
+    scaleName:'EXCELLENT', activeIdx:4, filledCount:5, segColor:'#3db84d',
+    shortDesc:'Like-new, no visible signs of wear.',
+    pillDesc:'Pristine, like new. No visible signs of wear: scuffing or handling marks on any surface or component. Finish is perfect. The finest used condition available. Fully functional with no performance issues.',
+    trayIdx:0 },
+  { label:'Very Good', price:2494.95, wear:1, imgBg:'#005db8',
+    scaleName:'VERY GOOD', activeIdx:3, filledCount:4, segColor:'#1877c5',
+    shortDesc:'Gently used, minimal signs of wear.',
+    pillDesc:'Shows light cosmetic wear. May have minimal scratches, scuffing or rubber imperfections present. Overall gently used condition, clean finish. Fully functional with no performance issues.',
+    trayIdx:1 },
+  { label:'Fair', price:1994.95, wear:2, imgBg:'#b85c00',
+    scaleName:'FAIR', activeIdx:1, filledCount:2, segColor:'#e07820',
+    shortDesc:'Well used with visible cosmetic flaws, scuffs, and marks.',
+    pillDesc:'Shows obvious cosmetic wear including significant scuffs, noticeable scratches, and possible brassing. Well used. Fully functional with no performance issues.',
+    trayIdx:3 }
+];
+
+var C_LEGACY = [
+  { label:'Condition 10', condNum:'10', price:2694.95, wear:0, imgBg:'#1a7a1a',
+    condDesc:'Like new, no signs of wear', legacyRowId:'legacy-row-10',
+    segColor:'#3db84d',
+    pillDesc:'Preowned equipment that looks good as new; no signs of wear. Finish is perfect. Fully functional with no performance issues.' },
+  { label:'Condition 9',  condNum:'9',  price:2494.95, wear:1, imgBg:'#005db8',
+    condDesc:'Minor surface marks', legacyRowId:'legacy-row-9',
+    segColor:'#1877c5',
+    pillDesc:'Very good condition; overall looks clean but may have minor signs of use or surface marks. Fully functional with no performance issues.' },
+  { label:'Condition 8',  condNum:'8',  price:1994.95, wear:2, imgBg:'#b85c00',
+    condDesc:'Noticeable marks to finish', legacyRowId:'legacy-row-8',
+    segColor:'#e07820',
+    pillDesc:'Well used — may exhibit noticeable marks or dings to finish. Shows moderate to heavy cosmetic wear. Fully functional with no performance issues.' }
+];
+
+/* ── BUILD NEW SCALE TRAY ACCORDION ──────────────────────────── */
+(function() {
+  var trayAccEl = document.getElementById('tray-acc');
+  if (!trayAccEl) return;
+  ALL_C.forEach(function(ac, i) {
+    var item = document.createElement('div');
+    item.className = 'acc-item';
+    item.id = 'acc-' + i;
+    var h = '<div class="mini-scale">';
+    ['Rough','Fair','Good','Very Good','Excellent'].forEach(function(lbl, j) {
+      var isA = j === ac.activeIdx, filled = j < ac.filledCount;
+      var tri = 'display:block;width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid ' + (isA ? ac.segColor : 'transparent') + ';margin:0 auto';
+      h += '<div class="mini-col"><div class="mini-arr-box"><span style="' + tri + '"></span></div><div class="mini-lbl">' + lbl + '</div><div class="mini-bar" style="background:' + (filled ? ac.segColor : '#d8d8d8') + '"></div></div>';
+    });
+    h += '</div>';
+    item.innerHTML =
+      '<div class="acc-head" onclick="toggleAcc(' + i + ')"><span class="acc-cname">' + ac.name + '</span><span class="acc-caret" id="caret-' + i + '">' + (i === openAccIdx ? '&#8743;' : '&#8744;') + '</span></div>' +
+      '<div class="acc-scale-wrap">' + h + '</div>' +
+      '<div class="acc-body' + (i === openAccIdx ? ' open' : '') + '" id="abody-' + i + '"><p class="acc-short">' + ac.short + '</p><p class="acc-long">' + ac.long + '</p></div>';
+    trayAccEl.appendChild(item);
+  });
+})();
+
+/* ── MODE SWITCH ─────────────────────────────────────────────── */
+function switchMode(mode) {
+  viewMode = mode;
+  var isImg = mode === 'images' || mode === 'sell';
+
+  document.getElementById('pdp-wrap').style.display = isImg ? 'none' : 'block';
+  document.getElementById('iframe-wrap').style.display = isImg ? 'block' : 'none';
+  if (isImg) {
+    var f = document.getElementById('ext-frame');
+    var url = mode === 'sell'
+      ? 'https://jerelproductmanager.github.io/used/sell-used/sell-used-prototype.html'
+      : 'https://jerelproductmanager.github.io/used/used-image-upload.html';
+    if (f.getAttribute('data-loaded') !== url) { f.src = url; f.setAttribute('data-loaded', url); }
+  }
+
+  document.getElementById('anno-toggle').style.display = mode === 'sell' ? 'none' : 'flex';
+
+  ['chip-legacy','chip-images','chip-new','chip-sell'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (id === 'chip-' + mode) { el.className='rm-chip active'; el.querySelector('.rm-dot').className='rm-dot dot-active'; }
+    else { el.className='rm-chip linked'; el.querySelector('.rm-dot').className='rm-dot dot-linked'; }
+  });
+
+  if (mode === 'sell') { clearAnnotations(); return; }
+
+  if (!isImg) {
+    var condSection = document.getElementById('conditions-section');
+    var cdescEl     = document.getElementById('cdesc');
+    document.getElementById('cond-rating').style.display = mode === 'new' ? 'block' : 'none';
+    document.getElementById('cond-header-legacy').style.display = mode === 'legacy' ? 'block' : 'none';
+    if (condSection) condSection.style.display = 'block';
+    if (cdescEl)     cdescEl.style.display     = 'block';
+
+    buildPills(mode);
+    if (mode === 'new') {
+      pickNew(activeNew, false);
+      setTimeout(function() { if (viewMode === 'new') pickNew(activeNew, false); }, 30);
+    } else {
+      pickLegacy(activeLegacy, false);
+    }
+  }
+
+  if (annoMode) {
+    if (isImg) {
+      // For iframe modes render immediately (fixed coords, no scroll needed)
+      requestAnimationFrame(function() { renderAnnotations(); });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      requestAnimationFrame(function() { requestAnimationFrame(function() { renderAnnotations(); }); });
+    }
+  }
+}
+
+/* ── BUILD PILLS ─────────────────────────────────────────────── */
+function buildPills(mode) {
+  var el = document.getElementById('pills');
+  el.innerHTML = '';
+  var data = mode === 'new' ? C_NEW : C_LEGACY;
+  data.forEach(function(c, i) {
+    var d = document.createElement('div');
+    d.className = 'pill';
+    d.innerHTML = '<span class="pl">' + c.label + '</span><span class="pp">$' + c.price.toFixed(2) + '</span>';
+    d.onclick = (function(idx){ return function(){ if(viewMode==='new') pickNew(idx,true); else pickLegacy(idx,true); }; })(i);
+    el.appendChild(d);
+  });
+}
+
+/* ── PICK NEW ────────────────────────────────────────────────── */
+function pickNew(i, anim) {
+  try {
+  activeNew = i;
+  var c = C_NEW[i];
+  document.querySelectorAll('.pill').forEach(function(p, j) { p.classList.toggle('sel', j === i); });
+  var pe = document.getElementById('price-el');
+  if (anim) { pe.style.opacity='0'; setTimeout(function(){ pe.textContent='$'+c.price.toFixed(2); pe.style.opacity='1'; }, 180); }
+  else pe.textContent = '$' + c.price.toFixed(2);
+  document.getElementById('mo-el').textContent = '$' + Math.round(c.price/12) + '/mo.';
+  document.getElementById('img-badge').textContent = c.label;
+  document.getElementById('img-badge').style.background = c.imgBg;
+  document.getElementById('w1').style.display = c.wear >= 1 ? 'block' : 'none';
+  document.getElementById('w2').style.display = c.wear >= 2 ? 'block' : 'none';
+  var cd = document.getElementById('cdesc');
+  if (cd) { cd.innerHTML = '<b>' + c.label + ':</b> ' + c.pillDesc; cd.style.borderLeftColor = c.segColor; }
+  document.getElementById('cond-name-lbl').textContent = c.scaleName;
+  document.getElementById('cond-short-txt').textContent = c.shortDesc;
+  for (var k=0;k<5;k++) { document.getElementById('arr'+k).innerHTML=''; document.getElementById('bar'+k).style.background=k<c.filledCount?c.segColor:'#d8d8d8'; }
+  var tri='display:block;width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid '+c.segColor+';margin:0 auto';
+  document.getElementById('arr'+c.activeIdx).innerHTML='<span style="'+tri+'"></span>';
+  } catch(e) { console.error('pickNew error:', e); }
+}
+
+/* ── PICK LEGACY ─────────────────────────────────────────────── */
+function pickLegacy(i, anim) {
+  activeLegacy = i;
+  var c = C_LEGACY[i];
+  document.querySelectorAll('.pill').forEach(function(p, j) { p.classList.toggle('sel', j === i); });
+  var pe = document.getElementById('price-el');
+  if (anim) { pe.style.opacity='0'; setTimeout(function(){ pe.textContent='$'+c.price.toFixed(2); pe.style.opacity='1'; }, 180); }
+  else pe.textContent = '$' + c.price.toFixed(2);
+  document.getElementById('mo-el').textContent = '$' + Math.round(c.price/12) + '/mo.';
+  document.getElementById('img-badge').textContent = c.condNum;
+  document.getElementById('img-badge').style.background = c.imgBg;
+  document.getElementById('w1').style.display = c.wear >= 1 ? 'block' : 'none';
+  document.getElementById('w2').style.display = c.wear >= 2 ? 'block' : 'none';
+  document.getElementById('legacy-cond-val').textContent = c.condNum;
+  document.getElementById('legacy-cond-desc').textContent = c.condDesc;
+  var cd = document.getElementById('cdesc');
+  if (cd) { cd.innerHTML = '<b>' + c.label + ':</b> ' + c.pillDesc; cd.style.borderLeftColor = c.segColor; }
+}
+
+/* ── TRAY FUNCTIONS ──────────────────────────────────────────── */
+function openNewTray() {
+  openAccIdx = C_NEW[activeNew].trayIdx;
+  ALL_C.forEach(function(_, i) {
+    document.getElementById('abody-'+i).classList.toggle('open', i===openAccIdx);
+    document.getElementById('caret-'+i).innerHTML = i===openAccIdx ? '&#8743;' : '&#8744;';
+  });
+  document.getElementById('tray-overlay').classList.add('open');
+  document.getElementById('tray-panel-new').classList.add('open');
+  setTimeout(function(){ var el=document.getElementById('acc-'+openAccIdx); if(el) el.scrollIntoView({behavior:'smooth',block:'nearest'}); }, 340);
+}
+function openLegacyTray() {
+  var c = C_LEGACY[activeLegacy];
+  document.querySelectorAll('.legacy-tray-row').forEach(function(r){ r.classList.remove('highlighted'); });
+  var row = document.getElementById(c.legacyRowId);
+  if (row) row.classList.add('highlighted');
+  document.getElementById('tray-overlay').classList.add('open');
+  document.getElementById('tray-panel-legacy').classList.add('open');
+  setTimeout(function(){ if(row) row.scrollIntoView({behavior:'smooth',block:'center'}); }, 340);
+}
+function closeAllTrays() {
+  document.getElementById('tray-overlay').classList.remove('open');
+  document.getElementById('tray-panel-new').classList.remove('open');
+  document.getElementById('tray-panel-legacy').classList.remove('open');
+}
+function toggleAcc(i) {
+  var isOpen = document.getElementById('abody-'+i).classList.contains('open');
+  ALL_C.forEach(function(_,j){ document.getElementById('abody-'+j).classList.remove('open'); document.getElementById('caret-'+j).innerHTML='&#8744;'; });
+  if (!isOpen) { document.getElementById('abody-'+i).classList.add('open'); document.getElementById('caret-'+i).innerHTML='&#8743;'; openAccIdx=i; }
+}
+
+/* ── EXPAND PANEL ────────────────────────────────────────────── */
+var expandOpen = false;
+function toggleExpand() {
+  expandOpen = !expandOpen;
+  document.getElementById('rm-expand-panel').classList.toggle('open', expandOpen);
+  document.getElementById('rm-expand-btn').classList.toggle('open', expandOpen);
+  document.getElementById('rm-ep-overlay').classList.toggle('open', expandOpen);
+}
+
+/* ── ANNOTATION SYSTEM ───────────────────────────────────────── */
+var focusedAnno = null;
+
+function toggleAnnotations() {
+  annoMode = !annoMode;
+  var btn = document.getElementById('anno-toggle');
+  btn.classList.toggle('on', annoMode);
+  btn.innerHTML = annoMode
+    ? '<svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 2l7 7M9 2l-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg> Hide Guide'
+    : '<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M6.5 6V9M6.5 4.5v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Feature Guide';
+  document.getElementById('anno-panel').classList.toggle('open', annoMode);
+  if (annoMode) renderAnnotations();
+  else clearAnnotations();
+}
+
+function dotAndArrow(r, pos) {
+  // Dot sits outside the element edge; arrow tip points into the element center
+  var sx = window.scrollX, sy = window.scrollY;
+  var OFFSET = 44; // distance from element edge to dot center
+  var dx, dy, tx, ty; // dot x,y  and  arrow tip x,y (element edge)
+
+  // Element center (for tip)
+  var cx = r.left + sx + r.width / 2;
+  var cy = r.top  + sy + r.height / 2;
+
+  switch(pos) {
+    case 'tr': dx = r.right + sx + OFFSET - 13;  dy = r.top    + sy - OFFSET - 13; tx = r.right  + sx; ty = r.top    + sy + 20; break;
+    case 'tl': dx = r.left  + sx - OFFSET - 13;  dy = r.top    + sy - OFFSET - 13; tx = r.left   + sx; ty = r.top    + sy + 20; break;
+    case 'br': dx = r.right + sx + OFFSET - 13;  dy = r.bottom + sy + OFFSET - 13; tx = r.right  + sx; ty = r.bottom + sy - 20; break;
+    case 'bl': dx = r.left  + sx - OFFSET - 13;  dy = r.bottom + sy + OFFSET - 13; tx = r.left   + sx; ty = r.bottom + sy - 20; break;
+    case 'tc': dx = cx - 13;                      dy = r.top    + sy - OFFSET - 13; tx = cx;            ty = r.top    + sy; break;
+    case 'bc': dx = cx - 13;                      dy = r.bottom + sy + OFFSET - 13; tx = cx;            ty = r.bottom + sy; break;
+    default:   dx = r.right + sx + OFFSET - 13;  dy = r.top    + sy - 13;           tx = r.right  + sx; ty = cy; break;
+  }
+  // Dot center
+  var dcx = dx + 13, dcy = dy + 13;
+  return { dotLeft: dx + 'px', dotTop: dy + 'px', fromX: dcx, fromY: dcy, toX: tx, toY: ty };
+}
+
+function renderAnnotations() {
+  clearAnnotations();
+  if (!annoMode || viewMode === 'sell') return;
+  var data = ANNO_DATA[viewMode] || [];
+  var listEl = document.getElementById('anno-panel-list');
+  listEl.innerHTML = '';
+
+  var modeEl  = document.querySelector('.anno-panel-mode');
+  var titleEl = document.querySelector('.anno-panel-title');
+  if (modeEl)  modeEl.textContent  = MODE_LABELS[viewMode] || '';
+  if (titleEl) titleEl.textContent = data.length + ' feature' + (data.length !== 1 ? 's' : '') + ' worth exploring';
+
+  data.forEach(function(a, idx) {
+    if (a.legendOnly) {
+      // Legend entry only — no dot or arrow on the page
+      var item = document.createElement('div');
+      item.className = 'anno-item';
+      item.id = 'anno-item-' + a.n;
+      item.innerHTML =
+        '<div class="anno-content" style="padding-left:4px">' +
+          '<div class="anno-label">' + a.label + '</div>' +
+          '<div class="anno-text">' + a.tip + '</div>' +
+        '</div>';
+      listEl.appendChild(item);
+      return;
+    }
+
+    var delay = idx * 0.08;
+    var dotLeft, dotTop, fromX, fromY, toX, toY;
+
+    if (a.fixed) {
+      // Fixed viewport coords for iframe overlays — dot sits above/left of the target point
+      var NAV_H = 54;
+      dotLeft = (a.vx - 50) + 'px';
+      dotTop  = (a.vy + NAV_H - 50) + 'px';
+      fromX   = a.vx - 37;
+      fromY   = a.vy + NAV_H - 37;
+      toX     = a.vx;
+      toY     = a.vy + NAV_H;
+    } else {
+      var el = document.querySelector(a.sel);
+      if (!el) return;
+      var r = el.getBoundingClientRect();
+      if (r.width === 0 && r.height === 0) return;
+      var coords = dotAndArrow(r, a.pos);
+      dotLeft = coords.dotLeft; dotTop = coords.dotTop;
+      fromX = coords.fromX; fromY = coords.fromY;
+      toX = coords.toX; toY = coords.toY;
+    }
+
+    // SVG arrow
+    var svgNS = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('class', 'anno-arrow');
+    svg.setAttribute('data-anno', a.n);
+    if (a.fixed) {
+      svg.style.position = 'fixed';
+      svg.style.top = '0'; svg.style.left = '0';
+      svg.style.width = '100vw'; svg.style.height = '100vh';
+      svg.style.zIndex = '190';
+    } else {
+      svg.style.position = 'absolute';
+      svg.style.top = '0'; svg.style.left = '0';
+      svg.style.width = document.body.scrollWidth + 'px';
+      svg.style.height = document.body.scrollHeight + 'px';
+    }
+    svg.style.animation = 'anno-pop .35s ease ' + (delay + 0.1) + 's both';
+
+    var defs = document.createElementNS(svgNS, 'defs');
+    var markerId = 'arrowhead-' + a.n;
+    defs.innerHTML = '<marker id="' + markerId + '" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#C8993A"/></marker>';
+    svg.appendChild(defs);
+
+    var line = document.createElementNS(svgNS, 'line');
+    line.setAttribute('x1', fromX); line.setAttribute('y1', fromY);
+    line.setAttribute('x2', toX);   line.setAttribute('y2', toY);
+    line.setAttribute('stroke', '#C8993A');
+    line.setAttribute('stroke-width', '2');
+    line.setAttribute('stroke-dasharray', '5,3');
+    line.setAttribute('marker-end', 'url(#' + markerId + ')');
+    line.setAttribute('opacity', '0.85');
+    svg.appendChild(line);
+    document.body.appendChild(svg);
+
+    // Dot
+    var dot = document.createElement('button');
+    dot.className = 'anno-dot';
+    dot.textContent = a.n;
+    if (a.fixed) {
+      dot.style.position = 'fixed';
+      dot.style.zIndex = '191';
+    }
+    dot.style.top   = dotTop;
+    dot.style.left  = dotLeft;
+    dot.style.animation = 'anno-pop .3s cubic-bezier(.2,1.4,.4,1) ' + delay + 's both';
+    dot.setAttribute('data-anno', a.n);
+    dot.onclick = function(e) { e.stopPropagation(); focusAnno(a.n); };
+    document.body.appendChild(dot);
+
+    // Legend
+    var item = document.createElement('div');
+    item.className = 'anno-item';
+    item.id = 'anno-item-' + a.n;
+    item.innerHTML =
+      '<div class="anno-num">' + a.n + '</div>' +
+      '<div class="anno-content">' +
+        '<div class="anno-label">' + a.label + '</div>' +
+        '<div class="anno-text">' + a.tip + '</div>' +
+      '</div>';
+    item.onclick = function() { focusAnno(a.n); };
+    listEl.appendChild(item);
+  });
+}
+
+function focusAnno(n) {
+  focusedAnno = n;
+  document.querySelectorAll('.anno-item').forEach(function(it){ it.classList.remove('focused'); });
+  var item = document.getElementById('anno-item-' + n);
+  if (item) { item.classList.add('focused'); item.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+  document.getElementById('anno-panel').classList.add('open');
+
+  var data = ANNO_DATA[viewMode] || [], entry = null;
+  for (var i=0;i<data.length;i++) { if (data[i].n===n) { entry=data[i]; break; } }
+  if (entry) { var el=document.querySelector(entry.sel); if(el) el.scrollIntoView({behavior:'smooth',block:'center'}); }
+
+  // Highlight the active arrow
+  document.querySelectorAll('.anno-arrow line').forEach(function(line) {
+    var isActive = line.closest('[data-anno]') && line.closest('[data-anno]').getAttribute('data-anno') == n;
+    line.setAttribute('opacity', isActive ? '1' : '0.3');
+    line.setAttribute('stroke-width', isActive ? '2.5' : '1.5');
+  });
+  document.querySelectorAll('.anno-dot').forEach(function(dot) {
+    dot.style.opacity = dot.getAttribute('data-anno') == n ? '1' : '0.45';
+    dot.style.transform = dot.getAttribute('data-anno') == n ? 'scale(1.15)' : 'scale(1)';
+  });
+}
+
+function clearAnnotations() {
+  document.querySelectorAll('.anno-dot,.anno-arrow').forEach(function(d){ d.remove(); });
+  document.getElementById('anno-panel-list').innerHTML = '';
+}
+
+function setThumb(el) {
+  document.querySelectorAll('.thumb').forEach(function(t){ t.classList.remove('sel'); });
+  el.classList.add('sel');
+}
+
+document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeAllTrays(); if(expandOpen) toggleExpand(); } });
+var scrollTimer = null;
+window.addEventListener('scroll', function(){
+  if (!annoMode) return;
+  clearTimeout(scrollTimer);
+  scrollTimer = setTimeout(function() {
+    if (viewMode === 'images') return; // fixed-position annotations don't need repositioning
+    requestAnimationFrame(function() { renderAnnotations(); });
+  }, 120);
+}, {passive:true});
+
+/* ── INIT — default to PDP Condition Grouping, annotations on ── */
+switchMode('legacy');
+annoMode = true;
+setTimeout(function() {
+  var btn = document.getElementById('anno-toggle');
+  btn.classList.add('on');
+  btn.innerHTML = '<svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 2l7 7M9 2l-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg> Hide Guide';
+  document.getElementById('anno-panel').classList.add('open');
+  renderAnnotations();
+}, 350);
+</script>
+</body>
+</html>

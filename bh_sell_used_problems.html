@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>(function(){if(!sessionStorage.getItem('js_portfolio_v1'))window.location.replace('index.html');}());</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B&H Sell Used — Problems to Solve</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --navy: #0F1F4B;
+  --navy-mid: #162452;
+  --navy-light: #1E3070;
+  --gold: #C8993A;
+  --gold-light: #E8B84B;
+  --gold-pale: #F5E8C8;
+  --white: #FFFFFF;
+  --off-white: #F7F8FA;
+  --gray-100: #EEF0F5;
+  --gray-200: #DDE1EA;
+  --gray-400: #8892A4;
+  --text-dark: #1A1F2E;
+  --text-mid: #4A5468;
+  --amber-bg: #FFFBF0;
+  --amber-border: #D4A43A;
+  --blue-bg: #EEF3FF;
+  --blue-border: #5B7FD4;
+  --blue-label: #3459B8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--gray-100);
+  color: var(--text-dark);
+  min-height: 100vh;
+}
+
+/* ── NAV ─────────────────────────────────────────── */
+.deck-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  z-index: 100;
+  box-shadow: 0 2px 16px rgba(0,0,0,.3);
+}
+.deck-nav::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+}
+.nav-brand {
+  padding: 0 20px 0 16px;
+  border-right: 1px solid rgba(255,255,255,.12);
+  flex-shrink: 0;
+}
+.nav-brand-name { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: .3px; }
+.nav-brand-sub  { font-size: 11px; color: rgba(255,255,255,.4); letter-spacing: .8px; text-transform: uppercase; margin-top: 1px; }
+.nav-pills {
+  display: flex;
+  gap: 2px;
+  padding: 0 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 1;
+}
+.nav-pills::-webkit-scrollbar { display: none; }
+.nav-pill {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,.4);
+  cursor: pointer;
+  transition: all .18s;
+  border: 1.5px solid transparent;
+  white-space: nowrap;
+}
+.nav-pill:hover { color: rgba(255,255,255,.8); background: rgba(255,255,255,.07); }
+.nav-pill.active { color: var(--gold-light); background: rgba(200,153,58,.15); border-color: rgba(200,153,58,.45); }
+.nav-counter {
+  padding: 0 16px;
+  font-size: 12px;
+  color: rgba(255,255,255,.28);
+  white-space: nowrap;
+  border-left: 1px solid rgba(255,255,255,.1);
+  flex-shrink: 0;
+}
+
+/* ── SLIDES ──────────────────────────────────────── */
+.slides-wrap {
+  padding-top: 52px;
+}
+
+.slide {
+  min-height: calc(100vh - 52px);
+  display: none;
+  flex-direction: column;
+  animation: fadeIn .22s ease;
+}
+.slide.visible { display: flex; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SLIDE 1 — COVER ─────────────────────────────── */
+.slide-cover {
+  background: var(--navy);
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0;
+}
+.cover-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64px 80px 0;
+}
+.cover-eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.cover-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 68px;
+  line-height: 1.05;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.cover-title span { color: var(--gold); }
+.cover-sub {
+  font-size: 22px;
+  font-weight: 300;
+  color: rgba(255,255,255,.55);
+  margin-bottom: 32px;
+  line-height: 1.4;
+}
+.cover-meta {
+  font-size: 14px;
+  color: rgba(255,255,255,.28);
+  letter-spacing: .5px;
+  font-style: italic;
+}
+.cover-stages {
+  display: flex;
+  margin-top: auto;
+}
+.cover-stage {
+  flex: 1;
+  padding: 18px 16px;
+  border-top: 2px solid rgba(255,255,255,.06);
+  border-right: 1px solid rgba(255,255,255,.06);
+  transition: background .18s;
+}
+.cover-stage:last-child { border-right: none; }
+.cover-stage:hover { background: rgba(255,255,255,.04); }
+.cover-stage-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.cover-stage-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,.4);
+  letter-spacing: .5px;
+  line-height: 1.4;
+}
+
+/* ── SLIDE 2 — OVERVIEW ──────────────────────────── */
+.slide-overview {
+  background: var(--off-white);
+}
+.slide-header {
+  background: var(--navy);
+  padding: 20px 48px 18px;
+  position: relative;
+}
+.slide-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+}
+.slide-header-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.slide-header-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,.42);
+  font-style: italic;
+  letter-spacing: .3px;
+}
+.slide-source {
+  font-size: 13px;
+  color: rgba(255,255,255,.38);
+  margin-top: 5px;
+  font-style: italic;
+  letter-spacing: .2px;
+  padding-right: 90px;
+}
+.bh-badge {
+  position: absolute;
+  top: 14px; right: 48px;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 2px;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+}
+.overview-body {
+  flex: 1;
+  padding: 24px 48px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.overview-lede {
+  font-size: 16px;
+  color: var(--text-mid);
+  font-style: italic;
+  line-height: 1.6;
+}
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  flex: 1;
+}
+.ov-card {
+  background: var(--white);
+  border-radius: 4px;
+  border: 1px solid var(--gray-200);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  transition: box-shadow .18s, transform .18s;
+  cursor: pointer;
+}
+.ov-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.1); transform: translateY(-2px); }
+.ov-card-head {
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ov-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--white);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+}
+.ov-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.3;
+}
+.ov-card-body {
+  padding: 10px 14px 14px;
+}
+.ov-problem {
+  font-size: 15px;
+  color: var(--text-mid);
+  line-height: 1.55;
+}
+
+/* ── CONTENT SLIDES ──────────────────────────────── */
+.slide-content {
+  background: var(--off-white);
+}
+.content-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 24px 48px 32px;
+}
+.card {
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  display: flex;
+  flex-direction: column;
+}
+.card-problem { background: var(--amber-bg); border: 1px solid var(--amber-border); border-left: 4px solid var(--gold); }
+.card-stories { background: var(--blue-bg); border: 1px solid var(--blue-border); border-left: 4px solid var(--blue-border); }
+.card-label {
+  padding: 10px 16px 6px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.card-problem .card-label { color: var(--gold); }
+.card-stories .card-label { color: var(--blue-label); }
+.card-divider {
+  height: 1px;
+  margin: 0 16px;
+}
+.card-problem .card-divider { background: rgba(200,153,58,.2); }
+.card-stories .card-divider { background: rgba(91,127,212,.2); }
+.card-body {
+  flex: 1;
+  padding: 14px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.card-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-dark);
+}
+.card-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+.card-problem .card-dot { background: var(--gold); }
+.card-stories .card-dot { background: var(--blue-border); }
+
+/* ── CLOSING SLIDE ───────────────────────────────── */
+.slide-close {
+  background: var(--navy);
+  justify-content: center;
+  padding: 64px 80px;
+  gap: 24px;
+}
+.close-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.close-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 52px;
+  color: var(--white);
+  line-height: 1.1;
+}
+.close-body {
+  font-size: 18px;
+  color: rgba(255,255,255,.6);
+  line-height: 1.7;
+  max-width: 640px;
+  font-style: italic;
+}
+.close-divider {
+  width: 48px;
+  height: 2px;
+  background: var(--gold);
+}
+.close-principles {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.close-principle {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  font-size: 16px;
+  color: rgba(255,255,255,.85);
+  line-height: 1.5;
+}
+.close-principle-bar {
+  width: 3px;
+  height: 36px;
+  background: var(--gold);
+  flex-shrink: 0;
+  border-radius: 2px;
+  margin-top: 2px;
+}
+.close-footer {
+  margin-top: auto;
+  font-size: 12px;
+  color: rgba(255,255,255,.2);
+  letter-spacing: .5px;
+}
+
+/* ── SLIDE NAV FOOTER ────────────────────────────── */
+.slide-footer {
+  background: var(--navy);
+  padding: 10px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.sf-label {
+  font-size: 13px;
+  color: rgba(255,255,255,.3);
+  letter-spacing: .4px;
+}
+.sf-nav {
+  display: flex;
+  gap: 8px;
+}
+.sf-btn {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.6);
+  border-radius: 3px;
+  padding: 5px 14px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all .15s;
+}
+.sf-btn:hover { background: rgba(255,255,255,.14); color: #fff; }
+.sf-btn:disabled { opacity: .25; cursor: default; }
+
+/* ── MASTER LIST SLIDE ───────────────────────────── */
+.slide-master {
+  background: var(--off-white);
+}
+.master-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 48px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.master-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.master-group-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.master-stage-badge {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--white);
+  padding: 3px 10px;
+  border-radius: 2px;
+  letter-spacing: .5px;
+  flex-shrink: 0;
+}
+.master-stage-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: .2px;
+}
+.master-stories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 4px;
+}
+.master-story-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 12px;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 3px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-dark);
+  transition: background .12s;
+}
+.master-story-row:hover { background: var(--blue-bg); border-color: var(--blue-border); }
+.master-story-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+.master-col-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  padding: 0 12px 6px 26px;
+  display: flex;
+  gap: 0;
+}
+.master-col-as   { width: 60px; flex-shrink: 0; }
+.master-col-want { flex: 1; }
+.master-col-so   { flex: 1; }
+.master-text-as   { color: var(--text-mid); flex-shrink: 0; font-size: 15px; margin-top: 1px; min-width: 60px; }
+.master-text-want { font-weight: 600; font-size: 15px; flex: 1; }
+.master-text-so   { font-size: 15px; color: var(--text-mid); flex: 1; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="deck-nav">
+  <div class="nav-brand">
+    <div class="nav-brand-name">B&amp;H Used</div>
+    <div class="nav-brand-sub">2026</div>
+  </div>
+  <div class="nav-pills" id="nav-pills"></div>
+  <div class="nav-counter" id="nav-counter"></div>
+</nav>
+
+<div class="slides-wrap" id="slides-wrap">
+
+  <!-- SLIDE 1: COVER -->
+  <div class="slide slide-cover" data-label="Cover">
+    <div class="cover-inner">
+      <div class="cover-eyebrow">B&amp;H Sell Used · 2026 Roadmap</div>
+      <div class="cover-title"><span>Problems</span><br>to Solve</div>
+      <div class="cover-sub">Mapped to Customer User Stories<br>across the Seller Journey</div>
+      <div class="cover-meta">9 stages · 9 problem areas · user stories</div>
+    </div>
+    <div class="cover-stages">
+      <div class="cover-stage"><div class="cover-stage-num">1</div><div class="cover-stage-label">Findability &amp;<br>Awareness</div></div>
+      <div class="cover-stage"><div class="cover-stage-num">2</div><div class="cover-stage-label">Item<br>Identification</div></div>
+      <div class="cover-stage"><div class="cover-stage-num">3</div><div class="cover-stage-label">Condition<br>Assessment</div></div>
+      <div class="cover-stage"><div class="cover-stage-num">4</div><div class="cover-stage-label">Accessories</div></div>
+      <div class="cover-stage"><div class="cover-stage-num">5</div><div class="cover-stage-label">Quote<br>Transparency</div></div>
+      <div class="cover-stage"><div class="cover-stage-num">6</div><div class="cover-stage-label">Submission</div></div>
+      <div class="cover-stage"><div class="cover-stage-num">7</div><div class="cover-stage-label">Shipping</div></div>
+      <div class="cover-stage"><div class="cover-stage-num">8</div><div class="cover-stage-label">Progress<br>Awareness</div></div>
+      <div class="cover-stage"><div class="cover-stage-num">9</div><div class="cover-stage-label">Payment &amp;<br>Getting Paid</div></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: OVERVIEW -->
+  <div class="slide slide-overview" data-label="Overview">
+    <div class="slide-header">
+      <div class="slide-header-title">Sell Used — End-to-End Seller Journey</div>
+      <div class="slide-header-sub">9 stages · 9 problem areas · mapped to user stories · sourced from benchmark &amp; foundational research</div>
+      <div class="bh-badge">B&amp;H Used</div>
+    </div>
+    <div class="overview-body">
+      <div class="overview-lede">Every stage where the seller is uninformed, uncertain, or surprised is a moment where they abandon, dispute, or don't return.</div>
+      <div class="overview-grid" id="overview-grid"></div>
+    </div>
+    <div class="slide-footer">
+      <div class="sf-label">Each stage is detailed on the following slides</div>
+      <div class="sf-nav">
+        <button class="sf-btn" onclick="prev()">← Prev</button>
+        <button class="sf-btn" onclick="next()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT SLIDES (generated) -->
+  <div id="content-slides"></div>
+
+
+  <!-- MASTER LIST SLIDE -->
+  <div class="slide slide-master" data-label="All User Stories" id="master-slide">
+    <div class="slide-header">
+      <div class="slide-header-title">Master List — All User Stories</div>
+      <div class="slide-header-sub">All stages · complete As a / I want / So that inventory</div>
+      <div class="bh-badge">B&amp;H Used</div>
+    </div>
+    <div class="master-body" id="master-body"></div>
+    <div class="slide-footer">
+      <div class="sf-label">B&amp;H Sell Used &nbsp;·&nbsp; 9 Stages &nbsp;·&nbsp; 2026</div>
+      <div class="sf-nav">
+        <button class="sf-btn" onclick="prev()">← Prev</button>
+        <button class="sf-btn" onclick="next()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: CLOSING -->
+  <div class="slide slide-close" data-label="Principles">
+    <div class="close-eyebrow">The Meta-Problem</div>
+    <div class="close-title">The current flow treats the seller as a logistics problem to be processed, not a customer making a financial decision.</div>
+    <div class="close-body">Every stage where the seller is uninformed, uncertain, or surprised is a moment where they abandon, dispute, or don't return.</div>
+    <div class="close-divider"></div>
+    <div class="close-principles">
+      <div class="close-principle"><div class="close-principle-bar"></div>Surface value early — quote transparency builds commitment before the seller second-guesses the transaction.</div>
+      <div class="close-principle"><div class="close-principle-bar"></div>Reduce friction at every handoff — especially submission and shipping, where committed sellers abandon.</div>
+      <div class="close-principle"><div class="close-principle-bar"></div>Communicate proactively — silence after shipping creates anxiety and drives support ticket volume.</div>
+      <div class="close-principle"><div class="close-principle-bar"></div>Make store credit the obvious choice — it's B&amp;H's strongest conversion lever and it's currently underleveraged.</div>
+    </div>
+    <div class="close-footer">B&amp;H Sell Used · Problems to Solve · 2026 Roadmap</div>
+  </div>
+
+</div>
+
+<script>
+var STAGES = [
+  {
+    num: 1, label: "Findability & Awareness",
+    headerColor: "#7C2D12",
+    sub: "Sellers can't find B&H's trade-in program — and many don't know it exists",
+    source: "Benchmark: 100% of participants struggled to find the trade-in page · Avg 42 sec to locate · 3.5/5 findability score",
+    problems: [
+      "100% of usability benchmark participants (6/6) struggled to find the sell-used page from the homepage — the megamenu link was consistently skipped. Average time to locate the page was 42 seconds.",
+      "Even loyal B&H customers were surprised to learn that B&H buys used gear. The program is not effectively marketed within the site architecture.",
+      "Sellers have no upfront awareness of which product categories B&H accepts, causing wasted effort and early drop-off when their item isn't supported.",
+      "The outdated look and feel of the Sell Used experience immediately reduces seller confidence — one participant closed the site immediately describing it as 'fully cluttered' and 'confusing.'",
+      "There is no visibility into whether a live trade-in event or promotion is currently active, leaving potential value on the table for both seller and B&H."
+    ],
+    stories: [
+      "As a seller, I want to easily find where to sell my gear on the B&H site so I don't have to hunt through navigation or resort to search.",
+      "As a seller, I want to know upfront which product categories B&H accepts so I don't waste time on items they don't buy.",
+      "As a seller, I want the Sell Used experience to feel modern and credible so I'm confident my transaction is in good hands.",
+      "As a seller, I want to know if a trade-in event or promotion is currently active so I don't miss out on a better deal.",
+    ]
+  },
+  {
+    num: 2, label: "Item Identification",
+    headerColor: "#1E3A8A",
+    overviewText: "Sell Used search is the #1 cited pain point in the overall customer experience. Customers find it buggy and struggle to find their products. Search terms are treated as OR not AND, returning erroneous result noise.",
+    sub: "Once on the page, 67% of participants couldn't find their specific gear in search results",
+    source: "Benchmark: 67% struggled to identify gear · Search logic: OR not AND · Results not ranked by relevance",
+    problems: [
+      "Search treats terms as OR rather than AND — a search for 'Sony Alpha 7 camera' returns results matching any single term, burying the target item under irrelevant accessories and older models.",
+      "Results are not ranked by best match or relevance. Camera bodies are buried under hundreds of lenses and accessories with no way to filter to the most likely match.",
+      "Naming inconsistencies in the catalog ('with Lens' vs. 'w/ Lens', varying model conventions) make it difficult to confirm the correct item has been selected.",
+      "Nearly all benchmark participants requested image-based or AI-assisted search to remove the labor of manual product identification.",
+      "Without confirmation of the selected item's key specs, sellers can accidentally quote the wrong product — creating friction at inspection."
+    ],
+    stories: [
+      "As a seller, I want predictive search suggestions as I type so I can find my item even if I only know a few details about it.",
+      "As a seller, I want my search results to match all terms I entered (AND logic) so I don't wade through results that only match part of my query.",
+      "As a seller, I want the most relevant results ranked at the top so I can find my exact item without scrolling through pages of mismatches.",
+      "As a seller, I want to search by brand, series, model number, or item code — or submit a photo — so I can identify my item without relying on catalog naming.",
+      "As a seller, I want to see a clear confirmation of the item I selected (brand, model, key specs) so I can verify before continuing."
+    ]
+  },
+  {
+    num: 3, label: "Condition Self-Assessment",
+    headerColor: "#1D6B48",
+    overviewText: "Customers want more detailed descriptions of condition ratings to guide self-assessment given the subjective nature of rating (3rd most cited pain point in customer surveys). In usability testing, sellers intentionally rated gear one level lower than accurate, assuming B&H would be stricter — eroding quote accuracy and trust.",
+    sub: "Sellers deliberately under-rate their gear out of fear — and the current scale makes it worse",
+    source: "Benchmark: 4.0/5 confidence · Foundational research: users used Gemini to pre-grade · Defensive under-rating observed",
+    problems: [
+      "Sellers intentionally rated their gear one level lower than accurate, assuming B&H would be 'stricter' during physical inspection. This 'defensive rating' behavior erodes quote accuracy and trust.",
+      "The distinction between ratings (e.g., 'Clean' vs. 'Moderate Wear') is too subjective. The current scale lacks visual anchors, driving demand for AI-assisted photo-based assessment.",
+      "One participant used Google Gemini to photograph and pre-grade their camera before submitting — a workaround that signals a real unmet need for guided or assisted grading.",
+      "A condition adjustment at inspection — when the seller expected one value and receives another — is a trust-breaking moment that can kill the transaction and the relationship."
+    ],
+    stories: [
+      "As a seller, I want plain-language condition descriptions with reference photos so I can accurately self-assess without guessing or second-guessing myself.",
+      "As a seller, I want to submit photos of my item and receive a suggested condition rating so I have confidence my self-assessment will hold at inspection.",
+      "As a seller, I want to understand B&H's grading standards before I rate so I don't defensively under-rate and undervalue my own gear.",
+      "As a seller, I want to be notified clearly if B&H's inspection differs from my rating — with a specific reason — so I can accept or reject the revised offer with full information."
+    ]
+  },
+  {
+    num: 4, label: "Accessories",
+    headerColor: "#92400E",
+    sub: "Sellers don't know what's expected — and can't see how it affects their value",
+    source: "Foundational research: sellers unaware which accessories are valued or expected",
+    problems: [
+      "Sellers don't know which accessories are expected or valued — they either leave money on the table or feel penalized for not including items they didn't realize mattered.",
+      "There's no clear signal on how including or excluding accessories affects quote value, so sellers can't make an informed inclusion decision."
+    ],
+    stories: [
+      "As a seller, I want a checklist of accessories for my specific item so I know exactly what to include and what's optional.",
+      "As a seller, I want to see how including or excluding accessories affects my quote in real time so I can decide what's worth including.",
+      "As a seller, I want to indicate the condition of accessories separately so I'm not penalized for a worn strap on an otherwise pristine body."
+    ]
+  },
+  {
+    num: 5, label: "Quote Transparency",
+    headerColor: "#6B21A8",
+    sub: "A 66% funnel drop-off sits between 'item found' and 'Add to Basket' — partly by design",
+    source: "Benchmark: 66% funnel drop-off · Completion paradox · Inconsistent quote delivery (immediate vs. email)",
+    problems: [
+      "The 'completion paradox': when users receive an immediate price quote, they feel their goal is complete and exit without clicking 'Add to Basket' — registering as a funnel drop-off in GA4.",
+      "Quote delivery is inconsistent: some products show an immediate estimate, others tell users a quote will arrive via email. Neither behavior is explained or expected.",
+      "A UI bug caused 50% of participants to experience the quote page anchoring to the bottom of the screen after item selection, making them believe they'd hit a dead end.",
+      "Sellers don't know how long a quote is valid, creating anxiety about whether to ship promptly or risk losing the offer."
+    ],
+    stories: [
+      "As a seller, I want to understand what 'Add to Basket' means in this context so I don't confuse getting a quote with completing the submission.",
+      "As a seller, I want consistent, immediate quote feedback after selecting my item so I'm not left wondering if a quote will arrive via email.",
+      "As a seller, I want to understand how long my quote is valid so I know my shipping deadline and don't lose the offer.",
+      "As a seller, I want to review a full summary of items, conditions, and accessories before submitting so I can catch and fix mistakes."
+    ]
+  },
+  {
+    num: 6, label: "Submission",
+    headerColor: "#C2410C",
+    sub: "The final form step is where committed sellers abandon",
+    source: "Foundational research: 'cluttered' and 'confusing' experience · Benchmark: navigation and form friction",
+    problems: [
+      "Too many required fields at submission is a known drop-off point — sellers who've invested time building a quote abandon if the final form feels like starting over.",
+      "No immediate confirmation receipt leaves sellers uncertain whether their submission was received at all."
+    ],
+    stories: [
+      "As a seller, I want to submit my quote with minimal required fields so I can complete the process without unnecessary friction at the last step.",
+      "As a seller, I want a confirmation email immediately after submitting so I have a record of exactly what I agreed to send in."
+    ]
+  },
+  {
+    num: 7, label: "Shipping",
+    headerColor: "#0E7490",
+    sub: "Logistics friction at the moment of commitment costs conversions",
+    source: "Foundational research: shipping ease rated as key decision factor across all archetypes",
+    problems: [
+      "Requiring sellers to arrange and pay for their own shipping is a conversion killer — it adds cost, effort, and uncertainty at the moment of commitment.",
+      "Without clear packaging guidance, items arrive damaged, triggering quote adjustments and eroding the trust that survived the rest of the process.",
+      "An unclear or missed shipping deadline means B&H holds an expired quote and the seller loses value without knowing why."
+    ],
+    stories: [
+      "As a seller, I want a prepaid shipping label provided to me so I don't have to pay out of pocket or figure out logistics on my own.",
+      "As a seller, I want clear instructions on how to package my item safely so it arrives without damage and my quote isn't adjusted.",
+      "As a seller, I want a clear shipping deadline communicated at submission so I don't lose my quoted value by waiting too long."
+    ]
+  },
+  {
+    num: 8, label: "Progress Awareness",
+    headerColor: "#1E40AF",
+    overviewText: "Survey responses show customers want an online status tracker — not email updates — to follow their progress through the sell used journey. Silence after shipping is the highest-anxiety moment.",
+    sub: "After the seller ships their gear, silence is the experience",
+    source: "Foundational research: transparency post-ship is a top trust driver · MPB praised for speed and communication",
+    problems: [
+      "Silence after shipping is the highest-anxiety moment in the seller journey — sellers have handed over their gear with no visibility into what happens next.",
+      "MPB was praised by multiple research participants for fast turnaround and proactive communication; B&H has no equivalent touchpoint.",
+      "A condition adjustment with no explanation feels arbitrary and punitive — sellers need to understand exactly why their quote changed in order to accept it.",
+      "Forcing sellers to contact support for a status update is a cost center and a friction point that damages NPS."
+    ],
+    stories: [
+      "As a seller, I want status notifications at each stage (shipped, received, inspected, paid) so I'm never left wondering what's happening with my gear.",
+      "As a seller, I want to check my submission status online at any time so I can get answers without calling or emailing support.",
+      "As a seller, I want to receive a clear explanation if B&H's inspection differs from my quoted condition so I understand any price adjustment before it's finalized.",
+      "As a seller, I want to accept or reject a revised quote without having to contact anyone so the resolution is fast and on my terms."
+    ]
+  },
+  {
+    num: 9, label: "Payment & Getting Paid",
+    headerColor: "#065F46",
+    overviewText: "Payment issues are the 2nd most cited pain point in sell used surveys. Customers want ACH, they don't want to call in to use store credit, and they want to apply store credit online seamlessly.",
+    sub: "B&H is perceived as 'store credit only' — a deal-breaker for digital-native sellers",
+    source: "Foundational research: payment flexibility named as top decision driver · Store credit perceived as restriction by non-loyalists",
+    problems: [
+      "B&H is widely perceived as offering only store credit for used gear. For digital-native sellers with no immediate purchase intent, this is a stated deal-breaker that routes them to MPB or Adorama instead.",
+      "The store credit uplift advantage (higher value vs. cash) is not surfaced clearly — B&H's strongest conversion lever is hidden.",
+      "Deferring payment method selection to post-submission means sellers can't plan around their choice. They need to know options upfront to decide if the transaction is worth starting.",
+      "Slow or opaque payment issuance after acceptance breaks the final trust moment — a seller who felt good about the experience can leave with a negative impression."
+    ],
+    stories: [
+      "As a seller, I want to see all payment method options (store credit, check, direct deposit) before I start a quote so I can decide if selling to B&H is right for me.",
+      "As a seller, I want to understand the value difference between payment methods so I can make an informed choice — especially if store credit is worth more.",
+      "As a seller, I want to change my payment preference before my item is inspected so I'm not locked into a decision I made before seeing the final offer.",
+      "As a seller, I want payment issued promptly after acceptance, with a confirmation when it's sent, so I know exactly when to expect my money.",
+      "As a seller, I want store credit applied to my account automatically so I can use it on my next purchase without any extra steps."
+    ]
+  }
+];
+
+// ── BUILD OVERVIEW GRID ──────────────────────────
+var grid = document.getElementById('overview-grid');
+STAGES.forEach(function(st, i) {
+  var card = document.createElement('div');
+  card.className = 'ov-card';
+  card.onclick = function() { goTo(i + 2); }; // +2 for cover + overview
+  card.innerHTML =
+    '<div class="ov-card-head" style="background:' + st.headerColor + '">' +
+      '<div class="ov-num" style="background:rgba(255,255,255,.15)">' + st.num + '</div>' +
+      '<div class="ov-title">' + st.label + '</div>' +
+    '</div>' +
+    '<div class="ov-card-body">' +
+      '<div class="ov-problem">' + (st.overviewText || st.problems[0] || '') + '</div>' +
+    '</div>';
+  grid.appendChild(card);
+});
+
+// ── BUILD CONTENT SLIDES ─────────────────────────
+var contentWrap = document.getElementById('content-slides');
+STAGES.forEach(function(st) {
+  var problemItems = st.problems.map(function(p) {
+    return '<div class="card-item"><div class="card-dot"></div><div>' + p + '</div></div>';
+  }).join('');
+  var storyItems = st.stories.map(function(s) {
+    return '<div class="card-item"><div class="card-dot"></div><div>' + s + '</div></div>';
+  }).join('');
+
+  var div = document.createElement('div');
+  div.className = 'slide slide-content';
+  div.setAttribute('data-label', st.num + ' · ' + st.label);
+  div.innerHTML =
+    '<div class="slide-header">' +
+      '<div class="slide-header-title">' + st.num + ' &nbsp;·&nbsp; ' + st.label + '</div>' +
+      '<div class="slide-header-sub">' + st.sub + '</div>' +
+      '<div class="bh-badge">B&amp;H Used</div>' +
+    '</div>' +
+    '<div class="content-body">' +
+      '<div class="card card-problem">' +
+        '<div class="card-label">Problem to Solve</div>' +
+        '<div class="card-divider"></div>' +
+        '<div class="card-body">' + problemItems + '</div>' +
+      '</div>' +
+      '<div class="card card-stories">' +
+        '<div class="card-label">User Stories</div>' +
+        '<div class="card-divider"></div>' +
+        '<div class="card-body">' + storyItems + '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="slide-footer">' +
+      '<div class="sf-label">Stage ' + st.num + ' of 8 &nbsp;·&nbsp; B&amp;H Sell Used &nbsp;·&nbsp; 2026</div>' +
+      '<div class="sf-nav">' +
+        '<button class="sf-btn" onclick="prev()">← Prev</button>' +
+        '<button class="sf-btn" onclick="next()">Next →</button>' +
+      '</div>' +
+    '</div>';
+  contentWrap.appendChild(div);
+});
+
+
+// ── BUILD MASTER LIST ────────────────────────────
+(function() {
+  var body = document.getElementById('master-body');
+  STAGES.forEach(function(st) {
+    var group = document.createElement('div');
+    group.className = 'master-group';
+
+    var head = '<div class="master-group-head">' +
+      '<div class="master-stage-badge" style="background:' + st.headerColor + '">' + st.num + '</div>' +
+      '<div class="master-stage-name">' + st.label + '</div>' +
+    '</div>';
+
+    var rows = st.stories.map(function(s) {
+      // Parse As a / I want / so that
+      var asMatch   = s.match(/^(As a [^,]+),/i);
+      var wantMatch = s.match(/I want ([^,]+(?:,(?!\s*so)[^,]*)*),?\s*so(?:\s+that)?\s+(.+)/i);
+      var asPart    = asMatch   ? asMatch[1]   : 'As a seller';
+      var wantPart  = wantMatch ? 'I want ' + wantMatch[1].replace(/,\s*$/, '') : s;
+      var soPart    = wantMatch ? 'So that ' + wantMatch[2] : '';
+
+      return '<div class="master-story-row">' +
+        '<div class="master-story-dot" style="background:' + st.headerColor + '"></div>' +
+        '<div class="master-text-as">' + asPart + ',</div>' +
+        '<div class="master-text-want">' + wantPart + (soPart ? ',' : '') + '</div>' +
+        (soPart ? '<div class="master-text-so">' + soPart + '</div>' : '') +
+      '</div>';
+    }).join('');
+
+    group.innerHTML = head + '<div class="master-stories-list">' + rows + '</div>';
+    body.appendChild(group);
+  });
+})();
+
+// ── NAVIGATION ───────────────────────────────────
+var slides = [];
+var current = 0;
+
+function init() {
+  slides = Array.from(document.querySelectorAll('.slide'));
+  var navPills = document.getElementById('nav-pills');
+  slides.forEach(function(s, i) {
+    var pill = document.createElement('div');
+    pill.className = 'nav-pill';
+    pill.textContent = s.getAttribute('data-label') || ('Slide ' + (i+1));
+    pill.onclick = function() { goTo(i); };
+    navPills.appendChild(pill);
+  });
+  goTo(0);
+}
+
+function goTo(i) {
+  if (i < 0 || i >= slides.length) return;
+  slides[current].classList.remove('visible');
+  current = i;
+  slides[current].classList.add('visible');
+  document.querySelectorAll('.nav-pill').forEach(function(p, j) {
+    p.classList.toggle('active', j === current);
+  });
+  document.getElementById('nav-counter').textContent = (current + 1) + ' / ' + slides.length;
+  // Scroll nav pill into view
+  var activePill = document.querySelectorAll('.nav-pill')[current];
+  if (activePill) activePill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+function next() { goTo(current + 1); }
+function prev() { goTo(current - 1); }
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next();
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   prev();
+});
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>(function(){if(!sessionStorage.getItem('js_portfolio_v1'))window.location.replace('index.html');}());</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mega Menu — Ready for Development | B&H Photo</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bh-navy: #0d1b3e;
+    --bh-green: #1db954;
+    --bh-green-dim: #17a349;
+    --bh-light: #f5f7fa;
+    --bh-mid: #e2e8f0;
+    --bh-text: #1a2340;
+    --bh-muted: #64748b;
+    --bh-white: #ffffff;
+    --slide-w: 1280px;
+    --slide-h: 720px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: #0a0f1e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    gap: 24px;
+  }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  .deck-nav {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(13,27,62,0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(29,185,84,0.3);
+    border-radius: 40px;
+    padding: 10px 20px;
+    z-index: 9999;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  .deck-nav button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+  .deck-nav button:hover { background: rgba(29,185,84,0.25); }
+  .deck-nav .slide-counter {
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    min-width: 60px;
+    text-align: center;
+  }
+  .deck-nav .dot-row { display: flex; gap: 6px; }
+  .deck-nav .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .deck-nav .dot.active { background: var(--bh-green); transform: scale(1.4); }
+
+  /* ── SLIDE WRAPPER ───────────────────────────────────── */
+  .slide {
+    width: var(--slide-w);
+    min-height: var(--slide-h);
+    max-width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    display: none;
+    position: relative;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  }
+  .slide.active { display: flex; flex-direction: column; }
+
+  /* ── SHARED COMPONENTS ───────────────────────────────── */
+  .slide-header {
+    background: var(--bh-navy);
+    padding: 22px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--bh-green);
+    flex-shrink: 0;
+  }
+  .slide-header .logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--bh-white);
+    letter-spacing: 1px;
+  }
+  .slide-header .logo span { color: var(--bh-green); }
+  .slide-header .slide-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+  }
+
+  .slide-body {
+    flex: 1;
+    background: var(--bh-light);
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1.section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--bh-navy);
+    text-transform: uppercase;
+    letter-spacing: -1px;
+  }
+  h1.section-label .green { color: var(--bh-green); }
+
+  .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--bh-green);
+    margin-bottom: 8px;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .tag-green { background: rgba(29,185,84,0.15); color: var(--bh-green-dim); }
+  .tag-navy  { background: rgba(13,27,62,0.1);  color: var(--bh-navy); }
+  .tag-red   { background: rgba(220,38,38,0.12); color: #dc2626; }
+
+  .divider-v {
+    width: 1px;
+    background: var(--bh-mid);
+    align-self: stretch;
+  }
+
+  /* ── SLIDE 1: COVER ──────────────────────────────────── */
+  #s1 { flex-direction: column; }
+  #s1 .cover-bg {
+    flex: 1;
+    background: var(--bh-navy);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  #s1 .cover-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(29,185,84,0.12) 0%, transparent 65%);
+  }
+  #s1 .cover-bg::after {
+    content: '';
+    position: absolute;
+    right: -80px;
+    top: -80px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    border: 1px solid rgba(29,185,84,0.1);
+  }
+  .cover-left { position: relative; z-index: 2; }
+  .cover-left .pre {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--bh-green);
+    margin-bottom: 16px;
+  }
+  .cover-left h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 88px;
+    line-height: 0.92;
+    color: var(--bh-white);
+    text-transform: uppercase;
+    letter-spacing: -2px;
+  }
+  .cover-left h1 em {
+    font-style: normal;
+    color: var(--bh-green);
+    display: block;
+  }
+  .cover-left .sub {
+    margin-top: 24px;
+    font-size: 16px;
+    color: rgba(255,255,255,0.55);
+    max-width: 460px;
+    line-height: 1.6;
+  }
+  .cover-left .byline {
+    margin-top: 28px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 500;
+  }
+  .cover-left .byline strong { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .cover-right {
+    position: relative; z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-end;
+  }
+  .cover-pill {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 14px 20px;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 240px;
+  }
+  .cover-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--bh-green); flex-shrink: 0; }
+  .cover-pill .dot.amber { background: #f59e0b; }
+  .cover-bottom {
+    background: #0a1228;
+    display: flex;
+    padding: 16px 72px;
+    gap: 48px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    flex-shrink: 0;
+  }
+  .cover-stat { display: flex; flex-direction: column; }
+  .cover-stat .val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--bh-green);
+    line-height: 1;
+  }
+  .cover-stat .lbl {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 500;
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+  .cover-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.07);
+  }
+
+  /* ── AGENDA SLIDE ────────────────────────────────────── */
+  #s2 .slide-body {
+    flex-direction: row;
+  }
+  #s2 .agenda-left {
+    width: 360px;
+    background: var(--bh-navy);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px 40px;
+  }
+  #s2 .agenda-right {
+    flex: 1;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+  }
+  .agenda-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    background: var(--bh-white);
+    border: 1px solid var(--bh-mid);
+    transition: border-color 0.2s;
+    cursor: default;
+  }
+  .agenda-item:hover { border-color: var(--bh-green); }
+  .agenda-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--bh-green);
+    line-height: 1;
+    width: 36px;
+    flex-shrink: 0;
+  }
+  .agenda-text strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--bh-text);
+  }
+  .agenda-text span {
+    font-size: 12px;
+    color: var(--bh-muted);
+    font-weight: 400;
+  }
+
+  /* ── PROBLEMS ────────────────────────────────────────── */
+  #s3 .slide-body {
+    padding: 40px 48px;
+    gap: 28px;
+  }
+  #s3 .problems-title {
+    display: flex;
+    flex-direction: column;
+  }
+  #s3 .problems-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    flex: 1;
+  }
+  .problem-card {
+    background: var(--bh-white);
+    border: 1px solid var(--bh-mid);
+    border-radius: 10px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--bh-green);
+  }
+  .problem-card.accent::before { background: #ef4444; }
+  .problem-card.amber::before  { background: #f59e0b; }
+  .problem-icon {
+    font-size: 28px;
+    line-height: 1;
+  }
+  .problem-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--bh-text);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .problem-card p {
+    font-size: 13px;
+    color: var(--bh-muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+  .problem-card .stat-chip {
+    align-self: flex-start;
+    padding: 4px 10px;
+    background: #fff4e6;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #b45309;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 0.5px;
+  }
+  .problem-card.accent .stat-chip { background: #fee2e2; color: #dc2626; }
+
+  /* ── OBJECTIVES ──────────────────────────────────────── */
+  #s4 .slide-body {
+    flex-direction: row;
+  }
+  #s4 .obj-left {
+    background: var(--bh-navy);
+    width: 280px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px 36px;
+    gap: 20px;
+  }
+  #s4 .obj-left h1 { color: var(--bh-white); font-size: 48px; }
+  #s4 .obj-left h1 .green { color: var(--bh-green); }
+  #s4 .obj-right {
+    flex: 1;
+    padding: 40px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-content: center;
+  }
+  .obj-card {
+    background: var(--bh-white);
+    border: 1px solid var(--bh-mid);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    gap: 14px;
+  }
+  .obj-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--bh-mid);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 32px;
+  }
+  .obj-content h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--bh-text);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+  }
+  .obj-content p {
+    font-size: 12px;
+    color: var(--bh-muted);
+    line-height: 1.55;
+  }
+
+  /* ── IMPLEMENTATION ──────────────────────────────────── */
+  #s5 .slide-body {
+    padding: 36px 48px;
+    gap: 24px;
+  }
+  #s5 .impl-header { display: flex; flex-direction: column; }
+  #s5 .impl-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    flex: 1;
+  }
+  .impl-card {
+    background: var(--bh-white);
+    border: 1px solid var(--bh-mid);
+    border-radius: 10px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .impl-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--bh-navy);
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .impl-card .impl-body { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .impl-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12.5px;
+    color: var(--bh-text);
+    line-height: 1.5;
+  }
+  .impl-step .bullet {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--bh-green);
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .ticket-box {
+    background: #f0fdf4;
+    border: 1px solid rgba(29,185,84,0.25);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--bh-text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ticket-box .ticket-id {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    color: var(--bh-green-dim);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .flow-node {
+    background: var(--bh-navy);
+    color: var(--bh-white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+  }
+  .flow-arrow {
+    color: var(--bh-green);
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .flow-node.green { background: var(--bh-green); color: var(--bh-navy); }
+
+  /* ── A/B TEST ────────────────────────────────────────── */
+  #s6 .slide-body {
+    flex-direction: row;
+  }
+  #s6 .ab-left {
+    flex: 1;
+    padding: 36px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-right: 1px solid var(--bh-mid);
+  }
+  #s6 .ab-right {
+    flex: 1;
+    padding: 36px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .ab-variant {
+    flex: 1;
+    background: var(--bh-white);
+    border: 1px solid var(--bh-mid);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ab-variant h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ab-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 800;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+  }
+  .ab-badge.ctrl { background: #e2e8f0; color: #475569; }
+  .ab-badge.test { background: rgba(29,185,84,0.15); color: var(--bh-green-dim); }
+  .ab-variant ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .ab-variant ul li {
+    font-size: 12.5px;
+    color: var(--bh-text);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+  }
+  .ab-variant ul li::before {
+    content: '→';
+    color: var(--bh-green);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0px;
+  }
+  .rigor-box {
+    background: var(--bh-navy);
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .rigor-box h5 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--bh-green);
+    letter-spacing: 1px;
+  }
+  .rigor-box p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.55;
+  }
+
+  /* ── METRICS ─────────────────────────────────────────── */
+  #s7 .slide-body {
+    padding: 32px 48px;
+    gap: 20px;
+  }
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .tier-col {
+    background: var(--bh-white);
+    border: 1px solid var(--bh-mid);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .tier-header {
+    background: var(--bh-navy);
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .tier-header .tier-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--bh-green);
+    text-transform: uppercase;
+  }
+  .tier-header h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--bh-white);
+    text-transform: uppercase;
+  }
+  .tier-body {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+  .metric-item {
+    font-size: 12px;
+    color: var(--bh-text);
+    line-height: 1.4;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .metric-item::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--bh-green);
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .metric-item strong {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--bh-text);
+  }
+  .metric-item span {
+    font-size: 11px;
+    color: var(--bh-muted);
+  }
+  .decision-rule {
+    background: var(--bh-navy);
+    border-radius: 8px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .decision-rule .dr-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--bh-green);
+    flex-shrink: 0;
+  }
+  .decision-rule p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.5;
+  }
+  .decision-rule p strong { color: var(--bh-white); }
+
+  /* ── NET IMPACT ──────────────────────────────────────── */
+  #s8 .slide-body {
+    padding: 36px 48px;
+    gap: 24px;
+  }
+  #s8 .net-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+  }
+  .net-card {
+    background: var(--bh-white);
+    border: 1px solid var(--bh-mid);
+    border-radius: 10px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .net-card h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--bh-navy);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .net-card p {
+    font-size: 12.5px;
+    color: var(--bh-muted);
+    line-height: 1.6;
+  }
+  .formula-box {
+    background: #f8fafc;
+    border: 1px solid var(--bh-mid);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--bh-navy);
+    letter-spacing: 0.3px;
+  }
+  .formula-box .plus { color: var(--bh-green); }
+  .formula-box .minus { color: #dc2626; }
+  .cadence-table {
+    background: var(--bh-white);
+    border: 1px solid var(--bh-mid);
+    border-radius: 10px;
+    overflow: hidden;
+    flex: 1;
+  }
+  .cadence-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+  .cadence-table th {
+    background: var(--bh-navy);
+    color: rgba(255,255,255,0.7);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    text-align: left;
+  }
+  .cadence-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--bh-mid);
+    color: var(--bh-text);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .cadence-table td:first-child {
+    font-weight: 600;
+    color: var(--bh-navy);
+    white-space: nowrap;
+    width: 160px;
+  }
+  .cadence-table tr:last-child td { border-bottom: none; }
+
+  /* ── NEXT STEPS / CLOSE ──────────────────────────────── */
+  #s9 .slide-body { flex-direction: row; }
+  #s9 .close-left {
+    background: var(--bh-navy);
+    width: 400px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  #s9 .close-left::before {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    border: 1px solid rgba(29,185,84,0.15);
+  }
+  #s9 .close-left h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--bh-white);
+    line-height: 0.95;
+    position: relative;
+    z-index: 2;
+  }
+  #s9 .close-left h2 span { color: var(--bh-green); display: block; }
+  #s9 .close-right {
+    flex: 1;
+    padding: 40px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    justify-content: center;
+  }
+  .next-step {
+    background: var(--bh-white);
+    border: 1px solid var(--bh-mid);
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .next-step .ns-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--bh-green);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 28px;
+  }
+  .next-step h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--bh-text);
+    margin-bottom: 3px;
+  }
+  .next-step p {
+    font-size: 12px;
+    color: var(--bh-muted);
+    line-height: 1.5;
+  }
+  .owner-chip {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 2px 8px;
+    background: rgba(13,27,62,0.08);
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: 'Barlow Condensed', sans-serif;
+    color: var(--bh-navy);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 1 — COVER
+═══════════════════════════════════════════════════════ -->
+<div class="slide active" id="s1">
+  <div class="cover-bg">
+    <div class="cover-left">
+      <div class="pre">B&H Photo · Search & Navigation</div>
+      <h1>Mega<em>Menu</em></h1>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:rgba(255,255,255,0.9);text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Ready for Development</div>
+      <div class="sub">Merchandiser-controlled navigation with engagement-optimized category placement, deep taxonomy access, and A/B-tested launch.</div>
+      <div class="byline">Presented by <strong>Jerel Smith</strong>, Senior PM — FIND &nbsp;·&nbsp; June 2026</div>
+    </div>
+    <div class="cover-right">
+      <div class="cover-pill"><span class="dot"></span>UX Complete — Dev Handoff Ready</div>
+      <div class="cover-pill"><span class="dot amber"></span>A/B Test Planned at Launch</div>
+      <div class="cover-pill"><span class="dot"></span>MRCH-973 Workflow Active</div>
+      <div class="cover-pill"><span class="dot amber"></span>Reviewing with Yaffit & Naftuli</div>
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-stat"><div class="val">~190k</div><div class="lbl">Monthly mega menu interactions</div></div>
+    <div class="cover-divider"></div>
+    <div class="cover-stat"><div class="val">56.7%</div><div class="lbl">Drop-off after first click</div></div>
+    <div class="cover-divider"></div>
+    <div class="cover-stat"><div class="val">Avg. 4</div><div class="lbl">Category depth before destination</div></div>
+    <div class="cover-divider"></div>
+    <div class="cover-stat"><div class="val">13</div><div class="lbl">Top-level categories managed</div></div>
+    <div class="cover-divider"></div>
+    <div class="cover-stat"><div class="val">0</div><div class="lbl">Merch control over menu today</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 2 — AGENDA
+═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="slide-header">
+    <div class="logo">B&<span>H</span> PHOTO</div>
+    <div class="slide-tag">Agenda</div>
+  </div>
+  <div class="slide-body">
+    <div class="agenda-left">
+      <div class="eyebrow">Today's Session</div>
+      <h1 class="section-label" style="font-size:42px;">What we're <span class="green">covering</span></h1>
+      <p style="margin-top:16px;font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;">From the customer pain points driving this initiative through the metrics we'll use to prove it worked.</p>
+    </div>
+    <div class="agenda-right">
+      <div class="agenda-item">
+        <div class="agenda-num">01</div>
+        <div class="agenda-text">
+          <strong>Problems to Solve</strong>
+          <span>Misaligned category order, scanning friction, deep tree inaccessibility</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">02</div>
+        <div class="agenda-text">
+          <strong>Product Objectives</strong>
+          <span>Six strategic goals for the redesigned mega menu experience</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">03</div>
+        <div class="agenda-text">
+          <strong>Implementation Strategy</strong>
+          <span>Merch tool, Nav Arch workflow, MRCH-973, Shalom Oster collaboration</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">04</div>
+        <div class="agenda-text">
+          <strong>A/B Test Plan</strong>
+          <span>Control vs. new design, statistical rigor, launch approach</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">05</div>
+        <div class="agenda-text">
+          <strong>Success Metrics</strong>
+          <span>Four-tier KPI framework: Engagement → Traffic → Conversion → Revenue</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 3 — PROBLEMS
+═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="slide-header">
+    <div class="logo">B&<span>H</span> PHOTO</div>
+    <div class="slide-tag">01 · Problems to Solve</div>
+  </div>
+  <div class="slide-body">
+    <div class="problems-title">
+      <div class="eyebrow">Why this matters</div>
+      <h1 class="section-label">Problems <span class="green">to Solve</span></h1>
+    </div>
+    <div class="problems-grid">
+      <div class="problem-card accent">
+        <div class="problem-icon">📉</div>
+        <h3>Order vs. Engagement Mismatch</h3>
+        <p>Featured image slots don't reflect actual customer engagement rankings. In Lighting, Fluorescent Lights holds slot 3 but ranks <strong>#17</strong> in engagement — prime real estate wasted on low-interest categories.</p>
+        <div class="stat-chip">e.g. Fluorescent Lights: slot 3, rank 17</div>
+      </div>
+      <div class="problem-card amber">
+        <div class="problem-icon">👁️</div>
+        <h3>Non-Standard Scanning Pattern</h3>
+        <p>The current mega menu layout does not adhere to F or Z scanning patterns. After the top-4 featured items, the list renders in a multi-column grid that forces non-linear reading — creating measurable friction for customers.</p>
+        <div class="stat-chip" style="background:#fef3c7;color:#92400e;">Category landing pages DO use Z-pattern</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🌳</div>
+        <h3>Deep Taxonomy Inaccessibility</h3>
+        <p>The category tree reaches <strong>7 levels deep</strong>. The average browsing path requires <strong>3–4 clicks</strong> just to reach a meaningful sub-category. The worst-case scenario requires 7–8 interactions with very little value along the way.</p>
+        <div class="stat-chip" style="background:#ede9fe;color:#6d28d9;">Avg. depth: 4 · Max: 7 levels</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🎛️</div>
+        <h3>No Merchandising Control</h3>
+        <p>Merchandisers have no mechanism to promote seasonal, new, or strategically important categories into featured slots. All category changes require developer tickets with no business-logic layer in between.</p>
+      </div>
+      <div class="problem-card amber">
+        <div class="problem-icon">🔍</div>
+        <h3>Search Doesn't Substitute</h3>
+        <p>Highly specific categories like "Professional Video Degaussers Accessories" return only <strong>1 search result</strong>. The curated taxonomy tree is irreplaceable for surfacing this breadth — but customers can't efficiently navigate to it.</p>
+        <div class="stat-chip" style="background:#fef3c7;color:#92400e;">1 result for "Prof. Video Degaussers Acc."</div>
+      </div>
+      <div class="problem-card accent">
+        <div class="problem-icon">📱</div>
+        <h3>Screen Height Blind Spot</h3>
+        <p>On screens under 800px, users see only the top 4 featured items plus "See More." The high engagement rate on "See More" across multiple categories signals customers aren't finding what they want in the featured slots shown.</p>
+        <div class="stat-chip">Mobile: 56.7% drop-off at step 1</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 4 — OBJECTIVES
+═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="slide-header">
+    <div class="logo">B&<span>H</span> PHOTO</div>
+    <div class="slide-tag">02 · Product Objectives</div>
+  </div>
+  <div class="slide-body">
+    <div class="obj-left">
+      <div class="eyebrow">What success looks like</div>
+      <h1 class="section-label" style="font-size:46px;color:white;">Product <span class="green">Objectives</span></h1>
+      <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;margin-top:8px;">Six capability goals that together transform the mega menu from a static navigation element into a dynamic, merchandisable surface.</p>
+    </div>
+    <div class="obj-right">
+      <div class="obj-card">
+        <div class="obj-num">01</div>
+        <div class="obj-content">
+          <h4>Merchandising Showcase</h4>
+          <p>Empower merchandisers to promote new, seasonal, or strategically important categories into featured slots — without developer involvement.</p>
+        </div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-num">02</div>
+        <div class="obj-content">
+          <h4>Maximum Category Depth</h4>
+          <p>Let customers access L3/L4/L5 sub-categories directly from the mega menu flyout — eliminating 2–4 intermediate clicks from the average browsing path.</p>
+        </div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-num">03</div>
+        <div class="obj-content">
+          <h4>Engagement-Driven Order</h4>
+          <p>Slot assignments should reflect actual customer engagement data. High-engagement categories surface first; low-engagement, low-business-focus categories move down.</p>
+        </div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-num">04</div>
+        <div class="obj-content">
+          <h4>Customer Guidance Funnels</h4>
+          <p>Lead customers into expert-driven journeys for popular use cases (e.g. Podcasting by Application). The menu becomes an entry point to curated experiences, not just links.</p>
+        </div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-num">05</div>
+        <div class="obj-content">
+          <h4>Promote Savings Opportunities</h4>
+          <p>Surface contextual Specials and seasonal campaign links within the menu flyout — presented in the right category context at the moment of browsing intent.</p>
+        </div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-num">06</div>
+        <div class="obj-content">
+          <h4>Dynamic Learning Opportunities</h4>
+          <p>Enrich the customer journey with contextual Explora content — buying guides, hands-on reviews, and video tutorials — surfaced inline within the relevant category flyout.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 5 — IMPLEMENTATION STRATEGY
+═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="slide-header">
+    <div class="logo">B&<span>H</span> PHOTO</div>
+    <div class="slide-tag">03 · Implementation Strategy</div>
+  </div>
+  <div class="slide-body">
+    <div class="impl-header">
+      <div class="eyebrow">How we get there</div>
+      <h1 class="section-label">Implementation <span class="green">Strategy</span></h1>
+    </div>
+    <div class="impl-grid">
+      <div class="impl-card">
+        <h3>🎛️ Merchandising Admin Tool</h3>
+        <div class="impl-body">
+          <div class="impl-step"><div class="bullet"></div><span>React-based internal tool allowing merchandisers to assign taxonomy categories to 30 slots per top-level category (5 featured, 25 standard)</span></div>
+          <div class="impl-step"><div class="bullet"></div><span>Supports L2, L3, and L4 category promotions — any node can be elevated to a featured or standard slot regardless of its natural tree depth</span></div>
+          <div class="impl-step"><div class="bullet"></div><span>Drag-and-drop reordering, section label/header slots, and a live mega menu preview mode</span></div>
+          <div class="impl-step"><div class="bullet"></div><span>Explora URL configuration per category for inline learning content in the flyout</span></div>
+        </div>
+        <div class="ticket-box"><span class="ticket-id">PROTOTYPE</span> <span>UX complete — available for engineering review at github.com/jerelProductManager</span></div>
+      </div>
+      <div class="impl-card">
+        <h3>🔄 Change Request Workflow</h3>
+        <div class="impl-body">
+          <div class="impl-step"><div class="bullet"></div><span>Merchandising submits category promotion/demotion requests via <strong>MRCH-973</strong> — a standardized ticket template specifying the target category, requested slot, and the business goal for the change</span></div>
+          <div class="impl-step"><div class="bullet"></div><span>Navigation Architecture (Nav Arch / WebDesk) receives MRCH-973 tickets and implements approved changes in the production taxonomy</span></div>
+          <div class="impl-step"><div class="bullet"></div><span>Program Manager <strong>Shalom Oster</strong> facilitates the MRCH-973 pipeline, ensuring ticket quality and routing to Nav Arch</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-node">Merchandising</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node green">MRCH-973</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">Shalom Oster</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">Nav Arch</div>
+        </div>
+      </div>
+      <div class="impl-card">
+        <h3>📐 UX & Technical Handoff</h3>
+        <div class="impl-body">
+          <div class="impl-step"><div class="bullet"></div><span>UX design is complete — flyout column behavior, featured vs. standard slot layout, "Shop & Learn" utility column, and scanning pattern improvements are all spec'd</span></div>
+          <div class="impl-step"><div class="bullet"></div><span>Navigation Architecture Manual serves as the source of truth for category hierarchy and DES: ROOT SHOW configuration</span></div>
+          <div class="impl-step"><div class="bullet"></div><span>SOLR internal representation provides the canonical category ID system that the merch tool's slot assignments map to</span></div>
+        </div>
+        <div class="ticket-box"><span class="ticket-id">STATUS</span> <span>Ready to generate WebDesk / engineering tickets from completed UX</span></div>
+      </div>
+      <div class="impl-card">
+        <h3>🚀 Launch & Iteration Plan</h3>
+        <div class="impl-body">
+          <div class="impl-step"><div class="bullet"></div><span>Initial launch as an <strong>A/B test</strong>: Control (current state) vs. Treatment (new expansive design) measured across the four-tier KPI framework</span></div>
+          <div class="impl-step"><div class="bullet"></div><span>Merchandisers use MRCH-973 to propose initial category reorders informed by Q1–Q2 2025 engagement data (e.g. promoting "See More" items that over-perform their slot rank)</span></div>
+          <div class="impl-step"><div class="bullet"></div><span>Post-launch cadence: real-time CTR monitoring, per-change readouts once significant, weekly RPI leaderboard to leadership</span></div>
+        </div>
+        <div class="ticket-box"><span class="ticket-id">GOAL</span> <span>Positive net Δrevenue + promoted slot RPI ≥ displaced slot RPI</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 6 — A/B TEST PLAN
+═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="slide-header">
+    <div class="logo">B&<span>H</span> PHOTO</div>
+    <div class="slide-tag">04 · A/B Test Plan</div>
+  </div>
+  <div class="slide-body">
+    <div class="ab-left">
+      <div>
+        <div class="eyebrow">Launch Approach</div>
+        <h1 class="section-label">A/B <span class="green">Test Plan</span></h1>
+      </div>
+      <div class="ab-variant" style="border-top:3px solid #94a3b8;">
+        <h4 style="color:#475569;"><span class="ab-badge ctrl">CONTROL</span> Current State</h4>
+        <ul>
+          <li>Existing mega menu with static, developer-set category order</li>
+          <li>No L3/L4 depth promotion — customers click through intermediate pages</li>
+          <li>Subpar Explora and specials experience in flyout</li>
+          <li>Non-F/Z scanning pattern in sub-category list</li>
+        </ul>
+      </div>
+      <div class="ab-variant" style="border-top:3px solid var(--bh-green);">
+        <h4 style="color:var(--bh-green-dim);"><span class="ab-badge test">TREATMENT</span> New Design</h4>
+        <ul>
+          <li>Merchandiser-configured slot order based on engagement data</li>
+          <li>L3/L4 categories directly accessible from mega menu flyout</li>
+          <li>Shop & Learn column: Specials, Used, New + Explora content</li>
+          <li>Improved scanning pattern with sectioned column layout</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ab-right">
+      <div>
+        <div class="eyebrow">Statistical Rigor</div>
+        <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--bh-navy);text-transform:uppercase;">Measurement Standards</h2>
+      </div>
+      <div class="rigor-box">
+        <h5>Methodology</h5>
+        <p>Random session-level split: portion of visitors served new layout simultaneously. Same season, campaigns, and traffic mix for both groups — causal attribution for placement changes.</p>
+      </div>
+      <div class="rigor-box">
+        <h5>Significance Threshold</h5>
+        <p>Don't act on lift until it clears <strong style="color:var(--bh-green);">95% confidence</strong>. Runtime determined before looking at results to avoid early stopping. High-traffic slots reach significance faster; long-tail categories need longer windows.</p>
+      </div>
+      <div class="rigor-box">
+        <h5>Baseline Capture</h5>
+        <p>2–4 week clean baseline window (matched day-of-week, no holiday distortion) captured for all Tier 1–4 KPIs on affected slots before any change goes live.</p>
+      </div>
+      <div class="rigor-box">
+        <h5>Novelty Effect Guard</h5>
+        <p>New placement often spikes then settles as repeat visitors adapt. Let results stabilize before reading steady state. Segment by new vs. returning, device, and logged-in vs. guest — aggregate can hide both a win and a loss.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 7 — SUCCESS METRICS
+═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s7">
+  <div class="slide-header">
+    <div class="logo">B&<span>H</span> PHOTO</div>
+    <div class="slide-tag">05 · Success Metrics</div>
+  </div>
+  <div class="slide-body">
+    <div>
+      <div class="eyebrow">KPI Framework</div>
+      <h1 class="section-label">Success <span class="green">Metrics</span></h1>
+      <p style="font-size:13px;color:var(--bh-muted);margin-top:4px;">A placement change should show effects cascading top to bottom. Menu engagement moves first; revenue confirms. Always lead with <strong>rates</strong> over counts.</p>
+    </div>
+    <div class="metrics-grid">
+      <div class="tier-col">
+        <div class="tier-header">
+          <div class="tier-num">Tier 1</div>
+          <h4>Menu Engagement</h4>
+        </div>
+        <div class="tier-body">
+          <div class="metric-item"><div><strong>Slot CTR</strong><span>Clicks ÷ impressions — primary signal a placement change is working</span></div></div>
+          <div class="metric-item"><div><strong>Slot Impressions</strong><span>Times the slot rendered/was visible to a user</span></div></div>
+          <div class="metric-item"><div><strong>Hover / Dwell Rate</strong><span>Share of menu opens triggering a flyout — indicates category relevance</span></div></div>
+          <div class="metric-item"><div><strong>Position-Normalized CTR</strong><span>CTR adjusted for slot rank — compares intrinsic appeal across positions</span></div></div>
+        </div>
+      </div>
+      <div class="tier-col">
+        <div class="tier-header">
+          <div class="tier-num">Tier 2</div>
+          <h4>Navigation & Traffic</h4>
+        </div>
+        <div class="tier-body">
+          <div class="metric-item"><div><strong>Category Page Sessions</strong><span>Sessions reaching the category page, split by entry path</span></div></div>
+          <div class="metric-item"><div><strong>Menu-Entry Share</strong><span>Share of category traffic arriving via the mega menu vs. search or homepage</span></div></div>
+          <div class="metric-item"><div><strong>Bounce / Immediate Exit Rate</strong><span>Menu-sourced sessions leaving without further interaction — quality signal</span></div></div>
+          <div class="metric-item"><div><strong>Assisted Reach</strong><span>Downstream product pages viewed per menu-sourced session</span></div></div>
+        </div>
+      </div>
+      <div class="tier-col">
+        <div class="tier-header">
+          <div class="tier-num">Tier 3</div>
+          <h4>Conversion</h4>
+        </div>
+        <div class="tier-body">
+          <div class="metric-item"><div><strong>Add-to-Cart Rate</strong><span>Menu-sourced sessions adding ≥1 item ÷ menu-sourced sessions</span></div></div>
+          <div class="metric-item"><div><strong>Product-Detail View Rate</strong><span>Menu-sourced sessions reaching a PDP — funnel entry indicator</span></div></div>
+          <div class="metric-item"><div><strong>Cart-to-Checkout Rate</strong><span>Progression from cart to checkout start — intent quality check</span></div></div>
+          <div class="metric-item"><div><strong>Purchase CVR</strong><span>Menu-sourced sessions ending in an order — end-to-end conversion</span></div></div>
+        </div>
+      </div>
+      <div class="tier-col">
+        <div class="tier-header">
+          <div class="tier-num">Tier 4</div>
+          <h4>Revenue & Value</h4>
+        </div>
+        <div class="tier-body">
+          <div class="metric-item"><div><strong>Attributed Revenue</strong><span>Order value attributable to menu-sourced sessions per category</span></div></div>
+          <div class="metric-item"><div><strong>Revenue per Impression (RPI)</strong><span>Real estate productivity — the key cross-slot comparator</span></div></div>
+          <div class="metric-item"><div><strong>Revenue per Click (RPC)</strong><span>Revenue efficiency per click — signals quality of demand, not just volume</span></div></div>
+          <div class="metric-item"><div><strong>Average Order Value (AOV)</strong><span>Basket size of menu-sourced orders; margin-weight where available</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="decision-rule">
+      <div class="dr-label">Decision Rule</div>
+      <p>A placement change is a <strong>success</strong> when — after reaching significance — it produces a <strong>positive net Δrevenue</strong> and the promoted slot's <strong>RPI meets or beats the slot it displaced</strong>, without degrading conversion quality. Anything else is a reshuffle or a revert.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 8 — NET IMPACT & REPORTING
+═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="slide-header">
+    <div class="logo">B&<span>H</span> PHOTO</div>
+    <div class="slide-tag">05 · Net Impact & Reporting Cadence</div>
+  </div>
+  <div class="slide-body">
+    <div>
+      <div class="eyebrow">Measuring the full picture</div>
+      <h1 class="section-label">Net Impact & <span class="green">Reporting</span></h1>
+    </div>
+    <div class="net-grid">
+      <div class="net-card">
+        <h4>📊 The Net Impact Formula</h4>
+        <p>Every promotion forces a demotion. Gains and losses must both be measured. We never declare a win on the promoted category alone.</p>
+        <div class="formula-box">
+          Net Δrev = <span class="plus">+Δrev (promoted)</span><br>
+          <span style="margin-left:56px;"><span class="minus">+ Δrev (demoted)</span> <em style="color:#94a3b8;font-size:11px;">// usually negative</em></span><br>
+          <span style="margin-left:56px;"><span class="plus">+ Δrev (adjacent slots)</span></span>
+        </div>
+        <p>Three outcomes: <strong>Net positive</strong> → keep. <strong>Reshuffle</strong> → cosmetic, not productive. <strong>Net negative</strong> → revert.</p>
+      </div>
+      <div class="net-card">
+        <h4>🔍 Demotion Intelligence</h4>
+        <p>A demoted category whose traffic <em>barely moves</em> is the best candidate to demote — it frees prime real estate at minimal cost. Demotion analysis is how merchandising finds these candidates.</p>
+        <p style="margin-top:8px;">Watch for <strong>resilience</strong>: if demoted category traffic holds via search or direct, it was over-merchandised. Watch for <strong>collapse</strong>: if its revenue drops more than the promoted category gained, the trade is net-negative.</p>
+      </div>
+      <div class="net-card">
+        <h4>⚠️ Cannibalization Watch</h4>
+        <p>If total department sales are flat but the promoted sub-category grew, the gain mostly cannibalized sibling categories rather than creating incremental demand.</p>
+        <p style="margin-top:8px;">Always measure total category-level demand alongside individual slot performance to distinguish <strong>real growth</strong> from <strong>internal redistribution</strong>.</p>
+      </div>
+    </div>
+    <div class="cadence-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Cadence</th>
+            <th>Audience</th>
+            <th>Content</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Real-time / Daily</td>
+            <td>Merchandising operators</td>
+            <td>Slot CTR, impressions, anomaly flags — catch broken or mis-performing placements fast</td>
+          </tr>
+          <tr>
+            <td>Per-change readout</td>
+            <td>Merchandising + Product</td>
+            <td>Full Tier 1–4 cascade + net-impact verdict for each slot swap, once statistically significant</td>
+          </tr>
+          <tr>
+            <td>Weekly</td>
+            <td>Merch leadership</td>
+            <td>Top movers, RPI leaderboard by slot, cumulative net revenue impact from menu changes</td>
+          </tr>
+          <tr>
+            <td>Monthly / Quarterly</td>
+            <td>VPs / Stakeholders</td>
+            <td>Initiative-level impact: incremental revenue, engagement trend, strategic learnings</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 9 — NEXT STEPS
+═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s9">
+  <div class="slide-header">
+    <div class="logo">B&<span>H</span> PHOTO</div>
+    <div class="slide-tag">Next Steps</div>
+  </div>
+  <div class="slide-body">
+    <div class="close-left">
+      <h2>Next<span>Steps</span></h2>
+      <p style="color:rgba(255,255,255,0.45);font-size:13px;line-height:1.7;margin-top:20px;position:relative;z-index:2;">UX is complete. We're ready to move into engineering scoping and A/B test infrastructure setup.</p>
+    </div>
+    <div class="close-right">
+      <div class="next-step">
+        <div class="ns-num">1</div>
+        <div>
+          <h4>VP Approval & Engineering Scoping</h4>
+          <p>Green light from Yaffit & Naftuli to generate WebDesk engineering tickets from the completed UX. Engineering scopes implementation effort and confirms A/B test infrastructure availability.</p>
+          <span class="owner-chip">Jerel Smith + VPs</span>
+        </div>
+      </div>
+      <div class="next-step">
+        <div class="ns-num">2</div>
+        <div>
+          <h4>MRCH-973 Workflow Launch</h4>
+          <p>Activate the MRCH-973 ticket template with Shalom Oster. Merchandising submits initial category reorder proposals based on the March–June 2025 engagement data reviewed in this deck.</p>
+          <span class="owner-chip">Shalom Oster · Merchandising</span>
+        </div>
+      </div>
+      <div class="next-step">
+        <div class="ns-num">3</div>
+        <div>
+          <h4>Baseline Capture Window</h4>
+          <p>Run a clean 2–4 week baseline measurement window for all Tier 1–4 KPIs across affected slots — matched day-of-week, no holiday distortion. No change goes live without a clean baseline on record.</p>
+          <span class="owner-chip">Analytics · Product</span>
+        </div>
+      </div>
+      <div class="next-step">
+        <div class="ns-num">4</div>
+        <div>
+          <h4>A/B Test Launch</h4>
+          <p>Deploy treatment to a random session split alongside the control. Run until 95% confidence is reached. Read net Δrevenue and RPI comparisons before declaring any placement a success.</p>
+          <span class="owner-chip">Engineering · Analytics · Merchandising</span>
+        </div>
+      </div>
+      <div class="next-step">
+        <div class="ns-num">5</div>
+        <div>
+          <h4>Ongoing Merch Cadence</h4>
+          <p>Post-launch: weekly RPI leaderboard to merch leadership, monthly initiative rollup to stakeholders. MRCH-973 becomes the standing channel for all future category placement changes.</p>
+          <span class="owner-chip">Jerel Smith · Shalom Oster</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     NAV
+═══════════════════════════════════════════════════════ -->
+<nav class="deck-nav">
+  <button id="prevBtn" onclick="navigate(-1)">&#8592;</button>
+  <div class="dot-row" id="dotRow"></div>
+  <span class="slide-counter" id="counter">1 / 9</span>
+  <button id="nextBtn" onclick="navigate(1)">&#8594;</button>
+</nav>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotRow = document.getElementById('dotRow');
+  const counter = document.getElementById('counter');
+  let current = 0;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotRow.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dotRow.children[current].classList.remove('active');
+    current = Math.max(0, Math.min(n, slides.length - 1));
+    slides[current].classList.add('active');
+    dotRow.children[current].classList.add('active');
+    counter.textContent = `${current + 1} / ${slides.length}`;
+  }
+
+  function navigate(dir) { goTo(current + dir); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+  });
+</script>
+</body>
+</html>

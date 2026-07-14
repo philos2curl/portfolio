@@ -1,0 +1,1541 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head><script>(function(){if(!sessionStorage.getItem('js_portfolio_v1'))window.location.replace('index.html');}());</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Condition Rating System — B&H Used</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   BASE
+============================================= */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy:       #0F1F4B;
+  --navy-mid:   #1A3066;
+  --navy-light: #2A4080;
+  --gold:       #C8993A;
+  --gold-light: #E8B84B;
+  --gold-dim:   rgba(200,153,58,0.12);
+  --gold-border:rgba(200,153,58,0.30);
+  --white:      #FFFFFF;
+  --off-white:  #F7F8FC;
+  --gray-100:   #EEF0F6;
+  --gray-200:   #DDE1EE;
+  --gray-300:   #C5CAD9;
+  --gray-500:   #7B82A0;
+  --gray-700:   #3D4468;
+  --font: 'Montserrat', sans-serif;
+  --shadow-sm: 0 2px 8px rgba(15,31,75,0.06);
+  --shadow-md: 0 4px 24px rgba(15,31,75,0.10);
+  --shadow-lg: 0 8px 40px rgba(15,31,75,0.14);
+  /* condition colors on light bg */
+  --exc: #22A05A;
+  --vgd: #2A6FC4;
+  --gd:  #B07D20;
+  --fr:  #C86B1A;
+  --rgh: #B83232;
+}
+
+html, body {
+  height: 100%;
+  background: var(--white);
+  color: var(--navy);
+  font-family: var(--font);
+  overflow: hidden;
+}
+
+/* =============================================
+   TOP ACCENT BAR (fixed)
+============================================= */
+.top-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 60%, var(--gold-light) 100%);
+  z-index: 1000;
+}
+
+/* =============================================
+   SLIDE ENGINE
+============================================= */
+.deck {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  padding-top: 4px;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  padding-top: 4px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 72px;
+  padding-right: 72px;
+  padding-bottom: 72px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  overflow: hidden;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.slide.exit {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+/* Dark slides (cover, close) */
+.slide-dark {
+  background: var(--navy);
+  color: var(--white);
+}
+
+/* Light slides */
+.slide-light {
+  background: var(--white);
+  color: var(--navy);
+}
+
+/* Off-white slides */
+.slide-off {
+  background: var(--off-white);
+  color: var(--navy);
+}
+
+/* =============================================
+   SHARED SLIDE ELEMENTS
+============================================= */
+.slide-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0 0;
+  margin-bottom: 28px;
+  flex-shrink: 0;
+}
+
+.slide-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eyebrow-rule {
+  width: 22px; height: 2px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+.eyebrow-text {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* On dark slides */
+.slide-dark .eyebrow-text { color: var(--gold); }
+
+.slide-num-badge {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  color: var(--gray-500);
+}
+
+.slide-dark .slide-num-badge { color: rgba(255,255,255,0.3); }
+
+.slide-h1 {
+  font-size: clamp(36px, 4.5vw, 56px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -.025em;
+  margin-bottom: 20px;
+}
+
+.slide-dark .slide-h1 { color: var(--white); }
+.slide-light .slide-h1, .slide-off .slide-h1 { color: var(--navy); }
+
+.accent { color: var(--gold); }
+
+.slide-h2 {
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  margin-bottom: 24px;
+  color: var(--navy);
+}
+
+.slide-dark .slide-h2 { color: var(--white); }
+
+.slide-body { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+/* =============================================
+   NAV BAR
+============================================= */
+.nav-bar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--navy);
+  border-radius: 100px;
+  padding: 10px 22px;
+  z-index: 999;
+  box-shadow: 0 8px 32px rgba(15,31,75,0.25);
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  font-size: 15px;
+  width: 26px; height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: color .2s, background .2s;
+  font-family: var(--font);
+}
+
+.nav-btn:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+.nav-btn:disabled { opacity: 0.2; cursor: default; }
+.nav-btn:disabled:hover { background: none; }
+
+.dots { display: flex; align-items: center; gap: 5px; }
+
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.25);
+  cursor: pointer;
+  transition: all .25s;
+}
+
+.dot.active { background: var(--gold); width: 20px; }
+.dot:hover:not(.active) { background: rgba(255,255,255,0.5); }
+
+.slide-counter {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: rgba(255,255,255,0.3);
+  min-width: 38px;
+  text-align: right;
+  font-family: var(--font);
+}
+
+/* =============================================
+   SLIDE 1 — COVER (dark)
+============================================= */
+.cover-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 20px;
+}
+
+.cover-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 7px 16px;
+  border-radius: 6px;
+  margin-bottom: 32px;
+  width: fit-content;
+}
+
+.cover-title {
+  font-size: clamp(44px, 6vw, 76px);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -.03em;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+
+.cover-sub {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.55);
+  max-width: 520px;
+  margin-bottom: 52px;
+}
+
+.cover-meta {
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 32px;
+}
+
+.meta-block {
+  padding-right: 36px;
+  margin-right: 36px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.meta-block:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+
+.meta-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 6px;
+}
+
+.meta-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.meta-value.names { font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.65); line-height: 1.7; }
+.meta-value.names strong { color: var(--white); font-weight: 700; }
+
+/* =============================================
+   SLIDE 2 — PROBLEM
+============================================= */
+.problem-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  overflow: hidden;
+}
+
+.prob-left { display: flex; flex-direction: column; gap: 10px; }
+
+.prob-card {
+  display: flex;
+  gap: 14px;
+  padding: 15px 18px;
+  background: var(--off-white);
+  border: 1px solid var(--gray-100);
+  border-left: 3px solid var(--gold);
+  border-radius: 10px;
+}
+
+.prob-num {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--gold);
+  opacity: .3;
+  line-height: 1;
+  min-width: 28px;
+}
+
+.prob-body h3 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.prob-body p  { font-size: 11px; font-weight: 400; color: var(--gray-500); line-height: 1.55; }
+
+.prob-right { display: flex; flex-direction: column; gap: 18px; }
+
+.scale-block-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  margin-bottom: 8px;
+}
+
+.buy-scale { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.scale-pill {
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--navy);
+  min-width: 52px;
+  text-align: center;
+}
+
+.scale-pill.dim {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-500);
+  border-style: dashed;
+}
+
+.sell-scale { display: flex; gap: 6px; }
+
+.sell-pill {
+  background: rgba(184,50,50,0.06);
+  border: 1.5px dashed rgba(184,50,50,0.3);
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-weight: 800;
+  font-size: 16px;
+  color: #B83232;
+  min-width: 52px;
+  text-align: center;
+}
+
+.mismatch-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: rgba(184,50,50,0.05);
+  border: 1px solid rgba(184,50,50,0.18);
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #B83232;
+  line-height: 1.5;
+}
+
+.industry-note {
+  background: var(--off-white);
+  border: 1px solid var(--gray-100);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+/* =============================================
+   SLIDE 3 — CUSTOMER VOICE
+============================================= */
+.quotes-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.quote-card {
+  background: var(--off-white);
+  border: 1px solid var(--gray-100);
+  border-radius: 12px;
+  padding: 20px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.quote-top-border {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 12px 12px 0 0;
+}
+
+.quote-mark {
+  font-size: 48px;
+  line-height: .7;
+  font-weight: 900;
+  color: var(--gold);
+  opacity: .25;
+}
+
+.quote-text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--gray-700);
+  font-style: italic;
+  flex: 1;
+}
+
+.quote-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--gray-100);
+}
+
+.quote-tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.qt-trust  { background: rgba(34,160,90,0.1);  color: var(--exc); }
+.qt-gap    { background: rgba(42,111,196,0.1); color: var(--vgd); }
+.qt-align  { background: rgba(184,50,50,0.08); color: var(--rgh); }
+.qt-disc   { background: rgba(176,125,32,0.1); color: var(--gd); }
+
+.quote-score { font-size: 10px; font-weight: 600; color: var(--gray-300); }
+
+/* =============================================
+   SLIDE 4 — COMPETITIVE
+============================================= */
+.comp-table {
+  flex: 1;
+  border: 1.5px solid var(--gray-100);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.comp-row {
+  display: grid;
+  grid-template-columns: 140px 120px 1fr 200px;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.comp-row:last-child { border-bottom: none; }
+
+.comp-row.header-row { background: var(--off-white); }
+
+.comp-row.bh-row {
+  background: var(--gold-dim);
+  border-left: 3px solid var(--gold);
+}
+
+.comp-cell {
+  padding: 13px 16px;
+  font-size: 12px;
+  border-right: 1px solid var(--gray-100);
+  display: flex;
+  align-items: center;
+}
+
+.comp-cell:last-child { border-right: none; }
+
+.header-row .comp-cell {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+}
+
+.comp-brand { font-weight: 700; color: var(--navy); }
+.comp-brand.bh-brand { color: var(--gold); }
+.comp-type  { font-size: 11px; font-weight: 500; color: var(--gray-500); }
+.comp-tiers { font-size: 11px; color: var(--gray-700); line-height: 1.5; }
+.comp-note  { font-size: 11px; color: var(--gray-500); }
+.comp-note.good    { color: var(--exc); font-weight: 600; }
+.comp-note.concern { color: var(--rgh); font-weight: 500; }
+
+/* =============================================
+   SLIDE 5 — CURRENT SCALE
+============================================= */
+.curr-list { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+
+.curr-row {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 18px;
+  background: var(--off-white);
+  border: 1px solid var(--gray-100);
+  border-radius: 8px;
+}
+
+.curr-code { font-size: 18px; font-weight: 800; color: var(--navy); font-family: var(--font); }
+
+.curr-desc { font-size: 12px; color: var(--gray-500); font-weight: 400; }
+
+.curr-tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.t-num    { background: rgba(42,111,196,0.1);  color: var(--vgd); }
+.t-ambig  { background: rgba(176,125,32,0.1);  color: var(--gd); }
+.t-hidden { background: rgba(184,50,50,0.08);  color: var(--rgh); }
+.t-spec   { background: rgba(123,130,160,0.1); color: var(--gray-500); }
+
+/* =============================================
+   SLIDE 6 — NEW SCALE
+============================================= */
+.new-list { flex: 1; display: flex; flex-direction: column; gap: 9px; }
+
+.new-row {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  background: var(--off-white);
+  border: 1.5px solid var(--gray-100);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+
+.new-row:hover { border-color: var(--gold-border); }
+
+.new-label {
+  padding: 14px 18px;
+  border-right: 1px solid var(--gray-100);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.new-cond-name {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+.cond-bars { display: flex; gap: 3px; }
+.cond-bar-seg { height: 3px; flex: 1; border-radius: 2px; background: var(--gray-200); }
+
+.new-content {
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.new-short { font-size: 13px; font-weight: 700; color: var(--navy); }
+.new-long  { font-size: 11px; font-weight: 400; color: var(--gray-500); line-height: 1.55; }
+
+/* Condition colors */
+.c-exc .new-cond-name { color: var(--exc); }
+.c-exc .cond-bar-seg.on { background: var(--exc); }
+
+.c-vgd .new-cond-name { color: var(--vgd); }
+.c-vgd .cond-bar-seg.on { background: var(--vgd); }
+
+.c-gd .new-cond-name { color: var(--gd); }
+.c-gd .cond-bar-seg.on { background: var(--gd); }
+
+.c-fr .new-cond-name { color: var(--fr); }
+.c-fr .cond-bar-seg.on { background: var(--fr); }
+
+.c-rgh .new-cond-name { color: var(--rgh); }
+.c-rgh .cond-bar-seg.on { background: var(--rgh); }
+
+/* =============================================
+   SLIDE 7 — TOUCHPOINTS
+============================================= */
+.tp-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.55fr;
+  gap: 18px;
+  overflow: hidden;
+}
+
+.tp-left { display: flex; flex-direction: column; gap: 14px; }
+.tp-right { display: flex; flex-direction: column; }
+
+.tp-card {
+  background: var(--off-white);
+  border: 1.5px solid var(--gray-100);
+  border-radius: 12px;
+  overflow: hidden;
+  flex: 1;
+}
+
+.tp-card-header {
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--gray-100);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--white);
+}
+
+.tp-card-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.tp-card-sub { font-size: 10px; color: var(--gray-300); }
+
+.tp-card-body { padding: 14px; }
+
+/* Mini PLP */
+.mini-plp {
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.mini-thumb {
+  width: 44px; height: 44px;
+  background: var(--gray-100);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.mini-info-title { font-size: 11px; font-weight: 600; color: var(--navy); margin-bottom: 4px; line-height: 1.3; }
+
+.mini-cond {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.mini-cond-name { font-size: 10px; font-weight: 800; }
+
+.mini-bar { display: flex; gap: 2px; flex: 1; }
+.mini-bar-seg { height: 3px; flex: 1; border-radius: 1px; background: var(--gray-100); }
+
+.mini-price { font-size: 13px; font-weight: 800; color: var(--navy); }
+
+/* PDP display */
+.pdp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--white);
+  border: 1.5px solid var(--gray-100);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.pdp-cond-name { font-size: 14px; font-weight: 900; }
+
+.pdp-bar { display: flex; gap: 3px; }
+.pdp-bar-seg { height: 4px; width: 20px; border-radius: 2px; }
+
+.pdp-short { font-size: 11px; color: var(--gray-500); }
+.pdp-learn { color: var(--gold); font-size: 10px; font-weight: 700; cursor: pointer; }
+
+/* Drawer mockup */
+.drawer-mock {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 14px;
+  height: 100%;
+  overflow: auto;
+}
+
+.drawer-title { font-size: 12px; font-weight: 800; color: var(--navy); margin-bottom: 3px; }
+.drawer-sub { font-size: 10px; color: var(--gray-500); margin-bottom: 12px; line-height: 1.45; }
+
+.drawer-item {
+  margin-bottom: 9px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.drawer-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.drawer-item-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.drawer-item-name { font-size: 12px; font-weight: 800; }
+
+.d-bar { display: flex; gap: 2px; }
+.d-seg { height: 3px; width: 14px; border-radius: 1px; background: var(--gray-100); }
+
+.drawer-item-desc { font-size: 10px; color: var(--gray-500); line-height: 1.45; }
+
+/* =============================================
+   SLIDE 8 — ROADMAP
+============================================= */
+.roadmap-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  padding-left: 108px;
+}
+
+.rm-line {
+  position: absolute;
+  left: 90px;
+  top: 16px;
+  bottom: 16px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--gold), var(--gray-100) 85%);
+  border-radius: 1px;
+}
+
+.rm-item {
+  display: flex;
+  gap: 20px;
+  padding: 10px 0;
+  position: relative;
+}
+
+.rm-dot {
+  position: absolute;
+  left: -22px;
+  top: 18px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid var(--white);
+  z-index: 1;
+}
+
+.rm-dot.dim { background: var(--gray-300); }
+
+.rm-quarter {
+  position: absolute;
+  left: -108px;
+  top: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold);
+  width: 72px;
+  text-align: right;
+}
+
+.rm-quarter.dim { color: var(--gray-300); }
+
+.rm-content {
+  flex: 1;
+  background: var(--off-white);
+  border: 1px solid var(--gray-100);
+  border-radius: 10px;
+  padding: 13px 16px;
+}
+
+.rm-phase {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.rm-phase-title { font-size: 13px; font-weight: 700; color: var(--navy); }
+
+.rm-status {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.rs-active { background: rgba(34,160,90,0.12);  color: var(--exc); }
+.rs-next   { background: rgba(42,111,196,0.12); color: var(--vgd); }
+.rs-later  { background: rgba(176,125,32,0.1);  color: var(--gd); }
+.rs-future { background: rgba(123,130,160,0.1); color: var(--gray-500); }
+
+.rm-tasks { display: flex; flex-wrap: wrap; gap: 5px; }
+
+.rm-task {
+  font-size: 10px;
+  font-weight: 500;
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: 4px;
+  padding: 3px 8px;
+  color: var(--gray-700);
+}
+
+.rm-task.gold-task {
+  background: var(--gold-dim);
+  border-color: var(--gold-border);
+  color: #8A6010;
+  font-weight: 600;
+}
+
+/* =============================================
+   SLIDE 9 — CLOSE (dark)
+============================================= */
+.close-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0;
+}
+
+.close-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.close-title {
+  font-size: clamp(42px, 6vw, 70px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -.025em;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+.close-sub {
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  max-width: 540px;
+  line-height: 1.65;
+  margin-bottom: 40px;
+}
+
+.close-pills {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 52px;
+}
+
+.cpill {
+  padding: 9px 18px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1.5px solid;
+  letter-spacing: .02em;
+}
+
+.cpill-gold   { background: var(--gold-dim);   border-color: var(--gold-border); color: var(--gold-light); }
+.cpill-border { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.55); }
+
+.close-presenters {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  width: 100%;
+  max-width: 560px;
+}
+
+.presenter { text-align: center; }
+
+.presenter-role {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 6px;
+}
+
+.presenter-name { font-size: 14px; font-weight: 700; color: var(--white); }
+</style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<div class="deck" id="deck">
+
+<!-- ============ SLIDE 1: COVER ============ -->
+<section class="slide slide-dark active" data-index="0">
+  <div class="slide-top-row">
+    <div class="slide-eyebrow">
+      <div class="eyebrow-rule"></div>
+      <span class="eyebrow-text">B&amp;H Photo · Used Department</span>
+    </div>
+    <span class="slide-num-badge">01 / 09</span>
+  </div>
+  <div class="cover-inner">
+    <div class="cover-badge">Condition Rating System · Executive Presentation</div>
+    <h1 class="cover-title">Modernizing the<br><span class="accent">Condition</span><br>Rating System</h1>
+    <p class="cover-sub">A proposal to replace the current numeric grading scale with an intuitive, word-based system that builds customer confidence and reduces friction at every touchpoint.</p>
+    <div class="cover-meta">
+      <div class="meta-block">
+        <div class="meta-label">Presented To</div>
+        <div class="meta-value">Chief Operating Officer</div>
+      </div>
+      <div class="meta-block">
+        <div class="meta-label">Presenters</div>
+        <div class="meta-value names">
+          <strong>Director, Used Dept.</strong> · Director, Used Dept.<br>
+          <strong>Jerel Smith</strong> · Sr. PM, Used Web
+        </div>
+      </div>
+      <div class="meta-block">
+        <div class="meta-label">Period</div>
+        <div class="meta-value">Q1 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2: PROBLEM ============ -->
+<section class="slide slide-light" data-index="1">
+  <div class="slide-top-row">
+    <div class="slide-eyebrow"><div class="eyebrow-rule"></div><span class="eyebrow-text">The Problem</span></div>
+    <span class="slide-num-badge">02 / 09</span>
+  </div>
+  <h2 class="slide-h2">Our current scale creates friction<br>at every customer touchpoint</h2>
+  <div class="slide-body">
+    <div class="problem-grid">
+      <div class="prob-left">
+        <div class="prob-card">
+          <div class="prob-num">1</div>
+          <div class="prob-body">
+            <h3>Numeric abstraction</h3>
+            <p>What's the real difference between an 8+ and a 9? Customers can't intuit quality from an abstract number — they have to stop and look it up.</p>
+          </div>
+        </div>
+        <div class="prob-card">
+          <div class="prob-num">2</div>
+          <div class="prob-body">
+            <h3>Scale fragmentation</h3>
+            <p>Sell Used uses a 1–5 scale. The buy side uses 7–10. These systems are completely disconnected — confusing sellers who then become buyers.</p>
+          </div>
+        </div>
+        <div class="prob-card">
+          <div class="prob-num">3</div>
+          <div class="prob-body">
+            <h3>Hidden condition definitions</h3>
+            <p>Indepth descriptions of conditions do not exist, the sentence that provides more information must be launched in a drawer by clicking a link — not visible at the moment of decision.</p>
+          </div>
+        </div>
+        <div class="prob-card">
+          <div class="prob-num">4</div>
+          <div class="prob-body">
+            <h3>Expectation misalignment</h3>
+            <p>Survey data shows that buyers who receive used goods, sometimes feel that the quality falls short of the rating — pointing to both evaluation inconsistency and unclear standards.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="prob-right">
+        <div>
+          <div class="scale-block-label">Current Buy Scale</div>
+          <div class="buy-scale">
+            <div class="scale-pill">10</div>
+            <div class="scale-pill">9+</div>
+            <div class="scale-pill">9</div>
+            <div class="scale-pill">8+</div>
+            <div class="scale-pill">8</div>
+            <div class="scale-pill">7</div>
+            <div class="scale-pill dim">Open Box</div>
+            <div class="scale-pill dim">Demo</div>
+          </div>
+        </div>
+        <div>
+          <div class="scale-block-label">Current Sell Scale</div>
+          <div class="sell-scale">
+            <div class="sell-pill">1</div>
+            <div class="sell-pill">2</div>
+            <div class="sell-pill">3</div>
+            <div class="sell-pill">4</div>
+            <div class="sell-pill">5</div>
+          </div>
+        </div>
+        <div class="mismatch-callout">
+          <span>⚠</span>
+          Two separate, incompatible scales. Sellers who become buyers encounter a completely different system — flagged directly in Medallia survey responses.
+        </div>
+        <div class="industry-note">
+          <div class="scale-block-label">Industry Standard</div>
+          <div style="font-size:12px; color:var(--gray-500); line-height:1.6; margin-top:6px;">MPB · KEH · Amazon · Sweetwater all use <strong style="color:var(--navy);">plain-language, word-based scales</strong> that customers understand without explanation.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ SLIDE 3: CUSTOMER VOICE ============ -->
+<section class="slide slide-off" data-index="2">
+  <div class="slide-top-row">
+    <div class="slide-eyebrow"><div class="eyebrow-rule"></div><span class="eyebrow-text">Customer Voice</span></div>
+    <span class="slide-num-badge">03 / 09</span>
+  </div>
+  <h2 class="slide-h2">The data backs up the experience</h2>
+  <div class="slide-body">
+    <div class="quotes-grid">
+
+      <div class="quote-card">
+        <div class="quote-top-border" style="background:var(--exc)"></div>
+        <div class="quote-mark">"</div>
+        <p class="quote-text">"The condition scale shown during item submission doesn't match the scale used when I receive the quote — one goes 1 to 5, the other 7 to 10. It created real confusion about how my item was being evaluated."</p>
+        <div class="quote-footer">
+          <span class="quote-tag qt-trust">Trust ✓</span>
+          <span class="quote-score">NPS 10 · OSAT 5</span>
+        </div>
+      </div>
+
+      <div class="quote-card">
+        <div class="quote-top-border" style="background:var(--vgd)"></div>
+        <div class="quote-mark">"</div>
+        <p class="quote-text">"The used item pages could do more to explain what each condition grade actually means. A visual scale with brief descriptions would make it much easier to know what I'm getting before I buy."</p>
+        <div class="quote-footer">
+          <span class="quote-tag qt-gap">Clarity Gap</span>
+          <span class="quote-score">Opportunity</span>
+        </div>
+      </div>
+
+      <div class="quote-card">
+        <div class="quote-top-border" style="background:var(--gd)"></div>
+        <div class="quote-mark">"</div>
+        <p class="quote-text">"I had to contact support to understand what the different condition levels meant. That information should be visible right on the page — not something I have to ask about."</p>
+        <div class="quote-footer">
+          <span class="quote-tag qt-disc">Needs Inline Descriptions</span>
+          <span class="quote-score">NPS 10 · OSAT 5</span>
+        </div>
+      </div>
+
+      <div class="quote-card">
+        <div class="quote-top-border" style="background:var(--fr)"></div>
+        <div class="quote-mark">"</div>
+        <p class="quote-text">"I was given one price estimate based on the online condition scale, then a lower offer when speaking with a buyer who referenced a different system. The inconsistency between channels eroded my confidence in the process."</p>
+        <div class="quote-footer">
+          <span class="quote-tag qt-align">Scale Inconsistency</span>
+          <span class="quote-score">NPS 2 · OSAT 2</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ============ SLIDE 4: COMPETITIVE ============ -->
+<section class="slide slide-light" data-index="3">
+  <div class="slide-top-row">
+    <div class="slide-eyebrow"><div class="eyebrow-rule"></div><span class="eyebrow-text">Competitive Landscape</span></div>
+    <span class="slide-num-badge">04 / 09</span>
+  </div>
+  <h2 class="slide-h2">The industry has moved — we haven't</h2>
+  <div class="slide-body">
+    <div class="comp-table">
+      <div class="comp-row header-row">
+        <div class="comp-cell">Retailer</div>
+        <div class="comp-cell">Scale Type</div>
+        <div class="comp-cell">Tiers</div>
+        <div class="comp-cell">Key Differentiator</div>
+      </div>
+      <div class="comp-row bh-row">
+        <div class="comp-cell"><span class="comp-brand bh-brand">B&H Photo</span></div>
+        <div class="comp-cell"><span class="comp-type">Numeric</span></div>
+        <div class="comp-cell"><span class="comp-tiers">7 · 8 · 8+ · 9 · 9+ · 10 · Open Box · Demo</span></div>
+        <div class="comp-cell"><span class="comp-note concern">8 tiers, 2 scales — customer must decode</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell"><span class="comp-brand">MPB</span></div>
+        <div class="comp-cell"><span class="comp-type">Word-based</span></div>
+        <div class="comp-cell"><span class="comp-tiers">Like New · Excellent · Good · Fair</span></div>
+        <div class="comp-cell"><span class="comp-note good">Visual condition bars + per-item photos</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell"><span class="comp-brand">KEH Camera</span></div>
+        <div class="comp-cell"><span class="comp-type">Word-based</span></div>
+        <div class="comp-cell"><span class="comp-tiers">Like New · Excellent · Very Good · Good · Fair · Bargain</span></div>
+        <div class="comp-cell"><span class="comp-note good">Video call evaluation for high-value items</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell"><span class="comp-brand">Amazon</span></div>
+        <div class="comp-cell"><span class="comp-type">Word-based</span></div>
+        <div class="comp-cell"><span class="comp-tiers">New · Like New · Very Good · Good · Acceptable</span></div>
+        <div class="comp-cell"><span class="comp-note">Consumer-friendly, immediate comprehension</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell"><span class="comp-brand">Sweetwater</span></div>
+        <div class="comp-cell"><span class="comp-type">Word-based</span></div>
+        <div class="comp-cell"><span class="comp-tiers">Excellent · Very Good · Good · Fair · Poor</span></div>
+        <div class="comp-cell"><span class="comp-note">Each item photographed; condition notes per listing</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell"><span class="comp-brand">Adorama</span></div>
+        <div class="comp-cell"><span class="comp-type">Word-based</span></div>
+        <div class="comp-cell"><span class="comp-tiers">Mint · Excellent Plus · Excellent · Average · Well Used · Heavy Use</span></div>
+        <div class="comp-cell"><span class="comp-note">Consumer-friendly, immediate comprehension</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 5: CURRENT SCALE ============ -->
+<section class="slide slide-off" data-index="4">
+  <div class="slide-top-row">
+    <div class="slide-eyebrow"><div class="eyebrow-rule"></div><span class="eyebrow-text">Current State</span></div>
+    <span class="slide-num-badge">05 / 09</span>
+  </div>
+  <h2 class="slide-h2" style="margin-bottom:6px;">The existing scale</h2>
+  <p style="font-size:12px; color:var(--gray-500); margin-bottom:20px; font-weight:400;">How items are graded and displayed today — per the B&H Used Equipment Rating System</p>
+  <div class="slide-body">
+    <div class="curr-list">
+      <div class="curr-row">
+        <div class="curr-code">OB</div>
+        <div class="curr-desc">Open Box — Like new condition, includes limited 1-year B&H warranty</div>
+        <div class="curr-tag t-spec">Special category</div>
+      </div>
+      <div class="curr-row">
+        <div class="curr-code">Demo</div>
+        <div class="curr-desc">Never owned — used for demonstration purposes only</div>
+        <div class="curr-tag t-spec">Special category</div>
+      </div>
+      <div class="curr-row">
+        <div class="curr-code">10</div>
+        <div class="curr-desc">Preowned equipment that looks good as new; no signs of wear</div>
+        <div class="curr-tag t-num">Numeric</div>
+      </div>
+      <div class="curr-row">
+        <div class="curr-code">9+</div>
+        <div class="curr-desc">Preowned equipment that shows little to no signs of wear</div>
+        <div class="curr-tag t-ambig">10 vs 9+ — ambiguous</div>
+      </div>
+      <div class="curr-row">
+        <div class="curr-code">9</div>
+        <div class="curr-desc">Very good condition; overall looks clean but may have minor signs of use or surface marks</div>
+        <div class="curr-tag t-num">Numeric</div>
+      </div>
+      <div class="curr-row">
+        <div class="curr-code">8+</div>
+        <div class="curr-desc">Shows moderate wear, scuffing or marks to finish</div>
+        <div class="curr-tag t-ambig">9 vs 8+ — ambiguous</div>
+      </div>
+      <div class="curr-row">
+        <div class="curr-code">8</div>
+        <div class="curr-desc">Well used — may exhibit "dings" or noticeable marks to finish</div>
+        <div class="curr-tag t-num">Numeric</div>
+      </div>
+      <div class="curr-row">
+        <div class="curr-code">7</div>
+        <div class="curr-desc">Shows considerable wear and above-average signs of use</div>
+        <div class="curr-tag t-hidden">Lowest tier</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 6: NEW SCALE ============ -->
+<section class="slide slide-light" data-index="5">
+  <div class="slide-top-row">
+    <div class="slide-eyebrow"><div class="eyebrow-rule"></div><span class="eyebrow-text">Proposed New Scale</span></div>
+    <span class="slide-num-badge">06 / 09</span>
+  </div>
+  <h2 class="slide-h2" style="margin-bottom:6px;">Five tiers. Plain language. Instant clarity.</h2>
+  <p style="font-size:12px; color:var(--gray-500); margin-bottom:20px; font-weight:400;">Cosmetic ratings only — all items tested and verified fully functional. Developed with evaluator consensus across the Used operations team.</p>
+  <div class="slide-body">
+    <div class="new-list">
+      <div class="new-row c-exc">
+        <div class="new-label">
+          <div class="new-cond-name">Excellent</div>
+          <div class="cond-bars">
+            <div class="cond-bar-seg on"></div><div class="cond-bar-seg on"></div><div class="cond-bar-seg on"></div><div class="cond-bar-seg on"></div><div class="cond-bar-seg on"></div>
+          </div>
+        </div>
+        <div class="new-content">
+          <div class="new-short">Like-new, no visible signs of wear.</div>
+          <div class="new-long">Pristine, like new. No visible signs of wear: scuffing or handling marks on any surface or component. Finish is perfect. The finest used condition available. Fully functional with no performance issues.</div>
+        </div>
+      </div>
+      <div class="new-row c-vgd">
+        <div class="new-label">
+          <div class="new-cond-name">Very Good</div>
+          <div class="cond-bars">
+            <div class="cond-bar-seg on"></div><div class="cond-bar-seg on"></div><div class="cond-bar-seg on"></div><div class="cond-bar-seg on"></div><div class="cond-bar-seg"></div>
+          </div>
+        </div>
+        <div class="new-content">
+          <div class="new-short">Gently used, minimal signs of wear.</div>
+          <div class="new-long">Shows light cosmetic wear. May have minimal scratches, scuffing or rubber imperfections present. Overall gently used condition, clean finish. Fully functional with no performance issues.</div>
+        </div>
+      </div>
+      <div class="new-row c-gd">
+        <div class="new-label">
+          <div class="new-cond-name">Good</div>
+          <div class="cond-bars">
+            <div class="cond-bar-seg on"></div><div class="cond-bar-seg on"></div><div class="cond-bar-seg on"></div><div class="cond-bar-seg"></div><div class="cond-bar-seg"></div>
+          </div>
+        </div>
+        <div class="new-content">
+          <div class="new-short">Shows moderate wear consistent with regular use.</div>
+          <div class="new-long">Shows moderate wear and signs of regular use, including scratches, scuffs, or possible minor brassing. Fully functional with no performance issues.</div>
+        </div>
+      </div>
+      <div class="new-row c-fr">
+        <div class="new-label">
+          <div class="new-cond-name">Fair</div>
+          <div class="cond-bars">
+            <div class="cond-bar-seg on"></div><div class="cond-bar-seg on"></div><div class="cond-bar-seg"></div><div class="cond-bar-seg"></div><div class="cond-bar-seg"></div>
+          </div>
+        </div>
+        <div class="new-content">
+          <div class="new-short">Well used with visible cosmetic flaws, scuffs, and marks.</div>
+          <div class="new-long">Shows obvious cosmetic wear including significant scuffs, noticeable scratches, and possible brassing. Well used. Fully functional with no performance issues.</div>
+        </div>
+      </div>
+      <div class="new-row c-rgh">
+        <div class="new-label">
+          <div class="new-cond-name">Rough</div>
+          <div class="cond-bars">
+            <div class="cond-bar-seg on"></div><div class="cond-bar-seg"></div><div class="cond-bar-seg"></div><div class="cond-bar-seg"></div><div class="cond-bar-seg"></div>
+          </div>
+        </div>
+        <div class="new-content">
+          <div class="new-short">Shows considerable wear, finishing loss, and above-average signs of hard use.</div>
+          <div class="new-long">Shows excessive wear, including significant paint and finish loss, exposed metal, deep scratches, and possible dents. Heavily used. Fully functional with no performance issues.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 7: TOUCHPOINTS ============ -->
+<section class="slide slide-off" data-index="6">
+  <div class="slide-top-row">
+    <div class="slide-eyebrow"><div class="eyebrow-rule"></div><span class="eyebrow-text">Customer Touchpoints</span></div>
+    <span class="slide-num-badge">07 / 09</span>
+  </div>
+  <h2 class="slide-h2">Condition at every step of the journey</h2>
+  <div class="slide-body">
+    <div class="tp-grid">
+
+      <div class="tp-left">
+        <div class="tp-card">
+          <div class="tp-card-header">
+            <span class="tp-card-label">Product Listing Page (PLP)</span>
+            <span class="tp-card-sub">Inline card</span>
+          </div>
+          <div style="overflow:hidden; flex:1;">
+            <img src="../PLP.png" alt="PLP mockup"
+                 style="width:100%; height:100%; object-fit:cover; object-position:top left; display:block;" />
+          </div>
+        </div>
+        <div class="tp-card">
+          <div class="tp-card-header">
+            <span class="tp-card-label">Product Detail Page (PDP)</span>
+            <span class="tp-card-sub">Near add-to-cart</span>
+          </div>
+          <div style="overflow:hidden; flex:1;">
+            <img src="../PDP.png" alt="PDP mockup"
+                 style="width:100%; height:100%; object-fit:cover; object-position:top left; display:block;" />
+          </div>
+        </div>
+      </div>
+
+      <div class="tp-right">
+        <div class="tp-card" style="flex:1">
+          <div class="tp-card-header">
+            <span class="tp-card-label">Condition Drawer — (?) Modal</span>
+            <span class="tp-card-sub">Defaults to current product grade</span>
+          </div>
+          <div style="overflow:hidden; flex:1;">
+            <img src="../PDP_w_Drawer.png" alt="PDP with drawer mockup"
+                 style="width:100%; height:100%; object-fit:cover; object-position:top right; display:block;" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ============ SLIDE 8: ROADMAP ============ -->
+<section class="slide slide-light" data-index="7">
+  <div class="slide-top-row">
+    <div class="slide-eyebrow"><div class="eyebrow-rule"></div><span class="eyebrow-text">Implementation Roadmap</span></div>
+    <span class="slide-num-badge">08 / 09</span>
+  </div>
+  <h2 class="slide-h2">Path to launch — targeting H1 2026</h2>
+  <div class="slide-body">
+    <div class="roadmap-wrap">
+      <div class="rm-line"></div>
+
+      <div class="rm-item">
+        <div class="rm-quarter">Q1 2026</div>
+        <div class="rm-dot"></div>
+        <div class="rm-content">
+          <div class="rm-phase">
+            <div class="rm-phase-title">Design &amp; Alignment</div>
+            <span class="rm-status rs-active">In Progress</span>
+          </div>
+          <div class="rm-tasks">
+            <span class="rm-task gold-task">COO Presentation</span>
+            <span class="rm-task gold-task">Scale Finalized w/ Evaluators</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-item">
+        <div class="rm-quarter">Q2 2026</div>
+        <div class="rm-dot"></div>
+        <div class="rm-content">
+          <div class="rm-phase">
+            <div class="rm-phase-title">Development &amp; Internal Rollout</div>
+            <span class="rm-status rs-next">Next Up</span>
+          </div>
+          <div class="rm-tasks">
+            <span class="rm-task">UX Mockups</span>
+            <span class="rm-task">Tech Scoping w/ Engineering Lead</span>
+            <span class="rm-task">Back-end Mapping (Old → New Scale)</span>
+            <span class="rm-task">Evaluator Training</span>
+            <span class="rm-task">PLP + PDP Component Build</span>
+            <span class="rm-task">Drawer Modal Update</span>
+            <span class="rm-task">QA &amp; Regression</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-item">
+        <div class="rm-quarter">Q2 / Q3</div>
+        <div class="rm-dot"></div>
+        <div class="rm-content">
+          <div class="rm-phase">
+            <div class="rm-phase-title">Customer-Facing Launch</div>
+            <span class="rm-status rs-later">Target: June</span>
+          </div>
+          <div class="rm-tasks">
+            <span class="rm-task">Go-Live: New Scale on PLP + PDP</span>
+            <span class="rm-task">Sell Used Scale Alignment</span>
+            <span class="rm-task">Customer-Facing Comms</span>
+            <span class="rm-task">Analytics Tagging</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-item">
+        <div class="rm-quarter rm-quarter dim">H2 2026</div>
+        <div class="rm-dot dim"></div>
+        <div class="rm-content" style="opacity:.7">
+          <div class="rm-phase">
+            <div class="rm-phase-title">Optimization &amp; Expansion</div>
+            <span class="rm-status rs-future">H2 Planning</span>
+          </div>
+          <div class="rm-tasks">
+            <span class="rm-task">Used Product Photography (Ortery)</span>
+            <span class="rm-task">PDP Condition Grouping (KEH-style)</span>
+            <span class="rm-task">Used Web Metrics Dashboard</span>
+            <span class="rm-task">CSAT Tracking per Tier</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 9: CLOSE ============ -->
+<section class="slide slide-dark" data-index="8">
+  <div class="slide-top-row">
+    <div class="slide-eyebrow"><div class="eyebrow-rule"></div><span class="eyebrow-text">The Ask</span></div>
+    <span class="slide-num-badge">09 / 09</span>
+  </div>
+  <div class="close-inner">
+    <h2 class="close-title">Approval to<br><span class="accent">Move Forward</span></h2>
+    <p class="close-sub">We're asking for alignment on the proposed scale and authorization to begin development. The scale has been vetted by the Used operations team and designed in response to direct customer feedback.</p>
+    <div class="close-pills">
+      <div class="cpill cpill-gold">✓ Scale Approved by Evaluators</div>
+      <div class="cpill cpill-border">Tech Scoping: Engineering Lead</div>
+      <div class="cpill cpill-border">UX Owner: UX Lead</div>
+      <div class="cpill cpill-gold">Target Launch: June 2026</div>
+    </div>
+    <div class="close-presenters">
+      <div class="presenter">
+        <div class="presenter-role">Director, Used Dept.</div>
+        <div class="presenter-name">Director, Used Dept.</div>
+      </div>
+      <div class="presenter">
+        <div class="presenter-role">Sr. PM, Used Web</div>
+        <div class="presenter-name">Jerel Smith</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /deck -->
+
+<!-- Nav -->
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>←</button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="nextBtn" onclick="navigate(1)">→</button>
+  <span class="slide-counter" id="counter">1 / 9</span>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotsEl = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const N = slides.length;
+  let cur = 0;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    n = Math.max(0, Math.min(n, N - 1));
+    if (n === cur) return;
+    slides[cur].classList.add('exit');
+    slides[cur].classList.remove('active');
+    setTimeout(() => slides[cur < n ? cur : n].classList.remove('exit'), 300);
+    cur = n;
+    slides[cur].classList.remove('exit');
+    slides[cur].classList.add('active');
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+    counter.textContent = (cur + 1) + ' / ' + N;
+    prevBtn.disabled = cur === 0;
+    nextBtn.disabled = cur === N - 1;
+  }
+
+  function navigate(d) { goTo(cur + d); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+  });
+
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.changedTouches[0].clientX; });
+  document.addEventListener('touchend',   e => {
+    const d = tx - e.changedTouches[0].clientX;
+    if (Math.abs(d) > 50) navigate(d > 0 ? 1 : -1);
+  });
+</script>
+</body>
+</html>

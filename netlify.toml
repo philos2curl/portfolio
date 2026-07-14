@@ -1,0 +1,46 @@
+[build]
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Protect every artifact page with the auth edge function
+[[edge_functions]]
+  path = "/condition-ratings-deck.html"
+  function = "auth"
+
+[[edge_functions]]
+  path = "/mega-menu-vp-deck.html"
+  function = "auth"
+
+[[edge_functions]]
+  path = "/megamenu-impact-dashboard.html"
+  function = "auth"
+
+[[edge_functions]]
+  path = "/condition-ratings-pdp.html"
+  function = "auth"
+
+[[edge_functions]]
+  path = "/bh_sell_used_problems.html"
+  function = "auth"
+
+[[edge_functions]]
+  path = "/sell_used_traffic_ytd_2026.html"
+  function = "auth"
+
+[[edge_functions]]
+  path = "/used-image-upload.html"
+  function = "auth"
+
+[[edge_functions]]
+  path = "/k12-safety-v1-classic.html"
+  function = "auth"
+
+[[edge_functions]]
+  path = "/k12-safety-v2-explorer.html"
+  function = "auth"
+
+[[edge_functions]]
+  path = "/k12-safety-v3-campus.html"
+  function = "auth"

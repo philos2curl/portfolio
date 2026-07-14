@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>(function(){if(!sessionStorage.getItem('js_portfolio_v1'))window.location.replace('index.html');}());</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mega Menu Impact Dashboard — Mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#10316b;        /* deep navy — primary */
+    --blue-2:#1f5fae;      /* mid blue — secondary */
+    --blue-tint:#eaf1fb;   /* panel wash */
+    --blue-line:#d3dbe6;   /* cool border */
+    --gold:#c49a3a;        /* accent / treatment */
+    --gold-tint:#fbf6ea;
+    --white:#ffffff;
+    --ink:#1f2733;         /* body text */
+    --muted:#69748a;
+    --up:#2e7d52;
+    --down:#c0413a;
+    --shadow:0 1px 2px rgba(16,49,107,.06),0 4px 16px rgba(16,49,107,.06);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{
+    font-family:"Barlow",system-ui,Arial,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(900px 360px at 88% -8%, rgba(196,154,58,.10), transparent 60%),
+      linear-gradient(180deg,#f4f7fc 0%,#eef3fa 100%);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .num{font-family:"Barlow Condensed","Barlow",sans-serif;font-variant-numeric:tabular-nums;}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;}
+
+  /* ---------- App bar ---------- */
+  .appbar{
+    background:linear-gradient(100deg,var(--blue) 0%,#0c2550 100%);
+    color:#fff;padding:16px 26px 0;
+    border-bottom:3px solid var(--gold);
+    position:relative;
+  }
+  .appbar .row1{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;}
+  .brand{font-family:"Barlow Condensed";font-weight:700;letter-spacing:.06em;
+    text-transform:uppercase;font-size:12px;color:#bcd0f0;}
+  .title{font-family:"Barlow Condensed";font-weight:700;font-size:30px;line-height:1.05;margin:2px 0 0;}
+  .title .gold{color:var(--gold);}
+  .mockbadge{
+    margin-left:auto;background:var(--gold);color:#3a2c08;font-weight:700;
+    font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    padding:5px 11px;border-radius:999px;align-self:center;white-space:nowrap;
+  }
+  .scenario{
+    margin-top:12px;font-size:13.5px;color:#dbe6f7;display:flex;
+    gap:10px 18px;flex-wrap:wrap;align-items:center;
+  }
+  .scenario b{color:#fff;font-weight:600;}
+  .scenario .pill{background:rgba(255,255,255,.12);padding:3px 10px;border-radius:6px;font-size:12.5px;}
+  .scenario .pill.treat{background:rgba(196,154,58,.25);color:#ffe6ad;}
+
+  /* ---------- Controls ---------- */
+  .controls{
+    display:flex;gap:10px 16px;flex-wrap:wrap;align-items:flex-end;
+    margin-top:16px;padding:14px 0 0;border-top:1px solid rgba(255,255,255,.14);
+    padding-bottom:14px;
+  }
+  .ctl{display:flex;flex-direction:column;gap:4px;}
+  .ctl label{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:#9fb6dc;}
+  .ctl select,.ctl .fakeinput{
+    background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);
+    color:#fff;border-radius:7px;padding:7px 10px;font-size:13px;font-family:inherit;min-width:150px;
+  }
+  .ctl select option{color:#16243f;}
+  .seg{display:inline-flex;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.20);border-radius:8px;overflow:hidden;}
+  .seg button{
+    background:transparent;border:0;color:#cdd9ee;padding:7px 13px;font-size:12.5px;
+    font-family:inherit;cursor:pointer;font-weight:600;
+  }
+  .seg button.on{background:var(--white);color:var(--blue);}
+  .seg.gold button.on{background:var(--gold);color:#3a2c08;}
+  .fieldtoggle{display:flex;align-items:center;gap:8px;margin-left:auto;align-self:center;
+    color:#dbe6f7;font-size:12.5px;cursor:pointer;user-select:none;}
+  .switch{width:38px;height:21px;border-radius:999px;background:rgba(255,255,255,.25);position:relative;transition:.18s;}
+  .switch::after{content:"";position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;background:#fff;transition:.18s;}
+  .fieldtoggle.on .switch{background:var(--gold);}
+  .fieldtoggle.on .switch::after{left:19px;}
+
+  /* ---------- Tabs ---------- */
+  .tabs{display:flex;gap:2px;padding:0 26px;background:transparent;margin-top:-1px;}
+  .tab{
+    background:transparent;border:0;border-bottom:3px solid transparent;
+    padding:14px 18px 11px;font-family:"Barlow";font-weight:600;font-size:14px;
+    color:var(--muted);cursor:pointer;
+  }
+  .tab.on{color:var(--blue);border-bottom-color:var(--gold);}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:8px 26px 60px;}
+  .view{display:none;}
+  .view.on{display:block;}
+
+  /* ---------- Tier sections ---------- */
+  .tier{margin-top:26px;}
+  .tier-h{display:flex;align-items:baseline;gap:12px;margin-bottom:12px;}
+  .tier-n{font-family:"Barlow Condensed";font-weight:700;color:#fff;background:var(--blue);
+    font-size:13px;padding:3px 9px;border-radius:6px;letter-spacing:.05em;}
+  .tier-h h2{font-family:"Barlow Condensed";font-weight:700;color:var(--blue);font-size:21px;margin:0;letter-spacing:.01em;}
+  .tier-h .q{color:var(--muted);font-size:13px;}
+  .tier-h .bar{flex:1;height:2px;background:linear-gradient(90deg,var(--gold),transparent);align-self:center;margin-left:6px;border-radius:2px;}
+
+  .grid{display:grid;gap:14px;}
+  .g4{grid-template-columns:repeat(4,1fr);}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .g2{grid-template-columns:repeat(2,1fr);}
+
+  .card{
+    background:var(--white);border:1px solid var(--blue-line);border-radius:12px;
+    padding:14px 15px 13px;box-shadow:var(--shadow);position:relative;
+  }
+  .kpi .klabel{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.01em;}
+  .kpi .kval{font-family:"Barlow Condensed";font-weight:700;color:var(--blue);font-size:33px;line-height:1.05;margin-top:3px;}
+  .kpi .krow{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:2px;}
+  .delta{font-size:12.5px;font-weight:700;display:inline-flex;align-items:center;gap:3px;}
+  .delta.up{color:var(--up);}
+  .delta.down{color:var(--down);}
+  .ctrlcmp{font-size:11.5px;color:var(--muted);}
+  .ctrlcmp b{color:var(--blue-2);font-weight:600;}
+  .spark{margin-top:8px;}
+
+  /* field chip */
+  .chip{
+    display:none;margin-top:10px;border-top:1px dashed var(--blue-line);padding-top:8px;
+    font-family:"IBM Plex Mono";font-size:10.5px;color:#516079;line-height:1.5;
+  }
+  .chip .f{color:var(--blue-2);font-weight:500;}
+  .chip .g{color:var(--gold);}
+  body.showfields .chip{display:block;}
+  body.showfields .card{padding-bottom:13px;}
+
+  /* ---------- Funnel ---------- */
+  .funnel{display:flex;flex-direction:column;gap:7px;}
+  .fstage{display:grid;grid-template-columns:170px 1fr 92px;align-items:center;gap:12px;}
+  .fstage .fl{font-size:12.5px;color:var(--ink);font-weight:600;}
+  .fstage .fl small{display:block;color:var(--muted);font-weight:400;font-size:11px;}
+  .ftrack{height:30px;background:var(--blue-tint);border-radius:6px;overflow:hidden;}
+  .ffill{height:100%;background:linear-gradient(90deg,var(--blue) 0%,var(--blue-2) 100%);
+    border-radius:6px;display:flex;align-items:center;justify-content:flex-end;
+    color:#fff;font-size:12px;font-weight:600;padding-right:9px;}
+  .fstage .fv{font-family:"Barlow Condensed";font-weight:700;color:var(--blue);font-size:18px;text-align:right;}
+  .fconv{font-size:10.5px;color:var(--gold);font-weight:700;margin:-3px 0 -3px 182px;}
+
+  /* ---------- Net impact waterfall ---------- */
+  .wf{display:flex;align-items:flex-end;gap:14px;height:200px;padding:8px 4px 0;}
+  .wfcol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;}
+  .wfbar{width:74%;border-radius:6px 6px 0 0;position:relative;}
+  .wfval{font-family:"Barlow Condensed";font-weight:700;font-size:16px;margin-bottom:5px;}
+  .wflab{font-size:11.5px;color:var(--muted);text-align:center;margin-top:7px;line-height:1.3;}
+
+  /* ---------- Compare bars ---------- */
+  .legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-bottom:10px;}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:5px;vertical-align:-1px;}
+  .cmpgroup{margin-bottom:13px;}
+  .cmpgroup .cl{font-size:12px;font-weight:600;margin-bottom:5px;}
+  .cmpbar{height:13px;border-radius:4px;margin-bottom:5px;display:flex;align-items:center;}
+  .cmpbar span{font-size:10.5px;color:#fff;font-weight:700;padding-left:7px;white-space:nowrap;}
+
+  /* ---------- Table ---------- */
+  table.lead{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table.lead th{background:var(--blue);color:#fff;text-align:left;padding:9px 11px;font-weight:600;font-size:11.5px;letter-spacing:.02em;}
+  table.lead th.r,table.lead td.r{text-align:right;}
+  table.lead td{padding:9px 11px;border-bottom:1px solid var(--blue-line);}
+  table.lead tr:nth-child(even) td{background:var(--blue-tint);}
+  table.lead .featured{color:var(--gold);font-weight:700;}
+  .ibar{height:9px;background:var(--blue-tint);border-radius:3px;overflow:hidden;margin-bottom:3px;}
+  .ibar i{display:block;height:100%;border-radius:3px;}
+  table.lead tr.grouprow td{font-weight:700;color:var(--blue);background:#dfe8f6;font-size:11.5px;letter-spacing:.02em;}
+  table.lead tr.grouprow.feat td{background:var(--gold-tint);color:#8a6a18;}
+  table.lead tr.grouprow.total td{background:var(--blue);color:#fff;}
+  table.lead tr.featrow td:first-child{box-shadow:inset 3px 0 var(--gold);}
+  .tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;text-transform:uppercase;letter-spacing:.04em;}
+  .tag.promo{background:var(--gold-tint);color:#8a6a18;border:1px solid #e7d49b;}
+  .tag.demo{background:#fdeceb;color:#a8332c;border:1px solid #f3c9c5;}
+
+  .panel{background:var(--white);border:1px solid var(--blue-line);border-radius:12px;padding:18px 18px 16px;box-shadow:var(--shadow);}
+  .panel h3{font-family:"Barlow Condensed";font-weight:700;color:var(--blue);font-size:18px;margin:0 0 12px;}
+  .panel h3 .gold{color:var(--gold);}
+
+  .note{font-size:11.5px;color:var(--muted);margin-top:8px;}
+
+  /* ---------- Data requirements view ---------- */
+  .spec-intro{background:var(--gold-tint);border:1px solid #e7d49b;border-left:4px solid var(--gold);
+    border-radius:8px;padding:14px 16px;margin:18px 0;font-size:13.5px;}
+  .spec-intro b{color:#8a6a18;}
+  table.spec{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px;background:#fff;
+    border:1px solid var(--blue-line);border-radius:10px;overflow:hidden;}
+  table.spec th{background:var(--blue);color:#fff;text-align:left;padding:9px 11px;font-size:11px;letter-spacing:.03em;}
+  table.spec td{padding:8px 11px;border-bottom:1px solid var(--blue-line);vertical-align:top;}
+  table.spec tr:nth-child(even) td{background:var(--blue-tint);}
+  table.spec .mono{font-size:11px;color:var(--blue-2);}
+  table.spec .grain{color:var(--gold);font-weight:600;white-space:nowrap;}
+  .spec-h{font-family:"Barlow Condensed";font-weight:700;color:var(--blue);font-size:19px;margin:26px 0 4px;}
+
+  .footer{max-width:1180px;margin:0 auto;padding:0 26px 40px;color:var(--muted);font-size:11.5px;}
+
+  @media (max-width:920px){
+    .g4{grid-template-columns:repeat(2,1fr);}
+    .g3,.g2{grid-template-columns:1fr;}
+    .fstage{grid-template-columns:120px 1fr 70px;}
+    .fconv{margin-left:132px;}
+  }
+  @media (max-width:560px){
+    .g4{grid-template-columns:1fr;}
+    .title{font-size:24px;}
+  }
+  :focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px;}
+</style>
+</head>
+<body>
+
+<header class="appbar">
+  <div class="row1">
+    <div>
+      <div class="brand">B&amp;H Photo · FIND · Merchandising Analytics</div>
+      <h1 class="title">Mega Menu <span class="gold">Impact Dashboard</span></h1>
+    </div>
+    <span class="mockbadge">Mock · illustrative data</span>
+  </div>
+
+  <div class="scenario">
+    <span class="pill">Scenario: <b>Drones</b> promoted L4 → featured top-level slot</span>
+    <span class="pill treat">A/B test · treatment vs control</span>
+    <span class="pill">Day <b>14</b> of 21 · <b>96.4%</b> confidence</span>
+  </div>
+
+  <div class="controls">
+    <div class="ctl">
+      <label>Date range</label>
+      <div class="fakeinput">Jun 2 – Jun 15, 2026 ▾</div>
+    </div>
+    <div class="ctl">
+      <label>Category</label>
+      <select aria-label="Category">
+        <option>Drones (promoted)</option>
+        <option>Tripods &amp; Supports (demoted)</option>
+        <option>All departments</option>
+      </select>
+    </div>
+    <div class="ctl">
+      <label>Device</label>
+      <select aria-label="Device"><option>All devices</option><option>Desktop</option><option>Mobile</option></select>
+    </div>
+    <div class="ctl">
+      <label>Experiment group</label>
+      <div class="seg gold" id="grpseg" role="group" aria-label="Experiment group">
+        <button data-grp="both" class="on">Both</button>
+        <button data-grp="treatment">Treatment</button>
+        <button data-grp="control">Control</button>
+      </div>
+    </div>
+    <div class="fieldtoggle" id="fieldtoggle" role="switch" aria-checked="false" tabindex="0">
+      <span class="switch"></span> Show data fields
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab on" data-view="dash" role="tab" aria-selected="true">Dashboard</button>
+  <button class="tab" data-view="spec" role="tab" aria-selected="false">Data requirements</button>
+</nav>
+
+<!-- ================= DASHBOARD ================= -->
+<main class="wrap">
+<section class="view on" id="dash">
+
+  <!-- TIER 1 -->
+  <div class="tier">
+    <div class="tier-h">
+      <span class="tier-n">TIER 1</span>
+      <h2>Menu Engagement</h2><span class="q">— does the placement get noticed &amp; clicked?</span>
+      <span class="bar"></span>
+    </div>
+    <div class="grid g4" id="t1"></div>
+
+    <div class="panel" style="margin-top:14px">
+      <h3>Slot-level impressions <span class="gold">— within the Drones flyout (treatment)</span></h3>
+      <p class="note" style="margin-top:0;margin-bottom:12px">
+        <b>Featured = slots 1–5</b> (premium placements), <b>Standard = slots 6–15</b> (remaining subcategories).
+        The aggregate tile above (1,240,000) is the <b>sum</b> of these. Impressions must be captured at
+        <b>category × slot × day</b> grain — one aggregate number hides which positions actually get seen,
+        and slot position is the merchandising lever itself.
+      </p>
+      <table class="lead" id="slottbl">
+        <thead><tr>
+          <th style="width:46px">Slot</th>
+          <th>Subcategory in slot</th>
+          <th style="width:36%">Viewable impressions</th>
+          <th class="r">CTR</th>
+          <th class="r">Clicks</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+      <p class="note">Position bias is steep: slot 1 earns ~19× the impressions of slot 15. Moving a subcategory from a standard slot into a featured one is exactly the change this table is built to measure.</p>
+    </div>
+  </div>
+
+  <!-- TIER 2 -->
+  <div class="tier">
+    <div class="tier-h">
+      <span class="tier-n">TIER 2</span>
+      <h2>Navigation &amp; Traffic</h2><span class="q">— where do they land?</span>
+      <span class="bar"></span>
+    </div>
+    <div class="grid g4" id="t2"></div>
+  </div>
+
+  <!-- TIER 3 -->
+  <div class="tier">
+    <div class="tier-h">
+      <span class="tier-n">TIER 3</span>
+      <h2>Conversion Funnel</h2><span class="q">— do they act? <span id="funnelgrp" class="mono" style="color:var(--gold)"></span></span>
+      <span class="bar"></span>
+    </div>
+    <div class="panel">
+      <div class="funnel" id="funnel"></div>
+      <div class="chip" style="display:none" id="funnelchip"></div>
+    </div>
+  </div>
+
+  <!-- TIER 4 -->
+  <div class="tier">
+    <div class="tier-h">
+      <span class="tier-n">TIER 4</span>
+      <h2>Revenue &amp; Value</h2><span class="q">— what is it worth?</span>
+      <span class="bar"></span>
+    </div>
+    <div class="grid g4" id="t4" style="margin-bottom:14px"></div>
+
+    <div class="grid g2">
+      <div class="panel">
+        <h3>Net impact <span class="gold">/ cannibalization</span></h3>
+        <div class="wf" id="waterfall"></div>
+        <p class="note">Promoting Drones gains revenue, but demoting Tripods &amp; shifting adjacent slots costs some back. The honest scorecard is the <b>net</b> bar — net-positive here, so the change holds.</p>
+      </div>
+      <div class="panel">
+        <h3>Control vs Treatment <span class="gold">— headline rates</span></h3>
+        <div class="legend"><span><i style="background:var(--blue-2)"></i>Control</span><span><i style="background:var(--gold)"></i>Treatment</span></div>
+        <div id="compare"></div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:14px">
+      <h3>Slot RPI leaderboard <span class="gold">— revenue productivity per impression</span></h3>
+      <table class="lead">
+        <thead><tr><th>Slot</th><th>Category</th><th></th><th class="r">Impressions</th><th class="r">RPI</th><th class="r">vs displaced</th></tr></thead>
+        <tbody>
+          <tr><td>Featured 01</td><td class="featured">Drones</td><td><span class="tag promo">Promoted</span></td><td class="r num">1,240,000</td><td class="r num">$0.393</td><td class="r" style="color:var(--down);font-weight:700">−38%</td></tr>
+          <tr><td>Top-level 04</td><td>Cameras</td><td></td><td class="r num">2,910,000</td><td class="r num">$0.71</td><td class="r num">—</td></tr>
+          <tr><td>Top-level 07</td><td>Lighting</td><td></td><td class="r num">1,640,000</td><td class="r num">$0.58</td><td class="r num">—</td></tr>
+          <tr><td>L4 (demoted)</td><td>Tripods &amp; Supports</td><td><span class="tag demo">Demoted</span></td><td class="r num">295,000</td><td class="r num">$0.49</td><td class="r" style="color:var(--up);font-weight:700">+2%</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Drones now generates far more total revenue but at lower RPI than the slot it took — the key trade-off to watch. Tripods barely moved after demotion, confirming it was a good demotion candidate.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DATA REQUIREMENTS ================= -->
+<section class="view" id="spec">
+  <div class="spec-intro">
+    <b>For the data warehouse team.</b> This is the data contract behind the dashboard above. The numbers are placeholders — what matters is the <b>shape</b>: each metric's grain, the dimensions we need to slice by, the source events, and refresh cadence. Toggle <b>“Show data fields”</b> on the dashboard to see the field chip on each tile.
+  </div>
+
+  <div class="spec-h">Required dimensions (every fact should carry these)</div>
+  <table class="spec">
+    <thead><tr><th style="width:22%">Dimension</th><th style="width:30%">Values</th><th>Why we need it</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">experiment_group</td><td>control / treatment</td><td>The entire framework is differences between these two groups.</td></tr>
+      <tr><td class="mono">category_id / node</td><td>L1–L4 taxonomy node</td><td>Attribute engagement &amp; revenue to the promoted/demoted category.</td></tr>
+      <tr><td class="mono">slot_position + slot_tier</td><td>position 1–15 · featured (1–5) / standard (6–15)</td><td><b>Impressions must be per-slot, not aggregated.</b> Drives position-normalized CTR, position bias, and the RPI leaderboard — and slot position is the merchandising lever.</td></tr>
+      <tr><td class="mono">subcategory_id</td><td>L3/L4 node occupying the slot</td><td>Attribute each slot's performance to the subcategory placed there, and track a subcategory as it moves between slots.</td></tr>
+      <tr><td class="mono">entry_path</td><td>mega_menu / search / homepage / direct / external</td><td>Menu-entry share — isolate menu-sourced traffic.</td></tr>
+      <tr><td class="mono">device</td><td>desktop / mobile / tablet</td><td>Segments often respond differently; aggregate hides it.</td></tr>
+      <tr><td class="mono">event_date</td><td>daily grain</td><td>Trends, baseline windows, day-of-week matching.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="spec-h">Metric → source mapping</div>
+  <table class="spec">
+    <thead><tr><th style="width:20%">Metric</th><th style="width:20%">Field</th><th style="width:16%">Grain</th><th>Source event / logic</th></tr></thead>
+    <tbody id="spectbl"></tbody>
+  </table>
+
+  <div class="spec-h">Attribution &amp; refresh</div>
+  <table class="spec">
+    <thead><tr><th style="width:26%">Item</th><th>Requirement</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">Attribution window</td><td>Session-scoped: credit a category's revenue to a menu-sourced session if the menu click occurred in the same session (configurable to 24h click-through for follow-up).</td></tr>
+      <tr><td class="mono">Slot impression def.</td><td>Slot rendered <em>and</em> in-viewport ≥ threshold (need a viewability flag, not just render).</td></tr>
+      <tr><td class="mono">Refresh cadence</td><td>Tier 1 engagement: near-real-time / hourly. Tiers 2–4: daily batch is fine for readouts.</td></tr>
+      <tr><td class="mono">Baseline table</td><td>Pre-test 2–4 week window per slot/category, day-of-week matched, holiday-flagged.</td></tr>
+      <tr><td class="mono">Net-impact join</td><td>Promoted + demoted + adjacent slots must be queryable together for one swap (a swap_id grouping would help).</td></tr>
+      <tr><td class="mono">Significance inputs</td><td>Per group: sessions (denominator) + conversions/revenue (numerator) at daily grain, to compute confidence.</td></tr>
+    </tbody>
+  </table>
+  <p class="note" style="margin-top:14px">Open questions for the DW team flagged in red on tiles where I'm unsure the event exists today: slot viewability, dwell/hover capture, and reliable <span class="mono">entry_path</span> on category sessions.</p>
+</section>
+</main>
+
+<div class="footer">
+  Mock dashboard · numbers are illustrative placeholders to specify data shape, not real values · B&amp;H Photo FIND team · June 2026.
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const fmtNum = n => n.toLocaleString('en-US');
+const fmtUSD = n => '$'+n.toLocaleString('en-US',{maximumFractionDigits:0});
+const fmtPct = n => n.toFixed(1)+'%';
+
+// deterministic gentle series for sparklines
+function series(start,end,n=14,wob=0.05){
+  const a=[];for(let i=0;i<n;i++){const t=i/(n-1);
+    const base=start+(end-start)*t;
+    a.push(base*(1+Math.sin(i*1.7)*wob));}
+  return a;
+}
+function sparkSVG(data,up){
+  const w=120,h=30,pad=2;
+  const mn=Math.min(...data),mx=Math.max(...data),rg=(mx-mn)||1;
+  const pts=data.map((v,i)=>{
+    const x=pad+i*(w-2*pad)/(data.length-1);
+    const y=h-pad-((v-mn)/rg)*(h-2*pad);
+    return [x,y];
+  });
+  const d=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  const col=up?'var(--up)':'var(--down)';
+  const area=`M${pts[0][0]} ${h} `+pts.map(p=>'L'+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ')+` L${pts[pts.length-1][0]} ${h} Z`;
+  return `<svg class="spark" width="100%" height="30" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <path d="${area}" fill="${col}" opacity=".08"/>
+    <path d="${d}" fill="none" stroke="${col}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${pts[pts.length-1][0]}" cy="${pts[pts.length-1][1]}" r="2.2" fill="${col}"/>
+  </svg>`;
+}
+
+/* ---------- KPI DATA MODEL (mock) ---------- */
+// each: treatment(t), control(c), fmt, higherBetter, spark range, + field spec
+const KPI = {
+  t1:[
+    {label:'Slot impressions',     t:1240000,c:310000, fmt:fmtNum, hb:true,  sp:[210000,1240000],
+      field:'fct_slot_engagement.impressions', grain:'category × slot × day', dims:'group, slot_tier, subcategory_id, device', flag:true},
+    {label:'Slot CTR',             t:2.8,    c:4.1,    fmt:fmtPct, hb:true,  sp:[4.3,2.8],
+      field:'clicks ÷ impressions', grain:'slot × day', dims:'group, device'},
+    {label:'Hover / dwell rate',   t:38,     c:31,     fmt:fmtPct, hb:true,  sp:[30,38],
+      field:'flyout_opened ÷ menu_opens', grain:'session', dims:'group, device', flag:true},
+    {label:'Position-norm. CTR',   t:1.34,   c:1.00,   fmt:(n)=>n.toFixed(2)+'×', hb:true, sp:[1.0,1.34],
+      field:'ctr ÷ rank_baseline_ctr', grain:'slot × day', dims:'group, slot_rank'},
+  ],
+  t2:[
+    {label:'Category sessions',    t:34720,  c:12980,  fmt:fmtNum, hb:true,  sp:[12000,34720],
+      field:'sessions w/ category_view', grain:'session', dims:'group, entry_path, device'},
+    {label:'Mega-menu entry share',t:61,     c:28,     fmt:fmtPct, hb:true,  sp:[30,61],
+      field:'menu_sessions ÷ category_sessions', grain:'session', dims:'group, entry_path', flag:true},
+    {label:'Pages / menu session', t:4.6,    c:3.9,    fmt:(n)=>n.toFixed(1), hb:true, sp:[3.9,4.6],
+      field:'pageviews ÷ menu_sessions', grain:'session', dims:'group'},
+    {label:'Bounce (menu-sourced)',t:41,     c:39,     fmt:fmtPct, hb:false, sp:[39,41],
+      field:'bounced_sessions ÷ menu_sessions', grain:'session', dims:'group, device'},
+  ],
+  t4:[
+    {label:'Attributed revenue',   t:487200, c:198400, fmt:fmtUSD, hb:true,  sp:[170000,487200],
+      field:'Σ order_value (menu-attributed)', grain:'order', dims:'group, category_id'},
+    {label:'Revenue / impression', t:0.393,  c:0.640,  fmt:(n)=>'$'+n.toFixed(3), hb:true,  sp:[0.64,0.393],
+      field:'attributed_revenue ÷ impressions', grain:'slot × day', dims:'group, slot_id'},
+    {label:'Revenue / click',      t:14.03,  c:22.70,  fmt:(n)=>'$'+n.toFixed(2), hb:true,  sp:[22.7,14.03],
+      field:'attributed_revenue ÷ clicks', grain:'slot × day', dims:'group, slot_id'},
+    {label:'Avg order value',      t:213,    c:208,    fmt:fmtUSD, hb:true,  sp:[206,213],
+      field:'attributed_revenue ÷ orders', grain:'order', dims:'group, category_id'},
+  ]
+};
+
+let MODE='both';
+
+function deltaHTML(t,c,hb){
+  const d=(t-c)/c*100;
+  const goodUp = hb ? d>=0 : d<=0;       // is the direction good?
+  const arrow = d>=0?'▲':'▼';
+  const cls = goodUp?'up':'down';
+  return `<span class="delta ${cls}">${arrow} ${Math.abs(d).toFixed(0)}%</span>`;
+}
+
+function renderKPIs(){
+  ['t1','t2','t4'].forEach(tier=>{
+    const host=$('#'+tier); host.innerHTML='';
+    KPI[tier].forEach(k=>{
+      let mainVal, cmp='', delta='', sparkData, sparkUp;
+      if(MODE==='control'){
+        mainVal=k.fmt(k.c); sparkData=series(k.sp[1],k.sp[0]); sparkUp = (k.sp[0]>=k.sp[1])===k.hb;
+      } else {
+        mainVal=k.fmt(k.t); sparkData=series(k.sp[0],k.sp[1]); sparkUp=(k.sp[1]>=k.sp[0])===k.hb;
+        if(MODE==='both'){
+          cmp=`<div class="ctrlcmp">ctrl <b>${k.fmt(k.c)}</b></div>`;
+          delta=deltaHTML(k.t,k.c,k.hb);
+        }
+      }
+      const flag = k.flag ? `<span class="g" style="color:var(--down)"> · ⚑ verify event exists</span>`:'';
+      host.insertAdjacentHTML('beforeend',`
+        <div class="card kpi">
+          <div class="klabel">${k.label}</div>
+          <div class="kval num">${mainVal}</div>
+          <div class="krow">${cmp||'<span></span>'}${delta}</div>
+          ${sparkSVG(sparkData,sparkUp)}
+          <div class="chip"><span class="f">${k.field}</span><br>grain <span class="g">${k.grain}</span> · dims ${k.dims}${flag}</div>
+        </div>`);
+    });
+  });
+}
+
+/* ---------- Funnel ---------- */
+const FUNNEL = {
+  treatment:[
+    {l:'Slot impressions',s:'viewable',v:1240000},
+    {l:'Slot clicks',s:'CTR 2.8%',v:34720},
+    {l:'Category sessions',s:'menu-sourced',v:34720},
+    {l:'Product views (PDP)',s:'',v:22500},
+    {l:'Add to cart',s:'ATC 20.0%',v:6940},
+    {l:'Checkout started',s:'',v:3120},
+    {l:'Purchase',s:'CVR 6.6%',v:2290},
+  ],
+  control:[
+    {l:'Slot impressions',s:'viewable',v:310000},
+    {l:'Slot clicks',s:'CTR 4.1%',v:12710},
+    {l:'Category sessions',s:'menu-sourced',v:12710},
+    {l:'Product views (PDP)',s:'',v:8800},
+    {l:'Add to cart',s:'ATC 21.0%',v:2670},
+    {l:'Checkout started',s:'',v:1290},
+    {l:'Purchase',s:'CVR 7.5%',v:954},
+  ]
+};
+function renderFunnel(){
+  const grp = MODE==='control'?'control':'treatment';
+  $('#funnelgrp').textContent = '· showing '+grp;
+  const data=FUNNEL[grp], max=data[0].v, host=$('#funnel'); host.innerHTML='';
+  data.forEach((st,i)=>{
+    const w=Math.max(4,(st.v/max)*100);
+    host.insertAdjacentHTML('beforeend',`
+      <div class="fstage">
+        <div class="fl">${st.l}${st.s?`<small>${st.s}</small>`:''}</div>
+        <div class="ftrack"><div class="ffill" style="width:${w}%"></div></div>
+        <div class="fv num">${fmtNum(st.v)}</div>
+      </div>`);
+  });
+  $('#funnelchip').innerHTML = `<span class="f">fct_funnel_step</span> · grain <span class="g">session × step</span> · dims group, entry_path, device · each step a flagged event in the session`;
+}
+
+/* ---------- Net impact waterfall ---------- */
+const WF=[
+  {l:'Promoted (Drones)',v:+288800,col:'var(--up)'},
+  {l:'Demoted (Tripods)',v:-96400,col:'var(--down)'},
+  {l:'Adjacent slots',v:-18200,col:'var(--down)'},
+  {l:'Net Δ revenue',v:+174200,col:'var(--gold)',total:true},
+];
+function renderWaterfall(){
+  const host=$('#waterfall'); host.innerHTML='';
+  const maxAbs=Math.max(...WF.map(w=>Math.abs(w.v)));
+  WF.forEach(w=>{
+    const h=Math.max(8,(Math.abs(w.v)/maxAbs)*150);
+    const sign=w.v>=0?'+':'−';
+    host.insertAdjacentHTML('beforeend',`
+      <div class="wfcol">
+        <div class="wfval" style="color:${w.col}">${sign}$${Math.abs(w.v).toLocaleString()}</div>
+        <div class="wfbar" style="height:${h}px;background:${w.col};${w.total?'box-shadow:0 0 0 2px #fff,0 0 0 4px var(--gold)':''}"></div>
+        <div class="wflab">${w.l}</div>
+      </div>`);
+  });
+}
+
+/* ---------- Compare bars (rates) ---------- */
+const CMP=[
+  {l:'Slot CTR',c:4.1,t:2.8,unit:'%',max:5},
+  {l:'Add-to-cart rate',c:21.0,t:20.0,unit:'%',max:25},
+  {l:'Purchase CVR',c:7.5,t:6.6,unit:'%',max:10},
+  {l:'Menu-entry share',c:28,t:61,unit:'%',max:70},
+];
+function renderCompare(){
+  const host=$('#compare'); host.innerHTML='';
+  CMP.forEach(m=>{
+    host.insertAdjacentHTML('beforeend',`
+      <div class="cmpgroup">
+        <div class="cl">${m.l}</div>
+        <div class="cmpbar" style="width:${(m.c/m.max)*100}%;background:var(--blue-2)"><span>${m.c}${m.unit}</span></div>
+        <div class="cmpbar" style="width:${(m.t/m.max)*100}%;background:var(--gold)"><span>${m.t}${m.unit}</span></div>
+      </div>`);
+  });
+}
+
+/* ---------- Slot-level impressions (treatment, within Drones flyout) ---------- */
+const SLOTS=[
+  {n:1, sub:'Consumer Drones',            imp:230000, ctr:5.2},
+  {n:2, sub:'Professional / Cinema Drones',imp:200000, ctr:4.6},
+  {n:3, sub:'FPV Drones',                 imp:175000, ctr:3.9},
+  {n:4, sub:'Drone Bundles & Kits',       imp:150000, ctr:3.4},
+  {n:5, sub:'Enterprise / Ag Drones',     imp:130000, ctr:3.0},
+  {n:6, sub:'Gimbals & Drone Cameras',    imp:72000,  ctr:2.4},
+  {n:7, sub:'Batteries & Chargers',       imp:56000,  ctr:2.1},
+  {n:8, sub:'Propellers & Motors',        imp:48000,  ctr:1.9},
+  {n:9, sub:'Controllers & Transmitters', imp:40000,  ctr:1.7},
+  {n:10,sub:'Cases & Backpacks',          imp:34000,  ctr:1.5},
+  {n:11,sub:'Landing Gear & Pads',        imp:28000,  ctr:1.3},
+  {n:12,sub:'ND / Lens Filters',          imp:24000,  ctr:1.2},
+  {n:13,sub:'FPV Goggles',                imp:20000,  ctr:1.0},
+  {n:14,sub:'Range Extenders',            imp:18000,  ctr:0.9},
+  {n:15,sub:'Replacement Parts',          imp:15000,  ctr:0.8},
+];
+function renderSlots(){
+  const max=Math.max(...SLOTS.map(s=>s.imp));
+  const tb=document.querySelector('#slottbl tbody'); tb.innerHTML='';
+  const rowHTML=(s,feat)=>{
+    const clicks=Math.round(s.imp*s.ctr/100);
+    const w=(s.imp/max)*100, col=feat?'var(--gold)':'var(--blue-2)';
+    return `<tr class="${feat?'featrow':''}">
+      <td><b>${s.n}</b></td>
+      <td>${s.sub}</td>
+      <td><div class="ibar"><i style="width:${w}%;background:${col}"></i></div><span class="num" style="font-size:12.5px;color:var(--blue);font-weight:600">${fmtNum(s.imp)}</span></td>
+      <td class="r num">${s.ctr.toFixed(1)}%</td>
+      <td class="r num">${fmtNum(clicks)}</td></tr>`;
+  };
+  const grp=(cls,label,sub)=>`<tr class="grouprow ${cls}"><td colspan="2">${label}</td><td class="num">${fmtNum(sub)}</td><td></td><td></td></tr>`;
+  const feat=SLOTS.filter(s=>s.n<=5), std=SLOTS.filter(s=>s.n>5);
+  const fsum=feat.reduce((a,s)=>a+s.imp,0), ssum=std.reduce((a,s)=>a+s.imp,0);
+  tb.insertAdjacentHTML('beforeend',grp('feat','★ Featured · slots 1–5',fsum));
+  feat.forEach(s=>tb.insertAdjacentHTML('beforeend',rowHTML(s,true)));
+  tb.insertAdjacentHTML('beforeend',grp('std','Standard · slots 6–15',ssum));
+  std.forEach(s=>tb.insertAdjacentHTML('beforeend',rowHTML(s,false)));
+  tb.insertAdjacentHTML('beforeend',grp('total','Total · all 15 slots',fsum+ssum));
+}
+
+/* ---------- Spec table ---------- */
+function renderSpec(){
+  const rows=[];
+  Object.values(KPI).flat().forEach(k=>{
+    rows.push(`<tr><td>${k.label}</td><td class="mono">${k.field}</td><td class="grain">${k.grain}</td><td>${k.dims}${k.flag?' · <span style="color:var(--down);font-weight:600">⚑ confirm event capture</span>':''}</td></tr>`);
+  });
+  $('#spectbl').innerHTML=rows.join('');
+}
+
+/* ---------- wire up ---------- */
+function renderAll(){renderKPIs();renderFunnel();renderWaterfall();renderCompare();renderSlots();}
+renderAll();renderSpec();
+
+$('#grpseg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  MODE=b.dataset.grp;
+  [...$('#grpseg').children].forEach(x=>x.classList.toggle('on',x===b));
+  renderAll();
+});
+
+const ft=$('#fieldtoggle');
+function toggleFields(){
+  const on=document.body.classList.toggle('showfields');
+  ft.classList.toggle('on',on); ft.setAttribute('aria-checked',on);
+  $('#funnelchip').style.display=on?'block':'none';
+}
+ft.addEventListener('click',toggleFields);
+ft.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();toggleFields();}});
+
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>{x.classList.remove('on');x.setAttribute('aria-selected','false');});
+  t.classList.add('on');t.setAttribute('aria-selected','true');
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  $('#'+t.dataset.view).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+</script>
+
+<!-- ================= MOCK INSIGHT CHAT ================= -->
+<style>
+  #chatLauncher{
+    position:fixed;right:22px;bottom:22px;z-index:60;
+    background:linear-gradient(135deg,var(--gold) 0%,#b3852b 100%);
+    color:#2a2008;border:0;border-radius:999px;padding:13px 20px 13px 16px;
+    font-family:"Barlow";font-weight:700;font-size:14px;cursor:pointer;
+    box-shadow:0 6px 22px rgba(16,49,107,.28);display:flex;align-items:center;gap:9px;
+    transition:transform .15s,box-shadow .15s;
+  }
+  #chatLauncher:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(16,49,107,.34);}
+  #chatLauncher svg{width:19px;height:19px;}
+  #chatLauncher.hide{display:none;}
+
+  #chatPanel{
+    position:fixed;right:22px;bottom:22px;z-index:61;width:392px;height:580px;max-height:calc(100vh - 44px);
+    background:#fff;border-radius:16px;box-shadow:0 18px 60px rgba(16,49,107,.34);
+    display:none;flex-direction:column;overflow:hidden;border:1px solid var(--blue-line);
+  }
+  #chatPanel.open{display:flex;}
+  .chat-head{
+    background:linear-gradient(100deg,var(--blue) 0%,#0c2550 100%);color:#fff;
+    padding:14px 16px;display:flex;align-items:center;gap:11px;border-bottom:3px solid var(--gold);
+  }
+  .chat-avatar{width:34px;height:34px;border-radius:50%;background:var(--gold);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    font-family:"Barlow Condensed";font-weight:700;color:#2a2008;font-size:17px;}
+  .chat-head .ttl{font-family:"Barlow Condensed";font-weight:700;font-size:17px;line-height:1.1;}
+  .chat-head .sub{font-size:10.5px;color:#bcd0f0;letter-spacing:.04em;text-transform:uppercase;}
+  .chat-head .demo{margin-left:auto;background:rgba(196,154,58,.28);color:#ffe6ad;
+    font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:6px;align-self:flex-start;}
+  .chat-close{background:transparent;border:0;color:#cdd9ee;font-size:22px;cursor:pointer;line-height:1;padding:0 2px;align-self:flex-start;}
+  .chat-close:hover{color:#fff;}
+
+  .chat-body{flex:1;overflow-y:auto;padding:16px 14px 6px;background:linear-gradient(180deg,#f6f9fd,#eef3fa);}
+  .msg{margin-bottom:12px;display:flex;}
+  .msg.bot .bub{background:#fff;border:1px solid var(--blue-line);color:var(--ink);border-radius:14px 14px 14px 4px;}
+  .msg.user{justify-content:flex-end;}
+  .msg.user .bub{background:var(--blue);color:#fff;border-radius:14px 14px 4px 14px;}
+  .bub{max-width:84%;padding:10px 13px;font-size:13.2px;line-height:1.5;box-shadow:0 1px 2px rgba(16,49,107,.06);}
+  .bub b{color:inherit;font-weight:700;}
+  .msg.bot .bub b{color:var(--blue);}
+
+  .typing{display:inline-flex;gap:4px;padding:4px 2px;}
+  .typing i{width:7px;height:7px;border-radius:50%;background:var(--blue-2);opacity:.4;animation:bl 1s infinite;}
+  .typing i:nth-child(2){animation-delay:.15s;}
+  .typing i:nth-child(3){animation-delay:.3s;}
+  @keyframes bl{0%,60%,100%{opacity:.3;transform:translateY(0);}30%{opacity:1;transform:translateY(-3px);}}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;padding:4px 14px 12px;background:#eef3fa;}
+  .chip-q{background:#fff;border:1px solid var(--blue-line);color:var(--blue-2);
+    font-family:"Barlow";font-size:12px;font-weight:600;padding:7px 11px;border-radius:999px;cursor:pointer;transition:.12s;}
+  .chip-q:hover{background:var(--gold-tint);border-color:#e7d49b;color:#8a6a18;}
+
+  .chat-input{display:flex;gap:8px;padding:11px 12px;border-top:1px solid var(--blue-line);background:#fff;}
+  .chat-input input{flex:1;border:1px solid var(--blue-line);border-radius:10px;padding:10px 12px;font-family:"Barlow";font-size:13.5px;outline:none;}
+  .chat-input input:focus{border-color:var(--gold);}
+  .chat-send{background:var(--blue);border:0;color:#fff;border-radius:10px;width:42px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .chat-send:hover{background:#0c2550;}
+  .chat-send svg{width:18px;height:18px;}
+  .chat-foot{font-size:10px;color:var(--muted);text-align:center;padding:0 0 8px;background:#fff;}
+
+  @media (max-width:560px){
+    #chatPanel{right:10px;left:10px;width:auto;bottom:10px;height:80vh;}
+    #chatLauncher{right:14px;bottom:14px;}
+  }
+</style>
+
+<button id="chatLauncher" aria-label="Open insight assistant">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z"/></svg>
+  Ask about this data
+</button>
+
+<section id="chatPanel" role="dialog" aria-label="Insight assistant (demo)">
+  <div class="chat-head">
+    <div class="chat-avatar">AI</div>
+    <div>
+      <div class="ttl">Insight Assistant</div>
+      <div class="sub">Mega Menu · A/B test</div>
+    </div>
+    <span class="demo">Simulated · demo</span>
+    <button class="chat-close" id="chatClose" aria-label="Close">×</button>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chips" id="chatChips"></div>
+  <div class="chat-input">
+    <input id="chatInput" type="text" placeholder="Ask about the CTR drop, slots, net impact…" autocomplete="off">
+    <button class="chat-send" id="chatSend" aria-label="Send">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+    </button>
+  </div>
+  <div class="chat-foot">Demo responses are pre-scripted from this dashboard's sample data.</div>
+</section>
+
+<script>
+(function(){
+  const body=document.getElementById('chatBody');
+  const chipWrap=document.getElementById('chatChips');
+  const input=document.getElementById('chatInput');
+
+  // featured/standard share computed live from the slot data already on the page
+  const fSum = (typeof SLOTS!=='undefined') ? SLOTS.filter(s=>s.n<=5).reduce((a,s)=>a+s.imp,0) : 885000;
+  const total = (typeof SLOTS!=='undefined') ? SLOTS.reduce((a,s)=>a+s.imp,0) : 1240000;
+  const fShare = Math.round(fSum/total*100);
+
+  const GREETING = "Hi — I'm the insight assistant (a demo). Ask me anything about what's on this dashboard: the CTR drop, slot-level impressions, the net revenue impact, or whether the test is ready to call.";
+
+  const CHIPS = ["Why did CTR drop?","Is the lift worth it?","Which slots underperform?","Is it significant yet?","Give me the summary"];
+
+  // pre-scripted, data-grounded answers
+  const RULES = [
+    {k:['summary','overview','tldr','tl;dr','verdict','recap','headline','how is it','how\'s it'],
+     a:`Quick read: promoting <b>Drones</b> to a featured slot tripled its impressions and lifted attributed revenue to <b>$487K</b> (+146% vs control). Rates dipped as expected — CTR and CVR slightly down — but volume more than made up for it. After the Tripods demotion, <b>net impact is +$174,200</b> at 96.4% confidence. Leaning ship, once the test finishes its 21 days.`},
+    {k:['ctr','click-through','click through','clickthrough','click rate','clicks drop','fewer click'],
+     a:`Slot CTR fell from <b>4.1% to 2.8%</b> (−32%). That's expected dilution — the featured slot now reaches a much broader, less-targeted audience, so a smaller share clicks. But impressions rose ~300%, so total clicks still went up. Bounce held near 41% and add-to-cart stayed ~20%, so the extra traffic is real, not junk. The dip isn't a relevance problem.`},
+    {k:['rpi','per impression','efficiency','productive','productivity','revenue per'],
+     a:`Drones' revenue-per-impression is <b>$0.393</b>, vs <b>$0.71</b> for the Cameras slot it displaced — about 38% lower. It earns far more total revenue ($487K vs $198K) but each impression is less productive. That's the trade-off to watch: if RPI stays below what it displaced, the prime slot might generate more for a different category.`},
+    {k:['net','worth it','worth','cannibal','keep it','keep the','revert','bottom line','should we ship','should we keep','roi','overall impact'],
+     a:`Net impact is <b>+$174,200</b>. Drones gained +$288,800, but demoting Tripods cost −$96,400 and adjacent slots −$18,200. So it's net-positive and the change holds — though about 40% of the headline gain was offset by losses elsewhere. The honest scorecard is the net number, not Drones' gain on its own.`},
+    {k:['significant','significance','confidence','ready','ship','call it','stop the test','conclude','done yet','can we end'],
+     a:`You're at <b>96.4% confidence on day 14 of 21</b>. The usual bar is 95%, so it's over threshold now — but I'd let it run the full 21 days. New placements often spike then settle as repeat visitors adapt, and stopping early risks mistaking a novelty bump for the steady state.`},
+    {k:['underperform','worst','which slot','bottom slot','weak slot','low slot','poorly','least','barely'],
+     a:`The bottom standard slots are barely seen. Slot 15 (Replacement Parts) gets <b>15,000</b> impressions vs slot 1's 230,000 — roughly 19× less — at 0.8% CTR. Slots 11–15 together draw under 8% of category impressions. Those are candidates to consolidate, rotate, or fill with higher-intent subcategories.`},
+    {k:['demote','promote next','move next','what next','recommend','should i feature','candidate','what to'],
+     a:`Tripods barely moved after being demoted — its RPI actually held (+2%), meaning shoppers still reach it via search and it didn't need the prime slot. That's the signal: <b>featured items whose traffic holds when demoted</b> are your best demotion candidates — they free premium slots at almost no cost.`},
+    {k:['featured','standard','split','position bias','distribution','1-5','6-15','spread'],
+     a:`Featured slots 1–5 capture <b>${fSum.toLocaleString()}</b> of ${total.toLocaleString()} impressions (~${fShare}%); standard slots 6–15 share the rest (~${100-fShare}%). Position bias is steep — slot 1 alone outdraws slots 11–15 combined. Which subcategory sits in which slot is the real lever.`},
+    {k:['add to cart','atc','convert','conversion','funnel','purchase','cvr','buy','checkout'],
+     a:`Through the funnel, ATC held at <b>20.0%</b> (vs 21.0% control) and purchase CVR at <b>6.6%</b> (vs 7.5%) — slightly lower rates, but on ~2.7× the traffic. The bigger audience still buys at a healthy clip: <b>2,290 purchases</b> vs 954 in control. Demand was latent, not absent.`},
+    {k:['real data','production','how do you','api','where does this','live data','connect','mock','fake'],
+     a:`Heads up — I'm a demo running on this dashboard's sample numbers, not a live model. In production I'd answer by querying the warehouse fact tables (per-slot impressions, the funnel, attributed revenue) or by reading the computed metrics on this page. This preview just shows the experience.`},
+  ];
+  const FALLBACK = `I'm a demo answering from this dashboard's sample data. I can speak to the CTR drop, slot-level impressions and position bias, the net revenue impact, conversion through the funnel, statistical significance, or what to promote/demote next. What would you like to dig into?`;
+
+  function answerFor(q){
+    const t=q.toLowerCase();
+    for(const r of RULES){ if(r.k.some(w=>t.includes(w))) return r.a; }
+    return FALLBACK;
+  }
+
+  function addMsg(html,who){
+    const m=document.createElement('div');
+    m.className='msg '+who;
+    m.innerHTML=`<div class="bub">${html}</div>`;
+    body.appendChild(m); body.scrollTop=body.scrollHeight;
+    return m;
+  }
+  function showTyping(){
+    const m=document.createElement('div');
+    m.className='msg bot'; m.id='typing';
+    m.innerHTML=`<div class="bub"><span class="typing"><i></i><i></i><i></i></span></div>`;
+    body.appendChild(m); body.scrollTop=body.scrollHeight;
+  }
+  function ask(q){
+    addMsg(q.replace(/</g,'&lt;'),'user');
+    input.value='';
+    showTyping();
+    const ans=answerFor(q);
+    const delay=620+Math.min(1100,ans.length*4);
+    setTimeout(()=>{
+      const t=document.getElementById('typing'); if(t)t.remove();
+      addMsg(ans,'bot');
+    },delay);
+  }
+
+  function renderChips(){
+    chipWrap.innerHTML='';
+    CHIPS.forEach(c=>{
+      const b=document.createElement('button');
+      b.className='chip-q'; b.textContent=c;
+      b.onclick=()=>ask(c);
+      chipWrap.appendChild(b);
+    });
+  }
+
+  let started=false;
+  function openChat(){
+    document.getElementById('chatPanel').classList.add('open');
+    document.getElementById('chatLauncher').classList.add('hide');
+    if(!started){ started=true; addMsg(GREETING,'bot'); renderChips(); }
+    setTimeout(()=>input.focus(),120);
+  }
+  function closeChat(){
+    document.getElementById('chatPanel').classList.remove('open');
+    document.getElementById('chatLauncher').classList.remove('hide');
+  }
+
+  document.getElementById('chatLauncher').onclick=openChat;
+  document.getElementById('chatClose').onclick=closeChat;
+  document.getElementById('chatSend').onclick=()=>{const v=input.value.trim();if(v)ask(v);};
+  input.addEventListener('keydown',e=>{if(e.key==='Enter'){const v=input.value.trim();if(v)ask(v);}});
+})();
+</script>
+</body>
+</html>

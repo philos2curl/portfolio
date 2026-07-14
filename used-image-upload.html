@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>(function(){if(!sessionStorage.getItem('js_portfolio_v1'))window.location.replace('index.html');}());</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Used Department — Image Upload Tool</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#222;background:#e4e4e4;min-height:100vh}
+.wrap{display:flex;min-height:100vh}
+
+/* LEFT NAV */
+.nav{width:82px;background:#2d6b50;flex-shrink:0;position:sticky;top:0;height:100vh;}
+.nav-item{padding:10px 4px;text-align:center;color:#fff;font-size:11px;font-weight:bold;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.15);}
+.nav-item:hover,.nav-item.act{background:rgba(0,0,0,.22);}
+
+/* MAIN */
+.main{flex:1;background:#fff;padding:10px;overflow-y:auto;}
+
+/* CARDS */
+.dcard{border:1px solid #b0b0b0;margin-bottom:6px;background:#fff;}
+.dsec{background:#2d6b50;color:#fff;padding:4px 8px;font-weight:bold;font-size:12px;text-align:center;}
+
+/* BUTTONS */
+.dchoose{background:#1a7abf;color:#fff;border:none;padding:5px 10px;cursor:pointer;font-size:11px;font-weight:bold;white-space:nowrap;}
+.dchoose:hover{background:#155d96;}
+.tbtn{background:#1a7abf;color:#fff;border:none;padding:6px 14px;cursor:pointer;font-size:12px;font-weight:bold;}
+.tbtn:hover{background:#155d96;}
+
+/* DROP ZONES */
+.dzone{display:inline-flex;align-items:center;justify-content:space-between;gap:4px;border:1px solid #aaa;padding:4px 8px;min-width:155px;background:#f8f8f8;cursor:pointer;font-size:11px;min-height:26px;transition:background .12s;}
+.dzone:hover:not(.hlbl){border-color:#555;background:#efefef;}
+.dzone.dov{background:#dfffdf;border:1px dashed #00aa00;}
+.dzone.hlbl{background:#00dd00;border-color:#007700;color:#003300;font-weight:bold;cursor:default;}
+
+/* LABEL BUTTONS */
+.lblb{display:block;width:100%;margin-bottom:6px;padding:9px 12px;background:#00e000;color:#003300;font-weight:bold;font-size:13px;border:2px solid #009900;border-radius:8px;cursor:grab;text-align:center;transition:background .1s;user-select:none;}
+.lblb:active{cursor:grabbing;}
+.lblb:hover:not(.lused){background:#00c800;}
+.lblb.lused{background:#d0d0d0;color:#888;border-color:#bbb;cursor:not-allowed;opacity:.65;}
+.lblb.lsel{background:#ffe000;border-color:#aa8800;color:#333;outline:2px solid #cc9900;}
+.lpill{border-radius:999px;}
+
+/* MISC */
+.dlink{color:#1a7abf;font-size:11px;text-decoration:underline;cursor:pointer;}
+.dorg{color:#cc5500;}
+.dstat{background:#fffce0;border:1px solid #cc9900;padding:6px 10px;font-size:12px;color:#553300;margin-bottom:6px;}
+.drlbl{background:none;border:none;cursor:pointer;font-size:12px;color:#005500;font-weight:bold;padding:0 2px;line-height:1;}
+.drlbl:hover{color:#cc0000;}
+.sinp{font-size:11px;padding:2px 4px;border:1px solid #aaa;}
+.ssel{font-size:11px;padding:2px 4px;border:1px solid #aaa;}
+.dfrow{display:flex;align-items:center;gap:6px;margin-bottom:4px;flex-wrap:wrap;}
+.dthumb{width:52px;height:52px;background:#d8d8d8;border:1px solid #bbb;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;}
+
+/* DRAGGABLE TEMPLATE PANEL */
+#dmodal{display:none;position:fixed;z-index:1000;top:60px;right:30px;width:255px;}
+.modal-shadow{background:#fff;border:2px solid #777;border-radius:4px;box-shadow:0 6px 20px rgba(0,0,0,.3);overflow:hidden;}
+#modalHandle{background:#2d6b50;color:#fff;padding:8px 10px;cursor:move;display:flex;align-items:center;justify-content:space-between;user-select:none;border-bottom:1px solid #1a4035;}
+#modalHandle:active{cursor:grabbing;}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:#2d6b50;color:#fff;padding:10px 16px;border-radius:4px;font-size:12px;z-index:2000;display:none;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:600px){.nav{display:none;}.main{padding:6px;}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- LEFT NAV — Images + Preview only -->
+  <div class="nav">
+    <div style="background:#1a4035;padding:8px 4px;text-align:center;">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="2" y="2" width="24" height="24" rx="3" fill="rgba(255,255,255,.15)"/><rect x="6" y="8" width="16" height="2" rx="1" fill="#fff"/><rect x="6" y="13" width="12" height="2" rx="1" fill="#fff"/><rect x="6" y="18" width="10" height="2" rx="1" fill="#fff"/></svg>
+      <div style="color:#a0d8b0;font-size:9px;margin-top:3px;font-weight:bold;">DES</div>
+    </div>
+    <div class="nav-item act">Images</div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+
+    <!-- Top Row -->
+    <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:6px;border-bottom:1px solid #ddd;padding-bottom:6px;flex-wrap:wrap;">
+      <button class="tbtn" onclick="openModal(null)">Image Template Labels</button>
+      <div style="flex:1;text-align:center;min-width:120px;">
+        <span class="dorg" style="font-size:18px;font-weight:bold;">Images</span>
+      </div>
+      <button style="background:#cc5500;color:#fff;border:none;padding:4px 8px;font-size:11px;cursor:pointer;font-weight:bold;align-self:flex-start;margin-top:2px;">Download All Images</button>
+    </div>
+
+    <!-- Status Bar -->
+    <div id="dstat" class="dstat" style="display:none;">
+      Label selected: <strong id="dstatlbl" style="color:#006600;"></strong>
+      &nbsp;— click a <em>Drop Image Label Here</em> zone to assign it, or
+      <a href="#" onclick="clearSel(event)" style="color:#cc5500;">cancel</a>.
+    </div>
+
+    <!-- MAIN IMAGE -->
+    <div class="dcard">
+      <div style="background:#2d6b50;color:#fff;padding:4px 8px;font-weight:bold;font-size:12px;">
+        Main Image <span style="font-weight:normal;font-size:11px;cursor:help;" title="Primary product image shown on the PDP">ℹ</span>
+      </div>
+      <div style="padding:6px;display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;">
+        <div style="flex-shrink:0;">
+          <div class="dthumb" id="thumb-main">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="1" y="6" width="26" height="18" rx="2" fill="#b0b0b0"/><circle cx="14" cy="14" r="5" fill="#c8c8c8"/><rect x="9" y="5" width="10" height="4" rx="1" fill="#a0a0a0"/></svg>
+          </div>
+          <div style="font-size:10px;line-height:1.8;margin-top:2px;">
+            <span class="dlink">55</span> <span class="dlink">750</span><br>
+            <span class="dlink">150</span> <span class="dlink">1000</span><br>
+            <span class="dlink">175</span> <span class="dlink">1500</span><br>
+            <span class="dlink">345</span> <span class="dlink">2000</span><br>
+            <span class="dlink" style="color:#cc5500;font-weight:bold;">500</span> <span class="dlink">2500</span>
+          </div>
+          <a href="#" class="dlink" style="font-size:10px;">Download</a>
+        </div>
+        <div style="flex:1;min-width:220px;">
+          <div class="dfrow">
+            <input type="file" id="file-main" style="display:none;" accept="image/*" onchange="pickFile(this,'main')">
+            <button class="dchoose" onclick="document.getElementById('file-main').click()">+ Choose Image</button>
+            <div class="dzone" id="dz-main"
+              ondragover="dov(event)" ondragleave="dolv(event)"
+              ondrop="ddrop(event,'main')" onclick="dzclick('main')">
+              Drop Image Label Here
+            </div>
+          </div>
+          <div class="dfrow">
+            <span style="font-size:11px;">Attach a note to the image:</span>
+            <select class="ssel"><option>Select Note</option><option>Cosmetic Damage</option><option>Missing Parts</option><option>Refurbished</option></select>
+          </div>
+          <div class="dfrow">
+            <label style="font-size:11px;"><input type="checkbox"> Remove Existing image</label>
+            <label style="font-size:11px;margin-left:8px;"><input type="checkbox"> Includes Accessories</label>
+            <a href="#" class="dlink" style="margin-left:8px;">▼ Move To Multiple Images</a>
+          </div>
+          <div style="text-align:center;margin-top:3px;">
+            <a href="#" class="dlink" style="font-size:11px;">Clear All Multiple Images</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- MULTIPLE IMAGES -->
+    <div style="border:1px solid #b0b0b0;margin-bottom:8px;">
+      <div class="dsec">Multiple Images</div>
+      <div style="padding:5px 8px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #ddd;flex-wrap:wrap;">
+        <label style="font-size:11px;"><input type="radio" name="apos" value="top"> Add-top</label>
+        <label style="font-size:11px;"><input type="radio" name="apos" value="bottom" checked> Add-bottom</label>
+        <span style="font-size:11px;font-weight:bold;">Required Image Count: <span class="dorg" id="reqCount">6</span></span>
+        <button class="dchoose" onclick="addCard()" style="font-size:12px;padding:6px 12px;">+ Select Multiple Images</button>
+        <span style="font-size:11px;color:#888;" id="cardCountDisplay">0 cards added</span>
+      </div>
+      <div id="cardList"></div>
+    </div>
+
+    <!-- DEO NOTE 
+    <div style="border:1px solid #b0b0b0;margin-bottom:8px;">
+      <div style="background:#cc5500;color:#fff;padding:3px 8px;font-size:11px;font-weight:bold;">DEO's Personal Note</div>
+      <textarea style="width:calc(100% - 10px);height:65px;margin:4px 5px;font-size:11px;border:1px solid #bbb;resize:vertical;font-family:Arial;" placeholder="Enter notes here..."></textarea>
+      <div style="padding:2px 8px 4px;">
+        <a href="#" class="dorg dlink" style="font-size:11px;">View DEO's History</a>
+      </div>
+    </div>
+
+    <!-- SAVE 
+    <div style="text-align:center;padding:8px 0 16px;">
+      <button class="tbtn" onclick="dsave()">Save Images</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- DRAGGABLE TEMPLATE PANEL -->
+<div id="dmodal">
+  <div class="modal-shadow">
+    <div id="modalHandle">
+      <span style="font-size:13px;font-weight:bold;">Image Template Labels</span>
+      <button onclick="closeModal()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:18px;padding:0 2px;line-height:1;" title="Close">✕</button>
+    </div>
+    <div style="padding:12px;max-height:calc(100vh - 140px);overflow-y:auto;">
+      <div style="font-size:10px;color:#777;text-align:center;margin-bottom:8px;line-height:1.5;">
+        Drag a label onto a card, or click a label then click a drop zone.
+      </div>
+      <div id="lblbtns"></div>
+      <div style="margin-top:10px;border-top:1px solid #ddd;padding-top:10px;">
+        <button class="tbtn" onclick="showMissing()" style="width:100%;font-size:11px;padding:7px;">Missing Reasons</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var LBLS=[
+  {id:'front',  text:'#1: Front',      multi:false},
+  {id:'back',   text:'#2: Back',       multi:false},
+  {id:'left',   text:'#3: Left',       multi:false},
+  {id:'right',  text:'#4: Right',      multi:false},
+  {id:'top',    text:'#5: Top',        multi:false},
+  {id:'bottom', text:'#6: Bottom',     multi:false},
+  {id:'ports',  text:'#7: Ports',      multi:false},
+  {id:'inbox',  text:'#8: In The Box', multi:false},
+  {id:'imperfection',text:'Imperfection',multi:true}
+];
+var used={},cardLbls={},selLbl=null,pickerCard=null,cc=0;
+
+function renderBtns(){
+  var c=document.getElementById('lblbtns');
+  c.innerHTML='';
+  LBLS.forEach(function(l){
+    var isUsed=!l.multi&&used[l.id];
+    var isSel=selLbl&&selLbl.id===l.id;
+    var btn=document.createElement('button');
+    btn.className='lblb'+(l.id==='imperfection'?' lpill':'')+(isUsed?' lused':'')+(isSel?' lsel':'');
+    btn.textContent=l.text;
+    if(isUsed){
+      btn.title='Already assigned — remove it from its card to reassign';
+    } else {
+      btn.draggable=true;
+      btn.addEventListener('dragstart',function(e){
+        e.dataTransfer.setData('dlid',l.id);
+        e.dataTransfer.setData('dltxt',l.text);
+      });
+      btn.addEventListener('click',function(){pickLbl(l);});
+    }
+    c.appendChild(btn);
+  });
+}
+
+function pickLbl(l){
+  if(pickerCard!==null){
+    assignLbl(pickerCard,l);
+    pickerCard=null;
+    closeModal();
+  } else {
+    if(selLbl&&selLbl.id===l.id){
+      selLbl=null;
+      document.getElementById('dstat').style.display='none';
+    } else {
+      selLbl=l;
+      document.getElementById('dstat').style.display='block';
+      document.getElementById('dstatlbl').textContent=l.text;
+    }
+    renderBtns();
+  }
+}
+
+function clearSel(e){
+  if(e)e.preventDefault();
+  selLbl=null;
+  document.getElementById('dstat').style.display='none';
+  renderBtns();
+}
+
+function openModal(targetId){
+  pickerCard=targetId;
+  renderBtns();
+  document.getElementById('dmodal').style.display='block';
+}
+
+function closeModal(){
+  document.getElementById('dmodal').style.display='none';
+  pickerCard=null;
+}
+
+function dov(e){e.preventDefault();e.currentTarget.classList.add('dov');}
+function dolv(e){e.currentTarget.classList.remove('dov');}
+function ddrop(e,cid){
+  e.preventDefault();
+  e.currentTarget.classList.remove('dov');
+  var lid=e.dataTransfer.getData('dlid');
+  var lbl=LBLS.find(function(l){return l.id===lid;});
+  if(lbl)assignLbl(cid,lbl);
+}
+
+function dzclick(cid){
+  if(selLbl){
+    assignLbl(cid,selLbl);
+    selLbl=null;
+    document.getElementById('dstat').style.display='none';
+    renderBtns();
+  }
+}
+
+function assignLbl(cid,lbl){
+  if(!lbl.multi&&used[lbl.id]&&used[lbl.id]!==cid){
+    showToast('"'+lbl.text+'" is already assigned. Remove it first.',true);
+    return;
+  }
+  if(cardLbls[cid]){var old=cardLbls[cid];if(!old.multi)delete used[old.id];}
+  cardLbls[cid]=lbl;
+  if(!lbl.multi)used[lbl.id]=cid;
+  updateZone(cid,lbl);
+  renderBtns();
+  showToast(lbl.text+' assigned.');
+}
+
+function updateZone(cid,lbl){
+  var z=document.getElementById('dz-'+cid);
+  if(!z)return;
+  z.className='dzone hlbl';
+  z.innerHTML='<span>'+lbl.text+'</span><button class="drlbl" onclick="rmLbl(event,\''+cid+'\')" title="Remove">✕</button>';
+}
+
+function rmLbl(e,cid){
+  e.stopPropagation();
+  var lbl=cardLbls[cid];
+  if(lbl){if(!lbl.multi)delete used[lbl.id];delete cardLbls[cid];}
+  var z=document.getElementById('dz-'+cid);
+  if(z){z.className='dzone';z.textContent='Drop Image Label Here';}
+  renderBtns();
+}
+
+function pickFile(inp,cid){
+  if(inp.files&&inp.files[0]){
+    var r=new FileReader();
+    r.onload=function(ev){
+      var t=document.getElementById('thumb-'+cid);
+      if(t)t.innerHTML='<img src="'+ev.target.result+'" style="width:52px;height:52px;object-fit:cover;">';
+    };
+    r.readAsDataURL(inp.files[0]);
+  }
+}
+
+function addCard(){
+  cc++;
+  var id='c'+cc;
+  var li=document.getElementById('cardList');
+  var d=document.createElement('div');
+  d.className='dcard';d.id='dc-'+id;
+  d.innerHTML=mkCard(id,cc);
+  li.appendChild(d);
+  renum();updateCountDisplay();
+}
+
+function mkCard(id,n){
+  return (
+    '<div style="background:#fff;border-bottom:1px solid #ddd;padding:4px 8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;" id="ch-'+id+'">'+
+      '<span class="dorg" style="font-weight:bold;font-size:12px;" id="cn-'+id+'">Image #'+n+'</span>'+
+      '<a class="dlink" onclick="swapMain(\''+id+'\')">Swap with Main Image</a>'+
+      '<span style="flex:1;"></span>'+
+      '<a class="dlink" onclick="mvUp(\''+id+'\')">▲</a>'+
+      '<a class="dlink" style="margin-left:4px;" onclick="mvDn(\''+id+'\')">▼</a>'+
+      '<a class="dlink" style="margin-left:8px;color:#cc0000;" onclick="rmCard(\''+id+'\')">Remove</a>'+
+    '</div>'+
+    '<div style="padding:6px;display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;">'+
+      '<div style="flex-shrink:0;">'+
+        '<div class="dthumb" id="thumb-'+id+'" style="font-size:10px;color:#aaa;text-align:center;line-height:1.3;padding:12px 2px 0;">No<br>Image</div>'+
+        '<div style="font-size:10px;line-height:1.8;margin-top:2px;">'+
+          '<span class="dlink">500</span> <span class="dlink">750</span><br>'+
+          '<span class="dlink">1000</span> <span class="dlink">1500</span><br>'+
+          '<span class="dlink">2000</span> <span class="dlink">2500</span>'+
+        '</div>'+
+        '<a href="#" class="dlink" style="font-size:10px;">Download</a>'+
+      '</div>'+
+      '<div style="flex:1;min-width:220px;">'+
+        '<div class="dfrow">'+
+          '<label style="font-size:11px;white-space:nowrap;">Hover Image: <input type="radio" name="hv_'+id+'"></label>'+
+          '<span style="font-size:11px;margin-left:4px;">Description:</span>'+
+          '<input type="text" class="sinp" style="flex:1;" value="" placeholder="">'+
+          '<label style="font-size:11px;margin-left:6px;white-space:nowrap;"><input type="checkbox"> Includes Accessories</label>'+
+        '</div>'+
+        '<div class="dfrow">'+
+          '<span style="font-size:11px;">Image Use:</span>'+
+          '<select class="ssel"><option>Multiple</option><option>Zoom Only</option><option>Both</option></select>'+
+        '</div>'+
+        '<div class="dfrow">'+
+          '<input type="file" id="file-'+id+'" style="display:none;" accept="image/*" onchange="pickFile(this,\''+id+'\')">'+
+          '<button class="dchoose" onclick="document.getElementById(\'file-'+id+'\').click()">+ Choose Image</button>'+
+          '<div class="dzone" id="dz-'+id+'"'+
+            ' ondragover="dov(event)" ondragleave="dolv(event)"'+
+            ' ondrop="ddrop(event,\''+id+'\')" onclick="dzclick(\''+id+'\')">'+
+            'Drop Image Label Here'+
+          '</div>'+
+          '<button style="background:#fff;border:1px solid #aaa;padding:4px 7px;cursor:pointer;font-size:12px;margin-left:2px;" onclick="openModal(\''+id+'\')" title="Open template labels">▼</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>'
+  );
+}
+
+function renum(){
+  var cards=document.querySelectorAll('#cardList .dcard');
+  cards.forEach(function(c,i){
+    var sp=document.getElementById('cn-'+c.id.replace('dc-',''));
+    if(sp)sp.textContent='Image #'+(i+1);
+  });
+}
+
+function updateCountDisplay(){
+  var n=document.querySelectorAll('#cardList .dcard').length;
+  document.getElementById('cardCountDisplay').textContent=n+' card'+(n===1?'':'s')+' added';
+}
+
+function rmCard(id){
+  var lbl=cardLbls[id];
+  if(lbl&&!lbl.multi)delete used[lbl.id];
+  delete cardLbls[id];
+  var el=document.getElementById('dc-'+id);
+  if(el)el.remove();
+  renum();renderBtns();updateCountDisplay();
+}
+
+function swapMain(id){
+  var el=document.getElementById('dc-'+id);
+  if(el){el.style.outline='2px solid #1a7abf';setTimeout(function(){el.style.outline='';},700);showToast('Swapped with Main Image.');}
+}
+function mvUp(id){var el=document.getElementById('dc-'+id);var p=el&&el.previousElementSibling;if(el&&p){el.parentNode.insertBefore(el,p);renum();}}
+function mvDn(id){var el=document.getElementById('dc-'+id);var n=el&&el.nextElementSibling;if(el&&n){el.parentNode.insertBefore(n,el);renum();}}
+
+function showMissing(){
+  var m=LBLS.filter(function(l){return !l.multi&&!used[l.id];});
+  if(m.length===0){showToast('All 8 required labels have been assigned!');}
+  else{alert('Labels not yet assigned:\n\n'+m.map(function(l){return '  \u2022 '+l.text;}).join('\n'));}
+}
+
+function dsave(){
+  var pairs=Object.keys(cardLbls).map(function(cid){
+    var nm=document.getElementById('cn-'+cid);
+    return '  '+(nm?nm.textContent:cid)+' \u2192 '+cardLbls[cid].text;
+  });
+  alert('Images saved!\n\n'+(pairs.length?'Label assignments:\n'+pairs.join('\n'):'No labels assigned yet.'));
+}
+
+var toastTimer;
+function showToast(msg,isErr){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.background=isErr?'#9b1c1c':'#2d6b50';
+  t.style.display='block';
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){t.style.display='none';},2400);
+}
+
+/* ── DRAGGABLE PANEL ──────────────────────────────────── */
+(function(){
+  var panel=document.getElementById('dmodal');
+  var handle=document.getElementById('modalHandle');
+  var dragging=false,sx,sy,sl,st;
+  handle.addEventListener('mousedown',function(e){
+    if(e.target.tagName==='BUTTON')return;
+    dragging=true;
+    sx=e.clientX;sy=e.clientY;
+    sl=panel.offsetLeft;st=panel.offsetTop;
+    document.addEventListener('mousemove',onMove);
+    document.addEventListener('mouseup',onUp);
+    e.preventDefault();
+  });
+  function onMove(e){
+    if(!dragging)return;
+    var nl=Math.max(0,Math.min(sl+(e.clientX-sx),window.innerWidth-panel.offsetWidth-4));
+    var nt=Math.max(0,Math.min(st+(e.clientY-sy),window.innerHeight-80));
+    panel.style.left=nl+'px';panel.style.top=nt+'px';panel.style.right='auto';
+  }
+  function onUp(){dragging=false;document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);}
+})();
+
+addCard();addCard();addCard();
+</script>
+</body>
+</html>
