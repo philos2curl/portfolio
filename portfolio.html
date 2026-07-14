@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jerel Smith — Senior Product Manager Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F9F8F6;
+  --surface: #FFFFFF;
+  --ink: #0F172A;
+  --ink-mid: #475569;
+  --ink-light: #94A3B8;
+  --border: #E2E8F0;
+  --accent: #1D4ED8;
+  --accent-dim: rgba(29, 78, 216, 0.08);
+  --accent-border: rgba(29, 78, 216, 0.2);
+  --green: #059669;
+  --green-dim: rgba(5, 150, 105, 0.08);
+  --amber: #D97706;
+  --amber-dim: rgba(217, 119, 6, 0.08);
+  --r: 12px;
+  --shadow: 0 1px 3px rgba(15,23,42,0.06), 0 4px 16px rgba(15,23,42,0.06);
+  --shadow-md: 0 4px 24px rgba(15,23,42,0.10);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+/* ── TOPBAR ─────────────────────────────────── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(249, 248, 246, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+.topbar-name {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: var(--ink);
+}
+
+.topbar-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+
+.topbar-links a {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-mid);
+  text-decoration: none;
+  transition: color .15s;
+}
+
+.topbar-links a:hover { color: var(--accent); }
+
+/* ── HERO ────────────────────────────────────── */
+.hero {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 80px 40px 72px;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-border);
+  border-radius: 100px;
+  padding: 5px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 28px;
+}
+
+.hero-title {
+  font-size: clamp(38px, 5vw, 58px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -.035em;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+
+.hero-title .underline {
+  position: relative;
+  display: inline-block;
+}
+
+.hero-title .underline::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -3px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 2px;
+  opacity: .35;
+}
+
+.hero-body {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--ink-mid);
+  line-height: 1.75;
+  max-width: 660px;
+  margin-bottom: 36px;
+}
+
+.hero-body strong { color: var(--ink); font-weight: 600; }
+
+.hero-context {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 18px 22px;
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+  max-width: 660px;
+}
+
+.hero-context strong { color: var(--ink); font-weight: 600; }
+
+/* ── STATS ROW ───────────────────────────────── */
+.stats-row {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 40px 64px;
+  display: flex;
+  gap: 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.stat-block {
+  flex: 1;
+  padding: 28px 0;
+  border-right: 1px solid var(--border);
+  padding-right: 32px;
+  margin-right: 32px;
+}
+
+.stat-block:last-child {
+  border-right: none;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.stat-value {
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -.03em;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-light);
+  line-height: 1.4;
+}
+
+/* ── SECTION ─────────────────────────────────── */
+.section {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 64px 40px;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin-bottom: 40px;
+}
+
+/* ── PROJECT CARDS ───────────────────────────── */
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+  transition: box-shadow .2s, transform .2s;
+}
+
+.project-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.card-header {
+  padding: 28px 32px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.card-meta {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.tag-deck    { background: var(--accent-dim); color: var(--accent); }
+.tag-proto   { background: var(--green-dim); color: var(--green); }
+.tag-dash    { background: var(--amber-dim); color: var(--amber); }
+.tag-analysis { background: rgba(139,92,246,0.08); color: #7C3AED; }
+
+.card-title {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+.card-subtitle {
+  font-size: 13px;
+  color: var(--ink-light);
+  font-weight: 400;
+}
+
+.card-links {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1.5px solid;
+  white-space: nowrap;
+  transition: all .15s;
+}
+
+.card-link-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.card-link-primary:hover { background: #1E40AF; border-color: #1E40AF; }
+
+.card-link-secondary {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--ink-mid);
+}
+
+.card-link-secondary:hover { border-color: var(--ink-mid); color: var(--ink); }
+
+.card-body {
+  padding: 24px 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.card-col-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  margin-bottom: 10px;
+}
+
+.card-col-text {
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+}
+
+.card-col-text strong { color: var(--ink); font-weight: 600; }
+
+.outcome-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.outcome-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--ink-mid);
+  line-height: 1.5;
+}
+
+.outcome-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+.outcome-dot.green { background: var(--green); }
+.outcome-dot.amber { background: var(--amber); }
+
+/* ── DIVIDER ─────────────────────────────────── */
+.divider {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 40px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── ABOUT ───────────────────────────────────── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.about-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+}
+
+.about-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.about-card-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.icon-blue  { background: var(--accent-dim); }
+.icon-green { background: var(--green-dim); }
+.icon-amber { background: var(--amber-dim); }
+.icon-purple { background: rgba(139,92,246,0.08); }
+
+.about-card-body {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+}
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.skill-pill {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-mid);
+}
+
+/* ── FOOTER ─────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.footer-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.footer-role { font-size: 13px; color: var(--ink-light); }
+
+.footer-contacts {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-mid);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color .15s;
+}
+
+.footer-link:hover { color: var(--accent); }
+
+/* ── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 680px) {
+  .topbar { padding: 0 20px; }
+  .topbar-links { gap: 16px; }
+  .hero { padding: 48px 20px 48px; }
+  .stats-row { padding: 0 20px 48px; flex-wrap: wrap; }
+  .stat-block { min-width: 140px; border-right: none; padding-right: 0; margin-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 20px; }
+  .section { padding: 40px 20px; }
+  .card-header { flex-direction: column; }
+  .card-links { flex-direction: row; }
+  .card-body { grid-template-columns: 1fr; gap: 20px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .footer { flex-direction: column; gap: 20px; padding: 32px 20px; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <span class="topbar-name">Jerel Smith</span>
+  <ul class="topbar-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">Skills</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="mailto:ContactJerel@pm.me">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-eyebrow">Senior Product Manager · Brooklyn, NY</div>
+  <h1 class="hero-title">Strategy that ships.<br><span class="underline">Work I actually built.</span></h1>
+  <p class="hero-body">
+    I'm a Senior PM with 10+ years experience across e-commerce, B2B SaaS, gaming, and healthcare. During my four years at B&H Photo, I owned Search, Navigation, B2B, and the full Used department web experience — leading strategy across a platform doing hundreds of millions in transactions.
+    <br><br>
+    <strong>This portfolio exists for one reason:</strong> the gap between what a PM envisions and what gets shipped is real. The artifacts here — executive decks, working prototypes, analytics dashboards — are my thinking. The UX execution is a different team's story.
+  </p>
+  <div class="hero-context">
+    <strong>For interviewers:</strong> when you pull up bhphoto.com, you're seeing a product built by 100+ people across engineering, UX, and operations. What you'll find below is what I drove — the research, the proposals I brought to the COO, and the prototypes I built to show what I would ship if I had full design authority.
+  </div>
+</header>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat-block">
+    <div class="stat-value">10+</div>
+    <div class="stat-label">Years in product management</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-value">+5.2%</div>
+    <div class="stat-label">Accessory attach rate, My Camera finder</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-value">+3.7%</div>
+    <div class="stat-label">Conversion lift, search optimization</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-value">$4.4B</div>
+    <div class="stat-label">Annual transaction volume managed at HCA</div>
+  </div>
+</div>
+
+<!-- WORK -->
+<section class="section" id="work">
+  <div class="section-label">Selected Work</div>
+  <div class="section-title">Projects & Artifacts</div>
+
+  <!-- PROJECT 1: MEGA MENU -->
+  <div class="project-card">
+    <div class="card-header">
+      <div>
+        <div class="card-meta">
+          <span class="tag tag-deck">Executive Deck</span>
+          <span class="tag tag-dash">Impact Dashboard</span>
+        </div>
+        <h2 class="card-title">Mega Menu Navigation Redesign</h2>
+        <p class="card-subtitle">B&H Photo · Search & Discovery · 2025–2026</p>
+      </div>
+      <div class="card-links">
+        <a href="mega-menu-vp-deck.html" class="card-link card-link-primary" target="_blank">↗ VP Deck</a>
+        <a href="megamenu-impact-dashboard.html" class="card-link card-link-secondary" target="_blank">↗ Impact Dashboard</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div>
+        <div class="card-col-label">The Problem</div>
+        <p class="card-col-text">
+          B&H's navigation was a structural blocker to discovery. The existing mega menu wasn't merchandisable, made it difficult to surface new categories, and contributed to elevated bounce rates from shoppers who couldn't find what they were looking for. No PM had formally owned the navigation layer as a product surface.
+          <br><br>
+          <strong>I brought this to VP leadership as a revenue and retention problem, not a UX refresh.</strong>
+        </p>
+      </div>
+      <div>
+        <div class="card-col-label">What I Built & Projected</div>
+        <ul class="outcome-list">
+          <li class="outcome-item"><span class="outcome-dot"></span>Executive deck built for VP-level approval, framing navigation as a discovery and conversion lever</li>
+          <li class="outcome-item"><span class="outcome-dot"></span>Impact dashboard modeling projected lift across bounce rate, category entry, and session depth</li>
+          <li class="outcome-item"><span class="outcome-dot"></span>Defined taxonomy, hover-state logic, and mobile behavior with engineering and UX scoping in parallel</li>
+          <li class="outcome-item"><span class="outcome-dot green"></span>Proposed A/B framework to measure discovery lift and downstream conversion post-launch</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 2: CONDITION RATING SYSTEM -->
+  <div class="project-card">
+    <div class="card-header">
+      <div>
+        <div class="card-meta">
+          <span class="tag tag-deck">COO Presentation</span>
+          <span class="tag tag-proto">Working Prototype</span>
+        </div>
+        <h2 class="card-title">Used Condition Rating System Overhaul</h2>
+        <p class="card-subtitle">B&H Photo · Used Department · Q1 2026</p>
+      </div>
+      <div class="card-links">
+        <a href="condition-ratings-deck.html" class="card-link card-link-primary" target="_blank">↗ Executive Deck</a>
+        <a href="condition-ratings-pdp.html" class="card-link card-link-secondary" target="_blank">↗ PDP Prototype</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div>
+        <div class="card-col-label">The Problem</div>
+        <p class="card-col-text">
+          B&H used a legacy numeric grading scale (7–10) on the buy side and a completely separate 1–5 scale on the sell side. Industry competitors — MPB, KEH, Amazon, Adorama — had all moved to plain-language word-based scales. Customer verbatims in Medallia directly called out the confusion, with one reviewer describing the experience as "what a used car dealer would pull."
+          <br><br>
+          <strong>I presented the full case to the COO alongside the Director of the Used Department.</strong>
+        </p>
+      </div>
+      <div>
+        <div class="card-col-label">What I Built & Projected</div>
+        <ul class="outcome-list">
+          <li class="outcome-item"><span class="outcome-dot"></span>9-slide executive deck with competitive analysis, Medallia voice-of-customer data, and implementation roadmap</li>
+          <li class="outcome-item"><span class="outcome-dot"></span>Proposed new 5-tier plain-language scale (Excellent → Rough) developed with the Used operations evaluator team</li>
+          <li class="outcome-item"><span class="outcome-dot green"></span>Fully interactive PDP prototype showing the new condition experience near the add-to-cart</li>
+          <li class="outcome-item"><span class="outcome-dot green"></span>Projected 8.5% CSAT improvement based on reduction in expectation-mismatch complaints</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 3: SELL USED EXPERIENCE -->
+  <div class="project-card">
+    <div class="card-header">
+      <div>
+        <div class="card-meta">
+          <span class="tag tag-analysis">Problem Analysis</span>
+          <span class="tag tag-dash">Traffic Data</span>
+          <span class="tag tag-proto">Prototype</span>
+        </div>
+        <h2 class="card-title">Sell Used — End-to-End Experience Redesign</h2>
+        <p class="card-subtitle">B&H Photo · Used Department · 2025–2026</p>
+      </div>
+      <div class="card-links">
+        <a href="bh_sell_used_problems.html" class="card-link card-link-primary" target="_blank">↗ Problem Analysis</a>
+        <a href="sell_used_traffic_ytd_2026.html" class="card-link card-link-secondary" target="_blank">↗ Traffic YTD</a>
+        <a href="used-image-upload.html" class="card-link card-link-secondary" target="_blank">↗ Upload Prototype</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div>
+        <div class="card-col-label">The Problem</div>
+        <p class="card-col-text">
+          The Sell Used funnel had significant friction: unclear value proposition at entry, a confusing quote flow, no image upload capability for sellers to document their item's condition, and the same scale fragmentation problem that hurt buyer confidence.
+          <br><br>
+          <strong>I audited the full funnel, mapped where sellers dropped off, and built a prioritized problem backlog backed by traffic data.</strong>
+        </p>
+      </div>
+      <div>
+        <div class="card-col-label">What I Built & Projected</div>
+        <ul class="outcome-list">
+          <li class="outcome-item"><span class="outcome-dot amber"></span>Full problem audit documenting funnel drop-off points with supporting traffic and behavioral data</li>
+          <li class="outcome-item"><span class="outcome-dot amber"></span>YTD 2026 traffic analysis surfacing where seller intent was high but conversion was low</li>
+          <li class="outcome-item"><span class="outcome-dot"></span>Working image upload prototype — sellers can document item condition before submission, reducing appraisal surprises and building trust in the quote process</li>
+          <li class="outcome-item"><span class="outcome-dot green"></span>Tied directly to CSAT improvement initiative targeting the "felt scammy" Medallia feedback category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- B2B SUBSECTION LABEL -->
+  <div style="display:flex; align-items:center; gap:14px; margin: 48px 0 32px;">
+    <div style="font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-light); white-space:nowrap;">B2B Work</div>
+    <div style="flex:1; height:1px; background:var(--border);"></div>
+  </div>
+
+  <!-- PROJECT 4: K-12 SCHOOL SAFETY -->
+  <div class="project-card">
+    <div class="card-header">
+      <div>
+        <div class="card-meta">
+          <span class="tag tag-proto">3 Wireframe Variants</span>
+          <span class="tag tag-analysis">B2B · K-12</span>
+        </div>
+        <h2 class="card-title">K-12 School Safety Landing Page</h2>
+        <p class="card-subtitle">B&H Photo · B2B Hub · 2025</p>
+      </div>
+      <div class="card-links">
+        <a href="k12-safety-v1-classic.html" class="card-link card-link-primary" target="_blank">↗ v1 Classic</a>
+        <a href="k12-safety-v2-explorer.html" class="card-link card-link-secondary" target="_blank">↗ v2 Explorer</a>
+        <a href="k12-safety-v3-campus.html" class="card-link card-link-secondary" target="_blank">↗ v3 Campus</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div>
+        <div class="card-col-label">The Problem</div>
+        <p class="card-col-text">
+          The existing K-12 page on the B2B Hub showed only cooperative contracts and generic non-clickable categories — no coherent story, no trust signals, no lead capture. Stakeholders wanted a dedicated school safety destination that could earn credibility with administrators, surface B&H's five areas of focus, and funnel prospects to an account manager.
+          <br><br>
+          <strong>I wrote the brief, defined the content architecture, and produced three distinct low-fi wireframe directions for stakeholder review.</strong>
+        </p>
+      </div>
+      <div>
+        <div class="card-col-label">What I Built & Projected</div>
+        <ul class="outcome-list">
+          <li class="outcome-item"><span class="outcome-dot amber"></span>Three wireframe variants exploring different narrative structures: Classic Scroll, Interactive Explorer, and Campus-first layout</li>
+          <li class="outcome-item"><span class="outcome-dot amber"></span>Five content pillars defined: Physical Security, Emergency Comms, Video Surveillance, Cybersecurity, and Student Wellness</li>
+          <li class="outcome-item"><span class="outcome-dot"></span>Lead capture funnel designed to route prospects to account managers by territory</li>
+          <li class="outcome-item"><span class="outcome-dot"></span>Compliance resource layer (Alyssa's Law, state requirements) to position B&H as a trusted K-12 authority, not just a vendor</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 5: EDU LANDING PAGE -->
+  <div class="project-card">
+    <div class="card-header">
+      <div>
+        <div class="card-meta">
+          <span class="tag tag-deck">UX Brief</span>
+          <span class="tag tag-proto">Figma</span>
+          <span class="tag tag-analysis">B2B · EDU</span>
+        </div>
+        <h2 class="card-title">EDU Advantage Landing Page Redesign</h2>
+        <p class="card-subtitle">B&H Photo · EDU Program · 2025</p>
+      </div>
+      <div class="card-links">
+        <a href="https://www.figma.com/design/86udqHzzAnV7e5J4KDjKos/EDU-Homepage?node-id=0-1&m=dev" class="card-link card-link-primary" target="_blank">↗ Figma Design</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div>
+        <div class="card-col-label">The Problem</div>
+        <p class="card-col-text">
+          FullStory and GA data showed the EDU landing page was generating a high volume of dead clicks — users clicking non-interactive elements expecting navigation that wasn't there. Benefits were buried, the sign-up flow lacked clarity, and Instagram content at the bottom of the page was auto-populated from the global feed, giving the EDU team no ability to control their own narrative.
+          <br><br>
+          <strong>I identified the dead-click pattern, wrote the redesign brief, and drove the Figma design through to a dev-ready handoff.</strong>
+        </p>
+      </div>
+      <div>
+        <div class="card-col-label">What I Built & Projected</div>
+        <ul class="outcome-list">
+          <li class="outcome-item"><span class="outcome-dot"></span>Redesigned benefit hierarchy to lead with student value — savings, selection, shipping, expert help — before the sign-up ask</li>
+          <li class="outcome-item"><span class="outcome-dot"></span>Clarified the 4-step verification flow (Verify → Confirm → Create → Explore) with visible progress cues</li>
+          <li class="outcome-item"><span class="outcome-dot green"></span>Proposed URL-specified Instagram embed replacing auto-feed, giving EDU control over curated content</li>
+          <li class="outcome-item"><span class="outcome-dot green"></span>Eliminated all dead-click elements; every interactive region mapped to a clear destination or action</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 6: CMS POC -->
+  <div class="project-card">
+    <div class="card-header">
+      <div>
+        <div class="card-meta">
+          <span class="tag tag-proto">Working Prototype</span>
+          <span class="tag tag-analysis">B2B · Infrastructure</span>
+        </div>
+        <h2 class="card-title">B2B CMS — Proof of Concept</h2>
+        <p class="card-subtitle">B&H Photo · B2B Content Operations · 2025–2026</p>
+      </div>
+      <div class="card-links">
+        <span class="card-link card-link-secondary" style="opacity:0.5; cursor:default; pointer-events:none;">Coming Soon</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div>
+        <div class="card-col-label">The Problem</div>
+        <p class="card-col-text">
+          B&H has long-standing organizational hesitation around committing to a CMS — the build vs. buy tension is real, and the business has historically defaulted to static pages and manual publishing workflows. B2B content in particular suffers from this: landing pages, hub pages, and program pages require engineering involvement for every edit.
+          <br><br>
+          <strong>I built a functional CMS proof of concept to demonstrate what editor-controlled, structured content could look like — lowering the cost of the argument by making it tangible.</strong>
+        </p>
+      </div>
+      <div>
+        <div class="card-col-label">What I Built & Projected</div>
+        <ul class="outcome-list">
+          <li class="outcome-item"><span class="outcome-dot"></span>Functional prototype showing a structured content editing interface mapped to real B2B page templates</li>
+          <li class="outcome-item"><span class="outcome-dot"></span>Demonstrated that a lightweight CMS layer could give non-technical stakeholders control over EDU, K-12, and hub page content without engineering tickets</li>
+          <li class="outcome-item"><span class="outcome-dot green"></span>Built as a decision-making artifact, not a pitch deck — the goal was to remove "we don't know what it would feel like" as a blocker to commitment</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- DIVIDER -->
+<div class="divider"></div>
+
+<!-- ABOUT / SKILLS -->
+<section class="section" id="about">
+  <div class="section-label">Background</div>
+  <div class="section-title">Skills & Domain</div>
+
+  <div class="about-grid">
+
+    <div class="about-card">
+      <div class="about-card-title">
+        <div class="about-card-icon icon-blue">🔍</div>
+        AI & Search
+      </div>
+      <div class="about-card-body">
+        Hands-on with LLM integration, hybrid keyword + vector search, RAG pipelines, and SOLR 9. Built a self-hosted multi-vertical AI search app (demo.AiPMBuilder.com) with Ollama, nomic-embed-text, and SSE streaming — well beyond typical PM scope.
+        <div class="skill-list" style="margin-top: 12px;">
+          <span class="skill-pill">Ollama / LLM</span>
+          <span class="skill-pill">SOLR 9</span>
+          <span class="skill-pill">RAG Pipelines</span>
+          <span class="skill-pill">Hybrid Search</span>
+          <span class="skill-pill">Flask / Python</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <div class="about-card-title">
+        <div class="about-card-icon icon-green">📊</div>
+        Data & Experimentation
+      </div>
+      <div class="about-card-body">
+        Product health frameworks, A/B test design and execution, funnel analysis, and behavioral analytics. 18% YoY increase in A/B tests shipped at B&H. Deep experience with Heap and Google Analytics for behavioral insight.
+        <div class="skill-list" style="margin-top: 12px;">
+          <span class="skill-pill">A/B Testing</span>
+          <span class="skill-pill">Heap Analytics</span>
+          <span class="skill-pill">Google Analytics</span>
+          <span class="skill-pill">Funnel Analysis</span>
+          <span class="skill-pill">Medallia / CSAT</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <div class="about-card-title">
+        <div class="about-card-icon icon-amber">🎯</div>
+        Go-to-Market & Positioning
+      </div>
+      <div class="about-card-body">
+        Comfortable owning the narrative from discovery to launch — positioning, stakeholder messaging, internal launch campaigns, and post-launch measurement. Proven at COO and VP level communication.
+        <div class="skill-list" style="margin-top: 12px;">
+          <span class="skill-pill">Executive Decks</span>
+          <span class="skill-pill">Roadmapping</span>
+          <span class="skill-pill">Product Positioning</span>
+          <span class="skill-pill">Launch Strategy</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <div class="about-card-title">
+        <div class="about-card-icon icon-purple">🛠</div>
+        Domain Depth
+      </div>
+      <div class="about-card-body">
+        10+ years across e-commerce (B&H Photo), B2B dental supply (Net32), healthcare GPO (HCA HealthTrust), gaming (Video Game Technologies), and media (TEGNA). Certified SAFe, CPO, and CSM. Computer Science + Organizational Development from Vanderbilt.
+        <div class="skill-list" style="margin-top: 12px;">
+          <span class="skill-pill">E-commerce</span>
+          <span class="skill-pill">B2B SaaS</span>
+          <span class="skill-pill">Healthcare</span>
+          <span class="skill-pill">SAFe · CPO · CSM</span>
+          <span class="skill-pill">Figma</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RESUME -->
+<div class="divider"></div>
+<section class="section" id="resume">
+  <div class="section-label">Resume</div>
+  <div class="section-title">Full Background</div>
+  <div class="project-card" style="display:flex; align-items:center; gap:32px; padding:28px 32px; flex-wrap:wrap;">
+    <div style="flex:1; min-width:240px;">
+      <div style="font-size:16px; font-weight:700; color:var(--ink); margin-bottom:8px;">Jerel Smith — Senior Product Manager</div>
+      <div style="font-size:14px; color:var(--ink-mid); line-height:1.7;">10+ years across e-commerce, B2B SaaS, gaming, and healthcare. Vanderbilt University, B.S. Computer Science & Human & Organizational Development. SAFe · CPO · CSM certified.</div>
+    </div>
+    <div style="display:flex; gap:12px; flex-shrink:0; flex-wrap:wrap;">
+      <a href="Jerel_Smith_Resume.docx" download class="card-link card-link-primary" style="font-size:13px; padding:10px 20px;">
+        ↓ Download Resume (.docx)
+      </a>
+      <a href="Jerel_Smith_Resume.pdf" download class="card-link card-link-secondary" style="font-size:13px; padding:10px 20px;">
+        ↓ PDF Version
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer">
+    <div>
+      <div class="footer-name">Jerel Smith</div>
+      <div class="footer-role">Senior Product Manager · Brooklyn, NY</div>
+    </div>
+    <div class="footer-contacts">
+      <a href="mailto:ContactJerel@pm.me" class="footer-link">✉ ContactJerel@pm.me</a>
+      <a href="tel:9178371562" class="footer-link">📞 917-837-1562</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
